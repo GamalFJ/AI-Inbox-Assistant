@@ -64,6 +64,10 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 - **Project Configuration**: 
     - Initialized `.eslintrc.json` for consistent code quality checks.
     - Verified build stability with local `npm run build` checks.
+- **Supabase Connectivity**:
+    - Verified live connection to Supabase database (queried `profiles` and `leads` tables).
+    - Verified access to Supabase Auth service.
+    - Confirmed correct environment variable configuration in `.env.local`.
 
 ---
 
