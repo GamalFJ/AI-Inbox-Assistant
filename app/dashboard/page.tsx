@@ -56,7 +56,7 @@ export default async function DashboardPage() {
                                     <h4 className="font-semibold text-gray-900">Reply to: Inquiry about pricing</h4>
                                     <p className="text-sm text-gray-500 mt-1">Generated 2 hours ago • Context: Standard SaaS</p>
                                     <p className="text-gray-600 mt-3 line-clamp-2">
-                                        "Hi there, thanks for reaching out. Our standard pricing starts at $19/mo. We also have a custom plan for larger teams..."
+                                        &quot;Hi there, thanks for reaching out. Our standard pricing starts at $19/mo. We also have a custom plan for larger teams...&quot;
                                     </p>
                                 </div>
                                 <div className="flex gap-2 items-center">

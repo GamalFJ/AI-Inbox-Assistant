@@ -41,7 +41,7 @@ export default function SignupPage() {
         return (
             <div className="min-h-[80vh] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 text-center">
                 <h2 className="text-3xl font-extrabold text-gray-900">Check your email</h2>
-                <p className="mt-4 text-gray-600">We've sent you a verification link to complete your registration.</p>
+                <p className="mt-4 text-gray-600">We&apos;ve sent you a verification link to complete your registration.</p>
                 <Link href="/login" className="mt-8 text-blue-600 font-medium">Back to Login</Link>
             </div>
         )
