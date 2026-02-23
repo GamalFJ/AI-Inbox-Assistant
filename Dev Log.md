@@ -64,6 +64,9 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 - **Project Configuration**: 
     - Initialized `.eslintrc.json` for consistent code quality checks.
     - Verified build stability with local `npm run build` checks.
+- **Security & Stability**:
+    - **Next.js Upgrade**: Upgraded from `15.1.12` to `15.5.12` to address the critical React Server Components RCE vulnerability (CVE-2025-66478) and the more recent DoS vulnerability (CVE-2026-23864).
+    - Verified build stability with `npm run build` and `npm run lint`.
 - **Supabase Connectivity**:
     - Verified live connection to Supabase database (queried `profiles` and `leads` tables).
     - Verified access to Supabase Auth service.
