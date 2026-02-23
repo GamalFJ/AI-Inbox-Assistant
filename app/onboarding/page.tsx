@@ -1,116 +1,198 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { createClient } from "@/utils/supabase/client"
 import { useRouter } from "next/navigation"
+import { Briefcase, MessageSquare, Link as LinkIcon, CheckCircle, Sparkles } from "lucide-react"
+
+const BUSINESS_TYPES = ["Coach", "Consultant", "Agency", "Freelancer"]
 
 export default function OnboardingPage() {
     const [businessType, setBusinessType] = useState("")
     const [exampleReplies, setExampleReplies] = useState("")
+    const [bookingLink, setBookingLink] = useState("")
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [isCheckingAuth, setIsCheckingAuth] = useState(true)
 
     const supabase = createClient()
     const router = useRouter()
+
+    useEffect(() => {
+        const checkUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser()
+            if (!user) {
+                router.push("/login")
+            } else {
+                setIsCheckingAuth(false)
+            }
+        }
+        checkUser()
+    }, [router, supabase.auth])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
         setError(null)
 
-        const { data: { user } } = await supabase.auth.getUser()
-
-        if (!user) {
-            router.push("/login")
-            return
-        }
-
-        // In a real app, we would save this to a 'profiles' or 'business_settings' table
-        // For this minimal demo, we'll just simulate it and redirect to dashboard
-
-        const { error } = await supabase
-            .from('profiles')
-            .upsert({
-                id: user.id,
-                business_type: businessType,
-                example_replies: exampleReplies,
-                onboarded: true
+        try {
+            const response = await fetch("/api/onboarding", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    business_type: businessType,
+                    example_replies: exampleReplies,
+                    booking_link: bookingLink,
+                }),
             })
 
-        if (error && error.code !== 'PGRST116') { // PGRST116 is 'no rows' which might happen if table doesn't exist
-            // We'll ignore the error for now as the user might not have set up the DB tables yet
-            console.warn("Table 'profiles' might not exist. Redirecting anyway.")
-        }
+            const result = await response.json()
 
-        router.push("/dashboard")
+            if (!response.ok) {
+                throw new Error(result.error || "Failed to save profile")
+            }
+
+            router.push("/dashboard")
+        } catch (err: any) {
+            setError(err.message)
+            setLoading(false)
+        }
+    }
+
+    if (isCheckingAuth) {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+                <p className="text-slate-500 font-medium">Loading your profile...</p>
+            </div>
+        )
     }
 
     return (
-        <div className="min-h-[80vh] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                    Tell us about your business
-                </h2>
-                <p className="mt-2 text-center text-sm text-gray-600">
-                    This helps our AI generate better replies for you.
-                </p>
-            </div>
+        <div className="min-h-screen bg-slate-50 py-16 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl mx-auto">
+                <div className="text-center mb-12">
+                    <div className="inline-flex items-center justify-center p-3 bg-blue-100 rounded-2xl mb-6">
+                        <Sparkles className="w-8 h-8 text-blue-600" />
+                    </div>
+                    <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight sm:text-5xl">
+                        Personalize your AI
+                    </h1>
+                    <p className="mt-4 text-lg text-slate-600 max-w-lg mx-auto">
+                        Teach the assistant about your business and tone so it can handle your leads perfectly.
+                    </p>
+                </div>
 
-            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="bg-white py-8 px-4 shadow-xl border border-gray-100 sm:rounded-2xl sm:px-10">
-                    <form className="space-y-6" onSubmit={handleSubmit}>
-                        {error && (
-                            <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm">
-                                {error}
-                            </div>
-                        )}
-                        <div>
-                            <label htmlFor="businessType" className="block text-sm font-medium text-gray-700">
-                                What type of business do you run?
-                            </label>
-                            <div className="mt-1">
-                                <input
-                                    id="businessType"
-                                    name="businessType"
-                                    type="text"
-                                    placeholder="e.g. SaaS, E-commerce, Agency"
-                                    required
-                                    value={businessType}
-                                    onChange={(e) => setBusinessType(e.target.value)}
-                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                />
-                            </div>
-                        </div>
+                <div className="bg-white rounded-[2rem] shadow-2xl shadow-slate-200/60 border border-slate-100 overflow-hidden">
+                    <div className="p-8 sm:p-12">
+                        <form onSubmit={handleSubmit} className="space-y-10">
+                            {error && (
+                                <div className="p-4 bg-red-50 border border-red-200 rounded-2xl text-red-600 text-sm flex items-start animate-in fade-in slide-in-from-top-2">
+                                    <span className="font-bold mr-2">Error:</span>
+                                    {error}
+                                </div>
+                            )}
 
-                        <div>
-                            <label htmlFor="exampleReplies" className="block text-sm font-medium text-gray-700">
-                                Paste some example replies you usually send
-                            </label>
-                            <div className="mt-1">
+                            {/* Business Type */}
+                            <div className="transition-all duration-300">
+                                <label className="flex items-center text-base font-bold text-slate-800 mb-4">
+                                    <Briefcase className="w-5 h-5 mr-3 text-blue-600" />
+                                    What best describes your business?
+                                </label>
+                                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                                    {BUSINESS_TYPES.map((type) => (
+                                        <button
+                                            key={type}
+                                            type="button"
+                                            onClick={() => setBusinessType(type)}
+                                            className={`
+                                                px-2 py-4 rounded-2xl border-2 text-sm font-bold transition-all duration-200
+                                                ${businessType === type
+                                                    ? "bg-blue-600 border-blue-600 text-white shadow-xl shadow-blue-200 ring-4 ring-blue-50"
+                                                    : "bg-white border-slate-100 text-slate-600 hover:border-blue-200 hover:bg-slate-50"
+                                                }
+                                            `}
+                                        >
+                                            {type}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Example Replies */}
+                            <div className="transition-all duration-300">
+                                <label htmlFor="exampleReplies" className="flex items-center text-base font-bold text-slate-800 mb-4">
+                                    <MessageSquare className="w-5 h-5 mr-3 text-blue-600" />
+                                    Paste 2–3 example replies you&apos;ve sent
+                                </label>
                                 <textarea
                                     id="exampleReplies"
-                                    name="exampleReplies"
-                                    rows={4}
-                                    placeholder="Paste a few examples of your typical email replies here..."
                                     required
+                                    rows={5}
+                                    placeholder="e.g. 'Hey [Name], thanks for reaching out! I'd love to jump on a call to see how I can help...'"
                                     value={exampleReplies}
                                     onChange={(e) => setExampleReplies(e.target.value)}
-                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                    className="block w-full rounded-2xl border-slate-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-slate-600 placeholder:text-slate-400 p-4 bg-slate-50/50"
                                 />
+                                <p className="mt-3 text-sm text-slate-500">
+                                    The AI uses these to match your unique brand voice and formatting.
+                                </p>
                             </div>
-                        </div>
 
-                        <div>
+                            {/* Booking Link */}
+                            <div className="transition-all duration-300">
+                                <label htmlFor="bookingLink" className="flex items-center text-base font-bold text-slate-800 mb-4">
+                                    <LinkIcon className="w-5 h-5 mr-3 text-blue-600" />
+                                    Your booking or contact link
+                                </label>
+                                <div className="relative">
+                                    <input
+                                        id="bookingLink"
+                                        type="url"
+                                        required
+                                        placeholder="https://calendly.com/your-name"
+                                        value={bookingLink}
+                                        onChange={(e) => setBookingLink(e.target.value)}
+                                        className="block w-full rounded-2xl border-slate-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-slate-600 placeholder:text-slate-400 pl-4 pr-4 py-4 bg-slate-50/50"
+                                    />
+                                </div>
+                                <p className="mt-3 text-sm text-slate-500">
+                                    Calendly, contact page, etc. where you want leads to go.
+                                </p>
+                            </div>
+
                             <button
                                 type="submit"
-                                disabled={loading}
-                                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                                disabled={loading || !businessType}
+                                className={`
+                                    w-full flex justify-center items-center py-5 px-6 rounded-2xl text-lg font-bold text-white transition-all duration-500
+                                    ${loading || !businessType
+                                        ? "bg-slate-300 cursor-not-allowed"
+                                        : "bg-blue-600 hover:bg-blue-700 shadow-2xl shadow-blue-200 hover:shadow-blue-400 group"
+                                    }
+                                `}
                             >
-                                {loading ? "Saving..." : "Finish Setup"}
+                                {loading ? (
+                                    <div className="flex items-center">
+                                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
+                                        Saving your settings...
+                                    </div>
+                                ) : (
+                                    <>
+                                        Save & Continue
+                                        <CheckCircle className="ml-3 w-6 h-6 transition-transform group-hover:scale-110" />
+                                    </>
+                                )}
                             </button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
+
+                <p className="mt-8 text-center text-slate-400 text-sm">
+                    You can always update these settings later in your dashboard.
+                </p>
             </div>
         </div>
     )

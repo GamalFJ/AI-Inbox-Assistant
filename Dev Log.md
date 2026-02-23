@@ -75,6 +75,7 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 ---
 
 ## 🗓️ Next Steps
+- [ ] **AI Draft Helper**: Integrate real OpenAI models for generating personalized email drafts (Tracked in `tasks/AI-Draft-Helper.md`).
 - [ ] Connect real AI model (OpenAI/Anthropic) to the production pipeline.
 - [ ] Implement actual "Send Email" functionality or email integration.
 - [ ] Refine the Dashboard with real-time lead updates.

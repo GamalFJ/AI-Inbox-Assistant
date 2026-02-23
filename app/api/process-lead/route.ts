@@ -41,11 +41,12 @@ export async function POST(req: Request) {
             .insert({
                 lead_id: lead.id,
                 user_id: user.id,
-                body: draftResult.body,
+                body: draftResult.draft_body, // Updated field name
                 status: "pending"
             })
             .select()
             .single();
+
 
         if (draftError) throw draftError;
 
