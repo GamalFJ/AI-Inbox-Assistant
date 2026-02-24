@@ -3,6 +3,7 @@
 import { Calendar, User, Mail, ChevronRight } from "lucide-react";
 import { Lead, Draft, LeadStatus } from "@/types";
 import DraftPanel from "./DraftPanel";
+import TaskList from "./TaskList";
 
 interface LeadDetailsProps {
     lead: Lead | null;
@@ -43,10 +44,16 @@ export default function LeadDetails({ lead, draft, onUpdateLeadStatus, onNewLead
             <div className="bg-white border border-slate-100 rounded-2xl p-8 shadow-sm">
                 <div className="flex justify-between items-start mb-8">
                     <div className="space-y-4 max-w-2xl">
-                        <div className="flex items-center gap-2 text-[10px] font-bold text-blue-600 uppercase tracking-widest">
-                            <span>Lead Details</span>
-                            <ChevronRight className="w-3 h-3" />
-                            <span>{lead.status}</span>
+                        <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest">
+                            <span className="text-blue-600">Lead Details</span>
+                            <ChevronRight className="w-3 h-3 text-slate-300" />
+                            <span className="text-slate-500">{lead.status}</span>
+                            {lead.classification && (
+                                <>
+                                    <ChevronRight className="w-3 h-3 text-slate-300" />
+                                    <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full lowercase">{lead.classification.replace('_', ' ')}</span>
+                                </>
+                            )}
                         </div>
                         <h2 className="text-3xl font-black text-slate-900 leading-tight">{lead.subject || "(No Subject)"}</h2>
                         <div className="flex flex-wrap gap-4 pt-2">
@@ -69,8 +76,8 @@ export default function LeadDetails({ lead, draft, onUpdateLeadStatus, onNewLead
                                     key={s}
                                     onClick={() => onUpdateLeadStatus(s as LeadStatus)}
                                     className={`px-3 py-1.5 text-[10px] font-bold rounded-lg transition-all ${lead.status === s
-                                            ? "bg-white text-blue-600 shadow-sm border border-slate-100"
-                                            : "text-slate-400 hover:text-slate-600"
+                                        ? "bg-white text-blue-600 shadow-sm border border-slate-100"
+                                        : "text-slate-400 hover:text-slate-600"
                                         }`}
                                 >
                                     {s.toUpperCase()}
@@ -90,6 +97,9 @@ export default function LeadDetails({ lead, draft, onUpdateLeadStatus, onNewLead
                     </div>
                 </div>
             </div>
+
+            {/* Follow-up Tasks */}
+            <TaskList leadId={lead.id} />
 
             {/* AI Draft Panel */}
             <DraftPanel

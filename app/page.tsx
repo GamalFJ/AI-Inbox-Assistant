@@ -21,10 +21,10 @@ export default function Home() {
                             Start Free Trial
                         </Link>
                         <Link
-                            href="https://www.paypal.com/dummy-link"
+                            href="/success"
                             className="bg-white text-gray-900 border border-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-50 transition"
                         >
-                            Buy Lifetime Access (PayPal)
+                            Buy Now - $49 Lifetime Access (PayPal)
                         </Link>
                     </div>
                 </div>

@@ -8,10 +8,24 @@ export default function SuccessPage() {
                 <div className="w-16 h-16 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
                     <CheckCircle className="w-10 h-10" />
                 </div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">Payment Received!</h1>
+                <h1 className="text-3xl font-bold text-gray-900 mb-4">You&apos;re in! 🎉</h1>
                 <p className="text-gray-600 mb-8">
-                    Thank you for your purchase. You now have full access to AI Inbox Assistant.
+                    Your lifetime access is activated. Follow these steps to start automating your inbox:
                 </p>
+                <div className="text-left space-y-4 mb-8">
+                    <div className="flex items-start gap-4">
+                        <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs font-bold shrink-0">1</div>
+                        <p className="text-sm text-slate-600 font-medium">Create your account using the button below.</p>
+                    </div>
+                    <div className="flex items-start gap-4">
+                        <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs font-bold shrink-0">2</div>
+                        <p className="text-sm text-slate-600 font-medium">Complete the 2-minute onboarding to connect your business email.</p>
+                    </div>
+                    <div className="flex items-start gap-4">
+                        <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs font-bold shrink-0">3</div>
+                        <p className="text-sm text-slate-600 font-medium">Paste your &quot;gold standard&quot; replies to train your AI assistant.</p>
+                    </div>
+                </div>
                 <div className="space-y-4">
                     <Link
                         href="/signup"

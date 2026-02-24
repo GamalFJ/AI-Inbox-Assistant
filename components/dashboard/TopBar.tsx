@@ -1,6 +1,7 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { Plus, Settings } from "lucide-react";
+import Link from "next/link";
 
 interface TopBarProps {
     onNewLead: () => void;
@@ -14,13 +15,22 @@ export default function TopBar({ onNewLead }: TopBarProps) {
                 <p className="text-sm text-slate-500">Review leads, generate drafts, never miss a follow-up.</p>
             </div>
 
-            <button
-                onClick={onNewLead}
-                className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition shadow-sm hover:shadow-md active:scale-95 transition-all"
-            >
-                <Plus className="w-5 h-5" />
-                <span>New Lead</span>
-            </button>
+            <div className="flex items-center gap-3">
+                <Link
+                    href="/settings"
+                    title="Settings"
+                    className="flex items-center justify-center w-10 h-10 rounded-xl border border-slate-200 bg-white text-slate-500 hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50 transition-all"
+                >
+                    <Settings className="w-5 h-5" />
+                </Link>
+                <button
+                    onClick={onNewLead}
+                    className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 shadow-sm hover:shadow-md active:scale-95 transition-all"
+                >
+                    <Plus className="w-5 h-5" />
+                    <span>New Lead</span>
+                </button>
+            </div>
         </div>
     );
 }

@@ -83,9 +83,53 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 
 ---
 
+## � Phase 4: Product Polish & AI Pre-wiring (Current)
+- **Onboarding Enhancements**:
+    - Added collection of **Business Email** for lead source tracking.
+    - Updated tone training to require **3–5 high-quality examples**.
+- **AI Automation Engine**:
+    - Enhanced `api/process-lead` to automatically **classify leads** (New Lead, Client, Spam).
+    - Implemented automatic **Follow-up Task scheduling** based on AI-generated plans (e.g., 2-day, 7-day touches).
+- **Dashboard & Task Management**:
+    - Built a new `TaskList` component to visualize scheduled follow-ups for each lead.
+    - Integrated lead classification badges into the UI for quick sanity checks.
+- **Marketing & Onboarding Flow**:
+    - Connected Landing Page "Buy Now" flow to simulated Success page.
+    - Simplified Success page with **3-step instant onboarding** instructions as requested.
+- **Data Model**:
+    - Expanded `Lead` and `Draft` types.
+    - Introduced `Task` schema for follow-up automation.
+- **Real Email Sending**:
+    - Integrated **Resend** for automated email delivery.
+    - Created `POST /api/send-email` endpoint.
+    - Added "Approve & Send" workflow to the dashboard, allowing users to trigger real sends with a single click.
+
+---
+
+## � Phase 5: Ingestion, Admin & Delivery Polish (Current)
+- **Lead Ingestion Webhook**:
+    - Built `POST /api/webhook/ingest` — a secure, authenticated endpoint for receiving inbound emails from any provider.
+    - Supports Postmark, Mailgun, Resend Inbound, SendGrid, and Zapier (no-code).
+    - Auto-runs the full AI pipeline on every inbound webhook: creates lead → generates draft → classifies → schedules follow-up tasks.
+    - Protected via `WEBHOOK_SECRET` environment variable (validated on every request).
+    - Documented `WEBHOOK_SECRET` in `.env.example`.
+- **Admin / Settings Page** (`/settings`):
+    - Built a full 3-tab Settings page at `/settings`.
+    - **AI Profile Tab**: Edit business type, business email, example replies (tone training), and booking link — all backed by the `PATCH /api/settings` endpoint.
+    - **Lead Ingestion Tab**: Displays the live webhook URL (copy-to-clipboard), the user's secret key, the expected JSON payload, and setup guides for Postmark, Mailgun, Resend, and Zapier.
+    - **Email Domain Tab**: Step-by-step Resend domain verification walkthrough with DNS record table.
+- **Navigation Updates**:
+    - Added Settings link to the main Header for authenticated users.
+    - Added Settings gear icon button to the Dashboard TopBar for quick access.
+- **API Routes**:
+    - `GET /api/settings` — Fetches the user's current profile settings.
+    - `PATCH /api/settings` — Updates profile settings (business type, email, tone examples, booking link).
+    - `POST /api/webhook/ingest` — Inbound email ingestion webhook (auto AI pipeline).
+
+---
+
 ## 🗓️ Next Steps
-- [ ] **AI Draft Helper**: Integrate real OpenAI models for generating personalized email drafts (Tracked in `tasks/AI-Draft-Helper.md`).
-- [ ] Connect real AI model (OpenAI/Anthropic) to the production pipeline.
-- [ ] Implement actual "Send Email" functionality or email integration.
-- [ ] Refine the Dashboard with real-time lead updates.
-- [ ] Integrate Stripe/PayPal for real payment processing.
+- [ ] **WEBHOOK_SECRET in .env.local**: Add `WEBHOOK_SECRET=your-secret` to `.env.local` before connecting a real provider.
+- [ ] **Production AI Model**: Connect to specialized fine-tuned models if needed for better classification accuracy.
+- [ ] **Domain Verification**: Verify your custom domain on Resend for professional email sending (instructions in Settings → Email Domain tab).
+- [ ] **Polling Fallback**: Add a cron job / Vercel Cron to poll for new emails if webhooks aren't available.

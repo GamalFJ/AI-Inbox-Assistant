@@ -9,6 +9,7 @@ const BUSINESS_TYPES = ["Coach", "Consultant", "Agency", "Freelancer"]
 
 export default function OnboardingPage() {
     const [businessType, setBusinessType] = useState("")
+    const [businessEmail, setBusinessEmail] = useState("")
     const [exampleReplies, setExampleReplies] = useState("")
     const [bookingLink, setBookingLink] = useState("")
     const [loading, setLoading] = useState(false)
@@ -43,6 +44,7 @@ export default function OnboardingPage() {
                 },
                 body: JSON.stringify({
                     business_type: businessType,
+                    business_email: businessEmail,
                     example_replies: exampleReplies,
                     booking_link: bookingLink,
                 }),
@@ -121,11 +123,28 @@ export default function OnboardingPage() {
                                 </div>
                             </div>
 
+                            {/* Business Email */}
+                            <div className="transition-all duration-300">
+                                <label htmlFor="businessEmail" className="flex items-center text-base font-bold text-slate-800 mb-4">
+                                    <Sparkles className="w-5 h-5 mr-3 text-blue-600" />
+                                    Your business email (where leads come in)
+                                </label>
+                                <input
+                                    id="businessEmail"
+                                    type="email"
+                                    required
+                                    placeholder="hello@yourbusiness.com"
+                                    value={businessEmail}
+                                    onChange={(e) => setBusinessEmail(e.target.value)}
+                                    className="block w-full rounded-2xl border-slate-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-slate-600 placeholder:text-slate-400 p-4 bg-slate-50/50"
+                                />
+                            </div>
+
                             {/* Example Replies */}
                             <div className="transition-all duration-300">
                                 <label htmlFor="exampleReplies" className="flex items-center text-base font-bold text-slate-800 mb-4">
                                     <MessageSquare className="w-5 h-5 mr-3 text-blue-600" />
-                                    Paste 2–3 example replies you&apos;ve sent
+                                    Paste 3–5 example replies you&apos;ve sent
                                 </label>
                                 <textarea
                                     id="exampleReplies"

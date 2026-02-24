@@ -1,4 +1,5 @@
 export type LeadStatus = "new" | "qualified" | "spam" | "done";
+export type LeadClassification = "new_lead" | "existing_client" | "spam" | "other";
 
 export interface Lead {
     id: string;
@@ -8,6 +9,7 @@ export interface Lead {
     subject: string;
     body: string;
     status: LeadStatus;
+    classification?: LeadClassification;
 }
 
 export interface Draft {
@@ -17,5 +19,15 @@ export interface Draft {
     user_id: string;
     body: string;
     status: string;
-    suggested_subject?: string; // We might need to add this to the DB if missing
+    suggested_subject: string;
+}
+
+export interface Task {
+    id: string;
+    created_at: string;
+    lead_id: string;
+    user_id: string;
+    title: string;
+    due_at: string;
+    status: "pending" | "completed";
 }

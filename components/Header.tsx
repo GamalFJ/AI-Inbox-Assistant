@@ -46,6 +46,9 @@ export default function Header() {
                             <Link href="/dashboard" className="text-gray-600 hover:text-gray-900 transition-colors">
                                 Dashboard
                             </Link>
+                            <Link href="/settings" className="text-gray-600 hover:text-gray-900 transition-colors">
+                                Settings
+                            </Link>
                             <button
                                 onClick={handleLogout}
                                 className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors"

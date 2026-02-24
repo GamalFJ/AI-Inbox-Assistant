@@ -35,7 +35,16 @@ export async function POST(req: Request) {
         // 3. Call server-side AI helper
         const draftResult = await generateDraftForLead(lead, profile);
 
-        // 4. Save to drafts table
+        // 4. Update lead classification and status
+        await supabase
+            .from("leads")
+            .update({
+                classification: draftResult.lead_type,
+                status: draftResult.lead_type === "spam" ? "spam" : lead.status
+            })
+            .eq("id", lead.id);
+
+        // 5. Save to drafts table
         const { data: draft, error: draftError } = await supabase
             .from("drafts")
             .insert({
@@ -50,6 +59,25 @@ export async function POST(req: Request) {
 
 
         if (draftError) throw draftError;
+
+        // 6. Create follow-up tasks
+        if (draftResult.followup_plan && draftResult.followup_plan.length > 0) {
+            const tasks = draftResult.followup_plan.map((offset: string) => {
+                const days = parseInt(offset);
+                const dueAt = new Date();
+                dueAt.setDate(dueAt.getDate() + (isNaN(days) ? 2 : days));
+
+                return {
+                    lead_id: lead.id,
+                    user_id: user.id,
+                    title: `Follow up (${offset})`,
+                    due_at: dueAt.toISOString(),
+                    status: "pending"
+                };
+            });
+
+            await supabase.from("tasks").insert(tasks);
+        }
 
         return NextResponse.json(draft);
     } catch (error: any) {

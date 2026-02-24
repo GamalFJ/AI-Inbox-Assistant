@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Sparkles, Copy, Check, RotateCcw } from "lucide-react";
+import { Sparkles, Copy, Check, RotateCcw, Send } from "lucide-react";
 import { Draft } from "@/types";
 
 interface DraftPanelProps {
@@ -16,6 +16,8 @@ export default function DraftPanel({ leadId, existingDraft, onStatusChange }: Dr
     const [subject, setSubject] = useState("");
     const [body, setBody] = useState("");
     const [copied, setCopied] = useState(false);
+    const [isSending, setIsSending] = useState(false);
+    const [sent, setSent] = useState(false);
 
     useEffect(() => {
         if (existingDraft) {
@@ -54,6 +56,32 @@ export default function DraftPanel({ leadId, existingDraft, onStatusChange }: Dr
         navigator.clipboard.writeText(`Subject: ${subject}\n\n${body}`);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
+    };
+
+    const handleSendEmail = async () => {
+        setIsSending(true);
+        try {
+            const res = await fetch("/api/send-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    lead_id: leadId,
+                    draft_id: draft?.id,
+                    subject,
+                    body
+                }),
+            });
+            const data = await res.json();
+            if (data.error) throw new Error(data.error);
+
+            setSent(true);
+            onStatusChange("done");
+        } catch (error) {
+            console.error("Failed to send email:", error);
+            alert("Failed to send email. Make sure your RESEND_API_KEY is configured.");
+        } finally {
+            setIsSending(false);
+        }
     };
 
     return (
@@ -112,20 +140,35 @@ export default function DraftPanel({ leadId, existingDraft, onStatusChange }: Dr
                     </div>
 
                     <div className="flex items-center justify-between pt-2">
-                        <p className="text-xs text-slate-400 italic">Paste this into your normal email app to send.</p>
+                        <p className="text-xs text-slate-400 italic">
+                            {sent ? "Email sent successfully!" : "Review and approve this draft to send."}
+                        </p>
                         <div className="flex gap-2">
                             <button
-                                onClick={() => onStatusChange("done")}
-                                className="px-4 py-2 text-slate-600 text-xs font-bold hover:text-slate-900 transition"
+                                onClick={handleCopy}
+                                className="flex items-center gap-2 px-4 py-2 text-slate-600 text-xs font-bold hover:text-slate-900 transition"
                             >
-                                Mark as done
+                                {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                                {copied ? "Copied" : "Copy"}
                             </button>
                             <button
-                                onClick={handleCopy}
-                                className="flex items-center gap-2 px-5 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-black transition shadow-lg shadow-slate-200"
+                                onClick={handleSendEmail}
+                                disabled={isSending || sent}
+                                className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-100 disabled:opacity-50 disabled:bg-slate-400"
                             >
-                                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                                {copied ? "Copied!" : "Copy Reply"}
+                                {isSending ? (
+                                    "Sending..."
+                                ) : sent ? (
+                                    <>
+                                        <Check className="w-4 h-4" />
+                                        Sent
+                                    </>
+                                ) : (
+                                    <>
+                                        <Send className="w-4 h-4" />
+                                        Approve & Send
+                                    </>
+                                )}
                             </button>
                         </div>
                     </div>

@@ -12,13 +12,14 @@ export async function POST(req: Request) {
     }
 
     try {
-        const { business_type, example_replies, booking_link } = await req.json();
+        const { business_type, business_email, example_replies, booking_link } = await req.json();
 
         const { data, error } = await supabase
             .from("profiles")
             .upsert({
                 id: user.id,
                 business_type,
+                business_email,
                 example_replies,
                 booking_link,
                 onboarded: true,
