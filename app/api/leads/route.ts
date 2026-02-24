@@ -54,3 +54,30 @@ export async function GET() {
         return Res.json({ error: error.message }, { status: 500 });
     }
 }
+
+export async function PATCH(req: NextRequest) {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        return Res.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    try {
+        const { id, status } = await req.json();
+
+        const { data, error } = await supabase
+            .from("leads")
+            .update({ status })
+            .eq("id", id)
+            .eq("user_id", user.id)
+            .select()
+            .single();
+
+        if (error) throw error;
+
+        return Res.json(data);
+    } catch (error: any) {
+        return Res.json({ error: error.message }, { status: 500 });
+    }
+}

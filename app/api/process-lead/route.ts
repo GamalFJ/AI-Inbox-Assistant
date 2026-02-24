@@ -41,7 +41,8 @@ export async function POST(req: Request) {
             .insert({
                 lead_id: lead.id,
                 user_id: user.id,
-                body: draftResult.draft_body, // Updated field name
+                suggested_subject: draftResult.suggested_subject,
+                body: draftResult.draft_body,
                 status: "pending"
             })
             .select()
