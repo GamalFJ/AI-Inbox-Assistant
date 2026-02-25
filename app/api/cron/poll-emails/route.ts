@@ -5,8 +5,12 @@ import { NextRequest, NextResponse } from "next/server";
 /**
  * GET /api/cron/poll-emails
  *
- * Vercel Cron endpoint — runs on a schedule to process any unprocessed leads.
+ * Vercel Cron endpoint — runs once per day (~2 AM UTC) to process any unprocessed leads.
  * This serves as a fallback for users who don't use the webhook-based ingestion.
+ *
+ * NOTE: On Vercel's Hobby (free) plan, cron jobs are limited to at most once per day.
+ * Expressions that would run more frequently will cause deployment to fail.
+ * The exact trigger time is not guaranteed (e.g. 2:00 AM–2:59 AM UTC).
  *
  * It finds leads that:
  *  1. Have status = 'new'
@@ -35,7 +39,7 @@ export async function GET(req: NextRequest) {
             .eq("status", "new")
             .is("classification", null)
             .order("created_at", { ascending: true })
-            .limit(10); // Process up to 10 leads per cron tick to avoid timeouts
+            .limit(20); // Process up to 20 leads per daily cron run
 
         if (leadsError) throw leadsError;
 
