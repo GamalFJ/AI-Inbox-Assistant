@@ -128,8 +128,33 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 
 ---
 
-## 🗓️ Next Steps
-- [ ] **WEBHOOK_SECRET in .env.local**: Add `WEBHOOK_SECRET=your-secret` to `.env.local` before connecting a real provider.
+## � Phase 6: Analytics & Polling Cron (Current)
+- **Polling Cron Fallback** (`/api/cron/poll-emails`):
+    - Built a **Vercel Cron** endpoint that runs every 10 minutes.
+    - Automatically discovers unprocessed leads (status = `new`, no classification, no drafts).
+    - Runs the full AI pipeline on each: generate draft → classify → schedule follow-up tasks.
+    - Secured via `CRON_SECRET` environment variable (injected automatically by Vercel).
+    - Processes up to 10 leads per tick to avoid serverless function timeouts.
+    - Updated `vercel.json` with `crons` schedule.
+    - Added `CRON_SECRET` to `.env.example`.
+- **Analytics API** (`GET /api/analytics`):
+    - Returns aggregated metrics: total leads, drafts generated, emails sent, hours saved, spam blocked, average AI response time, classification breakdown, 7-day activity timeline, pending/overdue task counts.
+- **Analytics Dashboard** (`/analytics`):
+    - Built a dedicated analytics page with 8 stat cards and dynamic charts.
+    - **7-Day Activity Bar Chart**: Visual comparison of leads received vs. AI drafts generated.
+    - **Lead Classification Breakdown**: Color-coded panel showing AI categorization (New Lead, Existing Client, Spam, Other).
+    - Back-to-dashboard navigation for seamless UX.
+- **Navigation Updates**:
+    - Added Analytics link to the main Header for authenticated users.
+    - Added Analytics (chart icon) shortcut button to the Dashboard TopBar.
+
+---
+
+## �🗓️ Next Steps
+- [x] ~~**WEBHOOK_SECRET in .env.local**: Add `WEBHOOK_SECRET=your-secret` to `.env.local` before connecting a real provider.~~
+- [x] ~~**Polling Fallback**: Add a cron job / Vercel Cron to poll for new emails if webhooks aren't available.~~
 - [ ] **Production AI Model**: Connect to specialized fine-tuned models if needed for better classification accuracy.
 - [ ] **Domain Verification**: Verify your custom domain on Resend for professional email sending (instructions in Settings → Email Domain tab).
-- [ ] **Polling Fallback**: Add a cron job / Vercel Cron to poll for new emails if webhooks aren't available.
+- [ ] **Notification System**: Add email/toast notifications when new leads arrive or tasks become overdue.
+- [ ] **Draft Edit History**: Track revisions to AI-generated drafts before sending.
+- [ ] **Multi-user / Team Support**: Extend the data model for shared inboxes and team assignment.

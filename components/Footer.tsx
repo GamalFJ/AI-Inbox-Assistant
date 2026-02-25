@@ -20,8 +20,9 @@ export default function Footer() {
                         <Link href="/#faq" className="hover:text-blue-600 transition-colors">FAQ</Link>
                     </div>
 
-                    <div className="text-sm text-gray-400">
-                        © {new Date().getFullYear()} AI Inbox Assistant. All rights reserved.
+                    <div className="text-sm text-gray-400 text-center md:text-right">
+                        <p>© {new Date().getFullYear()} AI Inbox Assistant. All rights reserved.</p>
+                        <p className="mt-1">A Product by <span className="text-gray-500 font-medium">Purple Cove Labs</span></p>
                     </div>
                 </div>
             </div>

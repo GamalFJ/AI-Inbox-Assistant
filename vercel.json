@@ -2,5 +2,11 @@
     "framework": "nextjs",
     "regions": [
         "arn1"
+    ],
+    "crons": [
+        {
+            "path": "/api/cron/poll-emails",
+            "schedule": "*/10 * * * *"
+        }
     ]
 }

@@ -4,8 +4,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-    title: "AI Inbox Assistant",
-    description: "Your smart AI-powered inbox companion",
+    title: "AI Inbox Assistant – Never Lose a Lead to Your Inbox Again",
+    description:
+        "A plug-and-play AI assistant that drafts your replies and follow-ups so you stop leaving money in unread emails. Lifetime access for $29.99.",
 };
 
 export default function RootLayout({
