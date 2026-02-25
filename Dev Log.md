@@ -150,11 +150,34 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 
 ---
 
-## �🗓️ Next Steps
+## ✏️ Phase 7: Draft Edit History (Current)
+- **`draft_revisions` table**: New Supabase table that stores a versioned snapshot of every draft save.
+    - Fields: `id`, `draft_id` (FK → drafts, CASCADE DELETE), `user_id`, `body`, `suggested_subject`, `edit_source` (`ai_generated | user_edit | regenerated`), `version_number`, `created_at`.
+    - RLS policies ensure users can only read/write their own revisions.
+    - Composite index on `(draft_id, version_number DESC)` for fast history loads.
+- **`PATCH /api/drafts/[id]`**: New dynamic API route that saves edits to the draft AND atomically inserts a revision snapshot with the correct `version_number`.
+- **`GET /api/drafts/[id]/revisions`**: Returns all revisions for a draft, newest-first, with ownership verification.
+- **`DraftHistory` component** (`components/dashboard/DraftHistory.tsx`): Slide-in drawer showing the full version timeline.
+    - Version badge (v1, v2…), source badge (🤖 AI Generated / ✏️ Your Edit / 🔄 Regenerated), relative timestamps.
+    - Collapsible body previews per version.
+    - "Restore this version" button — instantly populates the editor with the chosen snapshot.
+    - Highlights the **Latest** and **Active** versions distinctly.
+- **`DraftPanel` upgrades**:
+    - **Auto-save**: 3-second debounce after the user stops typing — silently creates a revision.
+    - **Manual Save** button (shown while dirty): instantly snapshots the current edit.
+    - **History button** in the panel header — opens the `DraftHistory` drawer.
+    - **Restore handler**: restores any previous revision back into the editor fields.
+    - Live `isDirty` feedback: "Unsaved edits" / "Auto-saving in 3s…" / "All changes saved".
+    - AI generate/regenerate now auto-snapshots with `ai_generated` / `regenerated` source label.
+- **SQL migration**: `supabase/migrations/draft_revisions.sql` ready to run in the Supabase SQL Editor.
+
+---
+
+## 🗓️ Next Steps
 - [x] ~~**WEBHOOK_SECRET in .env.local**: Add `WEBHOOK_SECRET=your-secret` to `.env.local` before connecting a real provider.~~
 - [x] ~~**Polling Fallback**: Add a cron job / Vercel Cron to poll for new emails if webhooks aren't available.~~
 - [ ] **Production AI Model**: Connect to specialized fine-tuned models if needed for better classification accuracy.
 - [ ] **Domain Verification**: Verify your custom domain on Resend for professional email sending (instructions in Settings → Email Domain tab).
-- [ ] **Notification System**: Add email/toast notifications when new leads arrive or tasks become overdue.
-- [ ] **Draft Edit History**: Track revisions to AI-generated drafts before sending.
+- [x] ~~**Notification System**: Add email/toast notifications when new leads arrive or tasks become overdue.~~
+- [x] ~~**Draft Edit History**: Track revisions to AI-generated drafts before sending.~~
 - [ ] **Multi-user / Team Support**: Extend the data model for shared inboxes and team assignment.

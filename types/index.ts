@@ -22,6 +22,17 @@ export interface Draft {
     suggested_subject: string;
 }
 
+export interface DraftRevision {
+    id: string;
+    created_at: string;
+    draft_id: string;
+    user_id: string;
+    body: string;
+    suggested_subject: string;
+    edit_source: "ai_generated" | "user_edit" | "regenerated";
+    version_number: number;
+}
+
 export interface Task {
     id: string;
     created_at: string;
