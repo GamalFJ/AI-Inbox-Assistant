@@ -173,11 +173,44 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 
 ---
 
-## 🗓️ Next Steps
+## �️ Phase 9: Usage Monitoring & Production Hardening (Current)
+- **Early Warning System (Usage Monitor)**:
+    - Built `GET /api/cron/usage-monitor` — a daily automated auditor that checks for high-volume users and total user count.
+    - Sends a beautifully formatted HTML alert email to the admin via Resend when thresholds are breached.
+    - Added `GET /api/admin/usage-stats` — an on-demand usage snapshot for the builder to check costs/stats anytime.
+    - Implemented `utils/supabase/service.ts` — a secure server-side client using `SERVICE_ROLE_KEY` to bypass RLS for administrative auditing.
+    - Integrated with Vercel Cron (`vercel.json`) to run daily at 8 AM UTC.
+    - Thresholds are fully configurable via env vars (`ALERT_USER_THRESHOLD`, `ALERT_LEADS_PER_USER`).
+
+
+---
+
+## �🗓️ Next Steps
 - [x] ~~**WEBHOOK_SECRET in .env.local**: Add `WEBHOOK_SECRET=your-secret` to `.env.local` before connecting a real provider.~~
 - [x] ~~**Polling Fallback**: Add a cron job / Vercel Cron to poll for new emails if webhooks aren't available.~~
-- [ ] **Production AI Model**: Connect to specialized fine-tuned models if needed for better classification accuracy.
-- [ ] **Domain Verification**: Verify your custom domain on Resend for professional email sending (instructions in Settings → Email Domain tab).
 - [x] ~~**Notification System**: Add email/toast notifications when new leads arrive or tasks become overdue.~~
 - [x] ~~**Draft Edit History**: Track revisions to AI-generated drafts before sending.~~
-- [ ] **Multi-user / Team Support**: Extend the data model for shared inboxes and team assignment.
+- [x] ~~**Usage Monitor**: Setup early warning system for AI costs and user growth.~~
+- [ ] **Production AI Model**: Connect to a strong, reliable AI provider (OpenAI / Anthropic) for real classification and draft generation.
+- [ ] **Domain Verification**: Verify your custom domain on Resend for professional email sending (instructions in Settings → Email Domain tab).
+
+---
+
+## 💡 Future Features (Planned Upsells)
+> These features are intentionally shelved for now and will be introduced as premium upgrade tiers once the core product is stable and generating revenue.
+
+- **🏢 Multi-user / Team Support** *(Pro / Team Plan Upsell)*:
+    - `teams` and `team_members` Supabase tables with role-based access (owner, admin, member).
+    - Shared inbox view — all team members see and can act on the same lead pool.
+    - Lead assignment (`assigned_to` field) with assignee avatars in the dashboard.
+    - Team management tab in `/settings`: invite by email, change roles, remove members.
+    - Invite emails sent via Resend.
+    - Dashboard filters: "Assigned to Me" vs. "All Team Leads".
+
+- **🤖 Fine-tuned / Custom AI Models** *(Enterprise Plan Upsell)*:
+    - Allow enterprise users to upload their own JSONL training data for a fine-tuned model.
+    - Per-user model selection (e.g., GPT-4o, Claude Opus, or a custom fine-tune).
+
+- **📆 Calendar Integration** *(Pro Plan Upsell)*:
+    - One-click "Book a Call" via Google Calendar or Calendly embedded in AI replies.
+    - Auto-detect scheduling intent in lead emails.

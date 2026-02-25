@@ -7,6 +7,14 @@
         {
             "path": "/api/cron/poll-emails",
             "schedule": "0 2 * * *"
+        },
+        {
+            "path": "/api/cron/usage-monitor",
+            "schedule": "0 8 * * *"
+        },
+        {
+            "path": "/api/cron/overdue-tasks",
+            "schedule": "0 9 * * *"
         }
     ]
 }

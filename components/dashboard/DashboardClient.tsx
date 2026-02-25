@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Lead, Draft, LeadStatus, Task } from "@/types";
 import TopBar from "./TopBar";
 import LeadList from "./LeadList";
@@ -8,6 +8,7 @@ import LeadDetails from "./LeadDetails";
 import NewLeadModal from "./NewLeadModal";
 import { Menu, X } from "lucide-react";
 import { useNotification } from "@/components/NotificationContext";
+import { createClient } from "@/utils/supabase/client";
 
 interface DashboardClientProps {
     initialLeads: Lead[];
@@ -22,9 +23,66 @@ export default function DashboardClient({ initialLeads, initialDrafts }: Dashboa
     const [isSidebarOpen, setIsSidebarOpen] = useState(true); // For mobile toggle
 
     const { notify } = useNotification();
+    const supabase = useMemo(() => createClient(), []);
 
     const selectedLead = (leads || []).find(l => l.id === selectedLeadId) || null;
     const selectedDraft = (drafts || []).find(d => d.lead_id === selectedLeadId);
+
+    // ── Realtime Subscriptions ───────────────────────────────────────────
+    useEffect(() => {
+        // 1. Subscribe to 'leads' changes
+        const leadsChannel = supabase
+            .channel("realtime_leads")
+            .on(
+                "postgres_changes",
+                { event: "*", schema: "public", table: "leads" },
+                (payload) => {
+                    if (payload.eventType === "INSERT") {
+                        const newLead = payload.new as Lead;
+                        setLeads((prev) => [newLead, ...prev]);
+                        notify({
+                            type: "info",
+                            title: "New lead received",
+                            message: `"${newLead.subject}" from ${newLead.email_from}`,
+                        });
+                    } else if (payload.eventType === "UPDATE") {
+                        const updatedLead = payload.new as Lead;
+                        setLeads((prev) => prev.map((l) => (l.id === updatedLead.id ? updatedLead : l)));
+                    } else if (payload.eventType === "DELETE") {
+                        const deletedId = payload.old.id;
+                        setLeads((prev) => prev.filter((l) => l.id !== deletedId));
+                        if (selectedLeadId === deletedId) setSelectedLeadId(undefined);
+                    }
+                }
+            )
+            .subscribe();
+
+        // 2. Subscribe to 'drafts' changes
+        const draftsChannel = supabase
+            .channel("realtime_drafts")
+            .on(
+                "postgres_changes",
+                { event: "*", schema: "public", table: "drafts" },
+                (payload) => {
+                    if (payload.eventType === "INSERT") {
+                        const newDraft = payload.new as Draft;
+                        setDrafts((prev) => [newDraft, ...prev]);
+                    } else if (payload.eventType === "UPDATE") {
+                        const updatedDraft = payload.new as Draft;
+                        setDrafts((prev) => prev.map((d) => (d.id === updatedDraft.id ? updatedDraft : d)));
+                    } else if (payload.eventType === "DELETE") {
+                        const deletedId = payload.old.id;
+                        setDrafts((prev) => prev.filter((d) => d.id !== deletedId));
+                    }
+                }
+            )
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(leadsChannel);
+            supabase.removeChannel(draftsChannel);
+        };
+    }, [supabase, notify, selectedLeadId]);
 
     // ── Overdue task check on mount ──────────────────────────────────────
     const checkOverdueTasks = useCallback(async () => {
