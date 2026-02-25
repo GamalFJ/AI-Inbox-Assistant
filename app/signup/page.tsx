@@ -1,11 +1,15 @@
 "use client"
 
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { createClient } from "@/utils/supabase/client"
 
-export default function SignupPage() {
+/* ─────────────────────────────────────────────────────────────────────────────
+   Inner component — contains useSearchParams() so it must live inside
+   a <Suspense> boundary (Next.js App Router requirement).
+───────────────────────────────────────────────────────────────────────────── */
+function SignupContent() {
     const searchParams = useSearchParams()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -210,5 +214,24 @@ export default function SignupPage() {
                 </p>
             </div>
         </div>
+    )
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Default export — wraps the content in a Suspense boundary so that
+   useSearchParams() doesn't cause a prerender failure in Next.js App Router.
+───────────────────────────────────────────────────────────────────────────── */
+export default function SignupPage() {
+    return (
+        <Suspense
+            fallback={
+                <div className="signup-bg min-h-[88vh] flex items-center justify-center px-4 py-16">
+                    <div className="signup-orb signup-orb-1" aria-hidden="true" />
+                    <div className="signup-orb signup-orb-2" aria-hidden="true" />
+                </div>
+            }
+        >
+            <SignupContent />
+        </Suspense>
     )
 }
