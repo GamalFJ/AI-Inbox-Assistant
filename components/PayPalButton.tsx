@@ -3,10 +3,17 @@
 import { useEffect, useRef } from "react"
 
 // Extend Window to satisfy TypeScript
+interface PayPalHostedButtonsInstance {
+    render: (selector: string) => void;
+}
+
+interface PayPalNamespace {
+    HostedButtons?: (options: { hostedButtonId: string }) => PayPalHostedButtonsInstance;
+}
+
 declare global {
     interface Window {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        paypal?: any
+        paypal?: PayPalNamespace;
     }
 }
 

@@ -32,7 +32,6 @@ interface Profile {
 
 export default function SettingsPage() {
     const router = useRouter();
-    const supabase = createClient();
 
     const [userId, setUserId] = useState<string | null>(null);
     const [isCheckingAuth, setIsCheckingAuth] = useState(true);
@@ -53,6 +52,7 @@ export default function SettingsPage() {
 
     useEffect(() => {
         const init = async () => {
+            const supabase = createClient();
             const { data: { user } } = await supabase.auth.getUser();
             if (!user) {
                 router.push("/login");
@@ -77,6 +77,7 @@ export default function SettingsPage() {
             setIsCheckingAuth(false);
         };
         init();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleSave = async (e: React.FormEvent) => {
@@ -100,8 +101,8 @@ export default function SettingsPage() {
             if (!res.ok) throw new Error(data.error || "Failed to save settings");
             setSaveSuccess(true);
             setTimeout(() => setSaveSuccess(false), 3000);
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : "Failed to save settings");
         } finally {
             setSaving(false);
         }

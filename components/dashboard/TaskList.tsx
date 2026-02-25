@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { CheckCircle2, Circle, Clock } from "lucide-react";
 import { Task } from "@/types";
 
@@ -12,7 +12,7 @@ export default function TaskList({ leadId }: TaskListProps) {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchTasks = async () => {
+    const fetchTasks = useCallback(async () => {
         setLoading(true);
         try {
             const res = await fetch(`/api/tasks?lead_id=${leadId}`);
@@ -24,11 +24,11 @@ export default function TaskList({ leadId }: TaskListProps) {
         } finally {
             setLoading(false);
         }
-    };
+    }, [leadId]);
 
     useEffect(() => {
         fetchTasks();
-    }, [leadId]);
+    }, [fetchTasks]);
 
     const toggleTask = async (task: Task) => {
         const newStatus = task.status === "completed" ? "pending" : "completed";
@@ -74,8 +74,8 @@ export default function TaskList({ leadId }: TaskListProps) {
                         key={task.id}
                         onClick={() => toggleTask(task)}
                         className={`flex items-center justify-between p-3 rounded-xl border transition-all cursor-pointer ${task.status === "completed"
-                                ? "bg-slate-50 border-slate-100 opacity-60"
-                                : "bg-white border-slate-100 hover:border-blue-200 hover:shadow-md"
+                            ? "bg-slate-50 border-slate-100 opacity-60"
+                            : "bg-white border-slate-100 hover:border-blue-200 hover:shadow-md"
                             }`}
                     >
                         <div className="flex items-center gap-3">

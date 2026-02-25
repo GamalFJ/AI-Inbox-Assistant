@@ -47,13 +47,13 @@ function formatClassification(key: string): string {
 
 export default function AnalyticsPage() {
     const router = useRouter();
-    const supabase = createClient();
 
     const [data, setData] = useState<Analytics | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const init = async () => {
+            const supabase = createClient();
             const {
                 data: { user },
             } = await supabase.auth.getUser();
@@ -73,6 +73,7 @@ export default function AnalyticsPage() {
             }
         };
         init();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (loading) {
@@ -345,8 +346,8 @@ function StatCard({
     return (
         <div
             className={`bg-white rounded-2xl border p-5 shadow-sm transition-all hover:shadow-md hover:scale-[1.01] ${highlight
-                    ? "border-orange-200 shadow-orange-100"
-                    : "border-slate-100 shadow-slate-100"
+                ? "border-orange-200 shadow-orange-100"
+                : "border-slate-100 shadow-slate-100"
                 }`}
         >
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${iconBg}`}>
