@@ -12,18 +12,19 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const lead_id = searchParams.get("lead_id");
 
-    if (!lead_id) {
-        return NextResponse.json({ error: "lead_id is required" }, { status: 400 });
-    }
-
     try {
-        const { data, error } = await supabase
+        let query = supabase
             .from("tasks")
             .select("*")
-            .eq("lead_id", lead_id)
             .eq("user_id", user.id)
             .order("due_at", { ascending: true });
 
+        // If a specific lead is requested, filter by it
+        if (lead_id) {
+            query = query.eq("lead_id", lead_id);
+        }
+
+        const { data, error } = await query;
         if (error) throw error;
 
         return NextResponse.json(data);

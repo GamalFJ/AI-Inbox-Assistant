@@ -21,11 +21,11 @@ export default function Home() {
                     </p>
                     <div className="mt-12 animate-slide-up-delay-2">
                         <Link
-                            href="/success"
+                            href="/signup"
                             id="hero-cta-button"
                             className="cta-button inline-block px-10 py-5 rounded-2xl font-bold text-lg text-white shadow-xl hover:shadow-2xl transition-all duration-300"
                         >
-                            Buy&nbsp;&nbsp;–&nbsp;&nbsp;$29.99 (Lifetime Access)
+                            Buy&nbsp;&nbsp;–&nbsp;&nbsp;$19.99 (Lifetime Access)
                         </Link>
                     </div>
                 </div>
@@ -191,11 +191,11 @@ export default function Home() {
                         One payment. Lifetime access. Start closing more deals from your inbox today.
                     </p>
                     <Link
-                        href="/success"
+                        href="/signup"
                         id="footer-cta-button"
                         className="inline-block bg-white text-blue-700 px-10 py-5 rounded-2xl font-bold text-lg hover:bg-gray-50 transition-all duration-300 shadow-xl hover:shadow-2xl"
                     >
-                        Buy&nbsp;&nbsp;–&nbsp;&nbsp;$29.99 (Lifetime Access)
+                        Buy&nbsp;&nbsp;–&nbsp;&nbsp;$19.99 (Lifetime Access)
                     </Link>
                 </div>
             </section>

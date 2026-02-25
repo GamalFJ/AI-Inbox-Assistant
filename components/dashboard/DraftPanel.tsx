@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Sparkles, Copy, Check, RotateCcw, Send } from "lucide-react";
 import { Draft } from "@/types";
+import { useNotification } from "@/components/NotificationContext";
 
 interface DraftPanelProps {
     leadId: string;
@@ -11,6 +12,7 @@ interface DraftPanelProps {
 }
 
 export default function DraftPanel({ leadId, existingDraft, onStatusChange }: DraftPanelProps) {
+    const { notify } = useNotification();
     const [isGenerating, setIsGenerating] = useState(false);
     const [draft, setDraft] = useState<Partial<Draft> | null>(existingDraft || null);
     const [subject, setSubject] = useState("");
@@ -47,6 +49,11 @@ export default function DraftPanel({ leadId, existingDraft, onStatusChange }: Dr
             setBody(data.body || "");
         } catch (error) {
             console.error("Failed to generate draft:", error);
+            notify({
+                type: "error",
+                title: "Draft generation failed",
+                message: error instanceof Error ? error.message : "Could not generate an AI draft. Check your API key configuration.",
+            });
         } finally {
             setIsGenerating(false);
         }
@@ -76,9 +83,19 @@ export default function DraftPanel({ leadId, existingDraft, onStatusChange }: Dr
 
             setSent(true);
             onStatusChange("done");
+            notify({
+                type: "success",
+                title: "Email sent!",
+                message: `Your reply has been delivered successfully.`,
+            });
         } catch (error) {
             console.error("Failed to send email:", error);
-            alert("Failed to send email. Make sure your RESEND_API_KEY is configured.");
+            notify({
+                type: "error",
+                title: "Email send failed",
+                message: "Make sure your RESEND_API_KEY is configured and your domain is verified.",
+                duration: 7000,
+            });
         } finally {
             setIsSending(false);
         }

@@ -208,3 +208,348 @@ body {
 .animate-slide-up-delay-2 {
   animation: slide-up 0.8s ease 0.3s both;
 }
+
+/* ── Success Page ─────────────────────────────────────────── */
+.success-page-bg {
+  background: linear-gradient(135deg, #eff6ff 0%, #f0f4ff 40%, #faf5ff 70%, #ffffff 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.success-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.success-orb-1 {
+  top: -15%;
+  right: -10%;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+}
+
+.success-orb-2 {
+  bottom: -20%;
+  left: -10%;
+  width: 440px;
+  height: 440px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+}
+
+.success-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 2rem;
+  padding: 3rem 2.5rem;
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.03),
+    0 24px 64px rgba(99, 102, 241, 0.1),
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+}
+
+/* Animated SVG checkmark */
+.success-icon-ring {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);
+  animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.success-checkmark {
+  width: 48px;
+  height: 48px;
+}
+
+.success-checkmark__circle {
+  stroke: #10b981;
+  stroke-width: 2.5;
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-linecap: round;
+  animation: stroke-circle 0.6s cubic-bezier(0.65, 0, 0.45, 1) 0.3s forwards;
+}
+
+.success-checkmark__check {
+  stroke: #10b981;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: stroke-check 0.4s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke-circle {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes stroke-check {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.success-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+}
+
+.success-btn-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.success-btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transition: left 0.5s ease;
+}
+
+.success-btn-primary:hover::after {
+  left: 100%;
+}
+
+.success-btn-primary:hover {
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.45);
+  transform: translateY(-1px);
+}
+
+/* ── Signup Page ──────────────────────────────────────────── */
+.signup-bg {
+  background: linear-gradient(135deg, #eff6ff 0%, #f0f4ff 40%, #faf5ff 70%, #ffffff 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.signup-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.signup-orb-1 {
+  top: -15%;
+  right: -10%;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.09) 0%, transparent 70%);
+}
+
+.signup-orb-2 {
+  bottom: -20%;
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.07) 0%, transparent 70%);
+}
+
+.signup-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 2rem;
+  padding: 2.5rem 2rem;
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.03),
+    0 24px 64px rgba(99, 102, 241, 0.1),
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+}
+
+/* Step indicators */
+.signup-step {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.signup-step--active {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+}
+
+.signup-step--done {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.signup-step--idle {
+  background: #f1f5f9;
+  color: #94a3b8;
+}
+
+/* Input fields */
+.signup-input {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0.75rem;
+  background: #fafafa;
+  color: #111827;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.signup-input::placeholder {
+  color: #b0bac5;
+}
+
+.signup-input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+  background: #fff;
+}
+
+/* Shared CTA button (signup + payment step) */
+.signup-btn-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.signup-btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transition: left 0.5s ease;
+}
+
+.signup-btn-primary:hover::after {
+  left: 100%;
+}
+
+.signup-btn-primary:hover {
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.45);
+  transform: translateY(-1px);
+}
+
+/* Price summary box */
+.signup-price-box {
+  background: linear-gradient(135deg, #f8faff 0%, #f3f4ff 100%);
+  border: 1.5px solid #e0e4ff;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+}
+
+/* ── Notification System ─────────────────────────────────────── */
+
+/* Bell wiggle animation */
+@keyframes bell-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  15% {
+    transform: rotate(18deg);
+  }
+
+  30% {
+    transform: rotate(-16deg);
+  }
+
+  45% {
+    transform: rotate(12deg);
+  }
+
+  60% {
+    transform: rotate(-10deg);
+  }
+
+  75% {
+    transform: rotate(6deg);
+  }
+
+  90% {
+    transform: rotate(-4deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-bell-ring {
+  animation: bell-ring 0.7s ease-in-out;
+  transform-origin: top center;
+}
+
+/* Dropdown slide-in */
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: top right;
+}
+
+/* Badge pop-in */
+@keyframes pop-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-pop-in {
+  animation: pop-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}

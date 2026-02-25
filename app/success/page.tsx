@@ -1,45 +1,101 @@
+"use client"
+
 import Link from "next/link"
-import { CheckCircle } from "lucide-react"
+import { useEffect, useState } from "react"
 
 export default function SuccessPage() {
+    const [confirming, setConfirming] = useState(true)
+    const [confirmed, setConfirmed] = useState(false)
+
+    // Mark the user as paid as soon as this page loads.
+    // The API route reads the active Supabase session server-side —
+    // no sensitive data is passed in the URL.
+    useEffect(() => {
+        fetch("/api/confirm-payment")
+            .then((res) => {
+                if (res.ok || res.redirected) setConfirmed(true)
+            })
+            .catch(() => {
+                // Non-fatal — user still sees the success page
+                setConfirmed(true)
+            })
+            .finally(() => setConfirming(false))
+    }, [])
+
     return (
-        <div className="min-h-[80vh] flex flex-col items-center justify-center p-4">
-            <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 max-w-md w-full text-center">
-                <div className="w-16 h-16 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle className="w-10 h-10" />
+        <div className="success-page-bg min-h-[90vh] flex items-center justify-center px-4 py-16">
+            {/* Decorative orbs */}
+            <div className="success-orb success-orb-1" aria-hidden="true" />
+            <div className="success-orb success-orb-2" aria-hidden="true" />
+
+            <div className="success-card relative z-10 w-full max-w-lg">
+                {/* Animated checkmark */}
+                <div className="flex justify-center mb-8">
+                    <div className="success-icon-ring">
+                        <svg
+                            viewBox="0 0 52 52"
+                            className="success-checkmark"
+                            aria-hidden="true"
+                        >
+                            <circle
+                                className="success-checkmark__circle"
+                                cx="26"
+                                cy="26"
+                                r="24"
+                                fill="none"
+                            />
+                            <path
+                                className="success-checkmark__check"
+                                fill="none"
+                                d="M14.1 27.2l7.1 7.2 16.7-16.8"
+                            />
+                        </svg>
+                    </div>
                 </div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">You&apos;re in! 🎉</h1>
-                <p className="text-gray-600 mb-8">
-                    Your lifetime access is activated. Follow these steps to start automating your inbox:
+
+                {/* Heading */}
+                <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-4 animate-slide-up">
+                    Payment received ✅
+                </h1>
+
+                {/* Body copy */}
+                <p className="text-gray-600 text-center text-lg leading-relaxed mb-10 animate-slide-up-delay">
+                    Check your email in the next couple of minutes for your setup
+                    link and login instructions. If you don&apos;t see it, check
+                    your spam folder.
                 </p>
-                <div className="text-left space-y-4 mb-8">
-                    <div className="flex items-start gap-4">
-                        <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs font-bold shrink-0">1</div>
-                        <p className="text-sm text-slate-600 font-medium">Create your account using the button below.</p>
-                    </div>
-                    <div className="flex items-start gap-4">
-                        <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs font-bold shrink-0">2</div>
-                        <p className="text-sm text-slate-600 font-medium">Complete the 2-minute onboarding to connect your business email.</p>
-                    </div>
-                    <div className="flex items-start gap-4">
-                        <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs font-bold shrink-0">3</div>
-                        <p className="text-sm text-slate-600 font-medium">Paste your &quot;gold standard&quot; replies to train your AI assistant.</p>
-                    </div>
-                </div>
-                <div className="space-y-4">
-                    <Link
-                        href="/signup"
-                        className="block w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
-                    >
-                        Create Your Account
-                    </Link>
+
+                {/* Divider */}
+                <div className="success-divider mb-10" />
+
+                {/* Single action — Sign In (account was already created at signup) */}
+                <div className="animate-slide-up-delay-2">
                     <Link
                         href="/login"
-                        className="block w-full text-gray-600 py-3 font-medium hover:text-gray-900 transition"
+                        id="success-signin-button"
+                        className="success-btn-primary block w-full text-center py-4 rounded-2xl font-bold text-white text-base transition-all duration-300"
                     >
-                        Already have an account? Log in
+                        {confirming ? "Activating access…" : "Sign In to Your Account"}
                     </Link>
                 </div>
+
+                {/* Confirmation badge */}
+                {confirmed && (
+                    <p className="mt-4 text-center text-xs text-green-600 font-medium animate-fade-in">
+                        ✓ Lifetime access activated
+                    </p>
+                )}
+
+                {/* Footer note */}
+                <p className="mt-8 text-center text-xs text-gray-400 animate-fade-in">
+                    Didn&apos;t receive anything after 5 minutes? Email us at{" "}
+                    <a
+                        href="mailto:support@aiinboxassistant.com"
+                        className="text-blue-500 hover:underline"
+                    >
+                        support@aiinboxassistant.com
+                    </a>
+                </p>
             </div>
         </div>
     )

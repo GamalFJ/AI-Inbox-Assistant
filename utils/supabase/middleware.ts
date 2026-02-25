@@ -1,10 +1,24 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+// Routes that are ALWAYS public — no auth or payment check needed
+const PUBLIC_PATHS = ['/', '/login', '/signup', '/success', '/auth']
+
+function isPublicPath(pathname: string): boolean {
+    return PUBLIC_PATHS.some(
+        (p) => pathname === p || pathname.startsWith(p + '/')
+    )
+}
+
+// API routes that must stay open (webhooks, cron, auth callback)
+const PUBLIC_API_PATHS = ['/api/webhook', '/api/cron', '/api/confirm-payment']
+
+function isPublicApi(pathname: string): boolean {
+    return PUBLIC_API_PATHS.some((p) => pathname.startsWith(p))
+}
+
 export async function updateSession(request: NextRequest) {
-    let supabaseResponse = NextResponse.next({
-        request,
-    })
+    let supabaseResponse = NextResponse.next({ request })
 
     const supabase = createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
@@ -14,50 +28,53 @@ export async function updateSession(request: NextRequest) {
                 getAll() {
                     return request.cookies.getAll()
                 },
-                setAll(cookiesToSet: { name: string; value: string; options: any }[]) {
-                    cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
-                    supabaseResponse = NextResponse.next({
-                        request,
-                    })
+                setAll(cookiesToSet: { name: string; value: string; options: Record<string, unknown> }[]) {
+                    cookiesToSet.forEach(({ name, value }) =>
+                        request.cookies.set(name, value)
+                    )
+                    supabaseResponse = NextResponse.next({ request })
                     cookiesToSet.forEach(({ name, value, options }) =>
-                        supabaseResponse.cookies.set(name, value, options)
+                        supabaseResponse.cookies.set(name, value, options as Parameters<typeof supabaseResponse.cookies.set>[2])
                     )
                 },
             },
         }
     )
 
-    // IMPORTANT: Avoid writing any logic between createServerClient and
-    // supabase.auth.getUser(). A simple mistake can make it very hard to debug
-    // issues with users being randomly logged out.
-
+    // IMPORTANT: Do not add logic between createServerClient and getUser()
     const {
         data: { user },
     } = await supabase.auth.getUser()
 
-    if (
-        !user &&
-        !request.nextUrl.pathname.startsWith('/login') &&
-        !request.nextUrl.pathname.startsWith('/signup') &&
-        request.nextUrl.pathname !== '/' &&
-        !request.nextUrl.pathname.startsWith('/_not-found')
-    ) {
-        // no user, potentially respond by redirecting the user to the login page
+    const { pathname } = request.nextUrl
+
+    // ── 1. Public paths — always allow ──────────────────────
+    if (isPublicPath(pathname) || isPublicApi(pathname)) {
+        return supabaseResponse
+    }
+
+    // ── 2. Not logged in → redirect to login ────────────────
+    if (!user) {
         const url = request.nextUrl.clone()
         url.pathname = '/login'
         return NextResponse.redirect(url)
     }
 
-    // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
-    // creating a new response object with NextResponse.next() make sure to:
-    // 1. Pass the request in it, like so:
-    //    const myNewResponse = NextResponse.next({ request })
-    // 2. Copy over the cookies, like so:
-    //    myNewResponse.cookies.setAll(supabaseResponse.cookies.getAll())
-    // 3. Change the myNewResponse object to fit your needs, but avoid changing
-    //    the cookies!
-    // 4. Finally: return myNewResponse, ensuring that the cookies (with the session)
-    //    are diffused throughout control flow.
+    // ── 3. Logged in but not paid → redirect to signup (payment step) ──
+    const { data: profile } = await supabase
+        .from('profiles')
+        .select('has_paid')
+        .eq('id', user.id)
+        .single()
 
+    if (!profile?.has_paid) {
+        const url = request.nextUrl.clone()
+        url.pathname = '/signup'
+        // Add a hint so the signup page can jump straight to Step 2
+        url.searchParams.set('step', 'pay')
+        return NextResponse.redirect(url)
+    }
+
+    // ── 4. Logged in + paid → allow ─────────────────────────
     return supabaseResponse
 }

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { createClient } from "@/utils/supabase/client"
 import { User } from "@supabase/supabase-js"
 import { useRouter } from "next/navigation"
+import NotificationBell from "./NotificationBell"
 
 export default function Header() {
     const [user, setUser] = useState<User | null>(null)
@@ -40,33 +41,34 @@ export default function Header() {
                     AI Inbox Assistant
                 </Link>
 
-                <nav className="flex items-center gap-6">
+                <nav className="flex items-center gap-4">
                     {user ? (
                         <>
-                            <Link href="/dashboard" className="text-gray-600 hover:text-gray-900 transition-colors">
+                            <Link href="/dashboard" className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium">
                                 Dashboard
                             </Link>
-                            <Link href="/analytics" className="text-gray-600 hover:text-gray-900 transition-colors">
+                            <Link href="/analytics" className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium">
                                 Analytics
                             </Link>
-                            <Link href="/settings" className="text-gray-600 hover:text-gray-900 transition-colors">
+                            <Link href="/settings" className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium">
                                 Settings
                             </Link>
+                            <NotificationBell />
                             <button
                                 onClick={handleLogout}
-                                className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors"
+                                className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
                             >
                                 Logout
                             </button>
                         </>
                     ) : (
                         <>
-                            <Link href="/login" className="text-gray-600 hover:text-gray-900 transition-colors">
+                            <Link href="/login" className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium">
                                 Login
                             </Link>
                             <Link
                                 href="/signup"
-                                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
                             >
                                 Sign up
                             </Link>
@@ -77,3 +79,4 @@ export default function Header() {
         </header>
     )
 }
+
