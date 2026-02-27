@@ -83,7 +83,7 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 
 ---
 
-## � Phase 4: Product Polish & AI Pre-wiring (Current)
+##   Phase 4: Product Polish & AI Pre-wiring (Current)
 - **Onboarding Enhancements**:
     - Added collection of **Business Email** for lead source tracking.
     - Updated tone training to require **3–5 high-quality examples**.
@@ -106,7 +106,7 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 
 ---
 
-## � Phase 5: Ingestion, Admin & Delivery Polish (Current)
+##   Phase 5: Ingestion, Admin & Delivery Polish (Current)
 - **Lead Ingestion Webhook**:
     - Built `POST /api/webhook/ingest` — a secure, authenticated endpoint for receiving inbound emails from any provider.
     - Supports Postmark, Mailgun, Resend Inbound, SendGrid, and Zapier (no-code).
@@ -128,7 +128,7 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 
 ---
 
-## � Phase 6: Analytics & Polling Cron (Current)
+##   Phase 6: Analytics & Polling Cron (Current)
 - **Polling Cron Fallback** (`/api/cron/poll-emails`):
     - Built a **Vercel Cron** endpoint that runs every 10 minutes.
     - Automatically discovers unprocessed leads (status = `new`, no classification, no drafts).
@@ -173,7 +173,7 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 
 ---
 
-## �️ Phase 9: Usage Monitoring & Production Hardening (Current)
+##  ️ Phase 9: Usage Monitoring & Production Hardening (Current)
 - **Early Warning System (Usage Monitor)**:
     - Built `GET /api/cron/usage-monitor` — a daily automated auditor that checks for high-volume users and total user count.
     - Sends a beautifully formatted HTML alert email to the admin via Resend when thresholds are breached.
@@ -185,7 +185,7 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 
 ---
 
-## �🗓️ Next Steps
+##  🗓️ Next Steps
 - [x] ~~**WEBHOOK_SECRET in .env.local**: Add `WEBHOOK_SECRET=your-secret` to `.env.local` before connecting a real provider.~~
 - [x] ~~**Polling Fallback**: Add a cron job / Vercel Cron to poll for new emails if webhooks aren't available.~~
 - [x] ~~**Notification System**: Add email/toast notifications when new leads arrive or tasks become overdue.~~
@@ -219,14 +219,14 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 
 ## Phase 10: Multiple Draft Variants (Current)
 - **3-Tone AI Draft System**:
-    - Refactored `utils/ai.ts` to export `generateDraftVariants()` � fires **3 parallel GPT-4o calls**: Formal, Casual, Short.
+    - Refactored `utils/ai.ts` to export `generateDraftVariants()`   fires **3 parallel GPT-4o calls**: Formal, Casual, Short.
     - Only the Formal call handles `lead_type` classification and `followup_plan`. Others focus purely on drafting, keeping token costs lean.
     - Original `generateDraftForLead()` preserved for backward compat with cron/webhook pipelines.
 - **API Route** (`POST /api/process-lead`):
     - Clears existing drafts for the lead, inserts all 3 variants with a `tone_variant` label.
     - Deduplicates follow-up tasks on regeneration. Returns full drafts array so UI renders instantly.
 - **Database** (`supabase/migrations/add_tone_variant.sql`):
-    - `ALTER TABLE drafts ADD COLUMN IF NOT EXISTS tone_variant TEXT CHECK (...)` � safe, non-destructive.
+    - `ALTER TABLE drafts ADD COLUMN IF NOT EXISTS tone_variant TEXT CHECK (...)`   safe, non-destructive.
 - **Type System** (`types/index.ts`):
     - Added `ToneVariant = 'formal' | 'casual' | 'short'` and optional `tone_variant` field on `Draft`.
 - **Dashboard UI** (`components/dashboard/DraftPanel.tsx`):
