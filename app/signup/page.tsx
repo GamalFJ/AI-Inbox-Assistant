@@ -55,47 +55,50 @@ function SignupContent() {
     /* ── Step 2: Account created — now pay ─────────────────── */
     if (accountCreated) {
         return (
-            <div className="signup-bg min-h-[88vh] flex items-center justify-center px-4 py-16">
+            <div className="signup-bg min-h-[90vh] flex items-center justify-center px-4 py-16">
                 <div className="signup-orb signup-orb-1" aria-hidden="true" />
                 <div className="signup-orb signup-orb-2" aria-hidden="true" />
 
                 <div className="signup-card relative z-10 w-full max-w-md animate-slide-up">
                     {/* Progress indicator */}
-                    <div className="flex items-center gap-3 mb-8">
-                        <div className="signup-step signup-step--done">
+                    <div className="flex items-center gap-3 mb-10">
+                        <div className="signup-step signup-step--done bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                             <svg viewBox="0 0 16 16" className="w-4 h-4" fill="none">
-                                <path d="M3 8l3.5 3.5L13 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M3 8l3.5 3.5L13 4" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </div>
-                        <div className="flex-1 h-px bg-gradient-to-r from-indigo-300 to-blue-200" />
-                        <div className="signup-step signup-step--active">2</div>
+                        <div className="flex-1 h-px bg-brand-orange/30" />
+                        <div className="signup-step signup-step--active bg-brand-orange text-white">2</div>
                     </div>
 
                     {/* Heading */}
                     <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-50 text-green-700 text-sm font-medium mb-4">
-                            <svg viewBox="0 0 16 16" className="w-4 h-4" fill="none">
-                                <path d="M3 8l3.5 3.5L13 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-black uppercase tracking-widest mb-6 border border-emerald-500/20">
+                            <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none">
+                                <path d="M3 8l3.5 3.5L13 4" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
-                            Account created!
+                            Account secured
                         </div>
-                        <h1 className="text-3xl font-extrabold text-gray-900 mb-2">
-                            One last step
+                        <h1 className="text-4xl font-black text-white mb-3 uppercase tracking-tight">
+                            Unlock Access
                         </h1>
-                        <p className="text-gray-500 text-base leading-relaxed">
-                            Complete your purchase to unlock lifetime access.
+                        <p className="text-slate-400 text-sm font-medium leading-relaxed">
+                            Join our founding members and secure lifetime access before the price increases.
                         </p>
                     </div>
 
                     {/* Price summary */}
-                    <div className="signup-price-box mb-6">
-                        <div className="flex items-center justify-between">
-                            <span className="text-gray-700 font-medium">AI Inbox Assistant</span>
-                            <span className="text-gray-400 text-sm line-through mr-2">$29.99</span>
+                    <div className="bg-brand-dark/50 border border-brand-border rounded-2xl p-6 mb-8 shadow-inner text-left">
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-slate-400 text-xs font-bold uppercase tracking-widest">Product</span>
+                            <span className="text-slate-500 text-xs font-bold line-through mr-2 leading-none">$99 VALUE</span>
                         </div>
-                        <div className="flex items-center justify-between mt-1">
-                            <span className="text-sm text-gray-500">Lifetime access · one-time payment</span>
-                            <span className="text-2xl font-extrabold text-gray-900">$19.99</span>
+                        <div className="flex items-center justify-between">
+                            <span className="text-white font-bold text-sm">Lifetime Pro Access</span>
+                            <div className="text-right">
+                                <span className="text-3xl font-black text-white">$19.99</span>
+                                <p className="text-[10px] text-brand-orange font-bold uppercase tracking-tighter">Limited Time Offer</p>
+                            </div>
                         </div>
                     </div>
 
@@ -105,13 +108,13 @@ function SignupContent() {
                         id="signup-paypal-button"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="signup-btn-primary block w-full text-center py-4 rounded-2xl font-bold text-white text-base transition-all duration-300 mb-4"
+                        className="bg-brand-orange hover:bg-brand-orange/90 text-white block w-full text-center py-5 rounded-2xl font-black uppercase tracking-widest shadow-2xl shadow-brand-orange/20 transition-all active:scale-[0.98] mb-6"
                     >
-                        Pay $19.99 &nbsp;→&nbsp; Lifetime Access
+                        Pay $19.99 &nbsp;→&nbsp; Secure Seat
                     </a>
 
-                    <p className="text-center text-xs text-gray-400 leading-relaxed">
-                        Secure checkout via PayPal. After payment you&apos;ll receive a confirmation email with your setup link.
+                    <p className="text-center text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-relaxed">
+                        Secure checkout via PayPal. Instant activation.
                     </p>
                 </div>
             </div>
@@ -120,41 +123,41 @@ function SignupContent() {
 
     /* ── Step 1: Create account ─────────────────────────────── */
     return (
-        <div className="signup-bg min-h-[88vh] flex items-center justify-center px-4 py-16">
+        <div className="signup-bg min-h-[90vh] flex items-center justify-center px-4 py-16">
             <div className="signup-orb signup-orb-1" aria-hidden="true" />
             <div className="signup-orb signup-orb-2" aria-hidden="true" />
 
             <div className="signup-card relative z-10 w-full max-w-md">
                 {/* Progress indicator */}
-                <div className="flex items-center gap-3 mb-8">
-                    <div className="signup-step signup-step--active">1</div>
-                    <div className="flex-1 h-px bg-gray-200" />
-                    <div className="signup-step signup-step--idle">2</div>
+                <div className="flex items-center gap-3 mb-10">
+                    <div className="signup-step signup-step--active bg-brand-orange text-white">1</div>
+                    <div className="flex-1 h-px bg-brand-border" />
+                    <div className="signup-step signup-step--idle bg-brand-dark border border-brand-border text-slate-600">2</div>
                 </div>
 
                 {/* Heading */}
-                <div className="text-center mb-8 animate-slide-up">
-                    <h1 className="text-3xl font-extrabold text-gray-900 mb-2">
-                        Create your account
+                <div className="text-center mb-10 animate-slide-up">
+                    <h1 className="text-4xl font-black text-white mb-3 uppercase tracking-tight">
+                        Get Started
                     </h1>
-                    <p className="text-gray-500 text-sm">
-                        Already have one?{" "}
-                        <Link href="/login" className="text-blue-600 font-medium hover:underline">
+                    <p className="text-slate-400 text-sm font-medium">
+                        Already have an account?{" "}
+                        <Link href="/login" className="text-brand-orange font-bold underline hover:text-brand-yellow transition-colors">
                             Sign in
                         </Link>
                     </p>
                 </div>
 
                 {/* Form */}
-                <form className="space-y-5 animate-slide-up-delay" onSubmit={handleSignup}>
+                <form className="space-y-6 animate-slide-up-delay" onSubmit={handleSignup}>
                     {error && (
-                        <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl text-sm border border-red-100">
+                        <div className="bg-red-500/10 text-red-400 px-5 py-4 rounded-xl text-xs font-bold border border-red-500/20 uppercase tracking-widest leading-relaxed">
                             {error}
                         </div>
                     )}
 
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1.5">
+                        <label htmlFor="email" className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">
                             Email address
                         </label>
                         <input
@@ -166,12 +169,12 @@ function SignupContent() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="you@example.com"
-                            className="signup-input w-full px-4 py-3 rounded-xl text-sm"
+                            className="w-full px-4 py-4 bg-brand-dark border border-brand-border text-white rounded-xl text-sm font-medium placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange transition-all"
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1.5">
+                        <label htmlFor="password" className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">
                             Password
                         </label>
                         <input
@@ -183,7 +186,7 @@ function SignupContent() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Min. 8 characters"
-                            className="signup-input w-full px-4 py-3 rounded-xl text-sm"
+                            className="w-full px-4 py-4 bg-brand-dark border border-brand-border text-white rounded-xl text-sm font-medium placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange transition-all"
                         />
                     </div>
 
@@ -191,26 +194,29 @@ function SignupContent() {
                         id="signup-submit-button"
                         type="submit"
                         disabled={loading}
-                        className="signup-btn-primary w-full py-4 rounded-2xl font-bold text-white text-base transition-all duration-300 mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                        className="bg-brand-orange hover:bg-brand-orange/90 text-white w-full py-5 rounded-2xl font-black uppercase tracking-widest shadow-2xl shadow-brand-orange/20 transition-all active:scale-[0.98] mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? (
                             <span className="flex items-center justify-center gap-2">
-                                <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
+                                <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none">
                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
                                 </svg>
-                                Creating account…
+                                Creating...
                             </span>
                         ) : (
                             "Continue to Payment →"
                         )}
                     </button>
+                    <p className="text-center text-[10px] text-slate-600 font-bold uppercase tracking-widest">
+                        Step 1 of 2: Create Secure Account
+                    </p>
                 </form>
 
-                <p className="mt-6 text-center text-xs text-gray-400">
+                <p className="mt-8 text-center text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-relaxed">
                     By continuing you agree to our{" "}
-                    <a href="#" className="text-blue-500 hover:underline">Terms</a> and{" "}
-                    <a href="#" className="text-blue-500 hover:underline">Privacy Policy</a>.
+                    <a href="#" className="text-brand-orange hover:underline">Terms</a> and{" "}
+                    <a href="#" className="text-brand-orange hover:underline">Privacy Policy</a>.
                 </p>
             </div>
         </div>

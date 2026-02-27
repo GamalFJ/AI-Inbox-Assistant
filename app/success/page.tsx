@@ -54,12 +54,12 @@ export default function SuccessPage() {
                 </div>
 
                 {/* Heading */}
-                <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-4 animate-slide-up">
+                <h1 className="text-3xl md:text-4xl font-extrabold text-white text-center mb-4 animate-slide-up">
                     Payment received ✅
                 </h1>
 
                 {/* Body copy */}
-                <p className="text-gray-600 text-center text-lg leading-relaxed mb-10 animate-slide-up-delay">
+                <p className="text-slate-300 text-center text-lg leading-relaxed mb-10 animate-slide-up-delay">
                     Check your email in the next couple of minutes for your setup
                     link and login instructions. If you don&apos;t see it, check
                     your spam folder.
@@ -81,17 +81,17 @@ export default function SuccessPage() {
 
                 {/* Confirmation badge */}
                 {confirmed && (
-                    <p className="mt-4 text-center text-xs text-green-600 font-medium animate-fade-in">
+                    <p className="mt-4 text-center text-xs text-emerald-400 font-bold uppercase tracking-widest animate-fade-in">
                         ✓ Lifetime access activated
                     </p>
                 )}
 
                 {/* Footer note */}
-                <p className="mt-8 text-center text-xs text-gray-400 animate-fade-in">
+                <p className="mt-8 text-center text-xs text-slate-500 font-medium animate-fade-in">
                     Didn&apos;t receive anything after 5 minutes? Email us at{" "}
                     <a
                         href="mailto:support@aiinboxassistant.com"
-                        className="text-blue-500 hover:underline"
+                        className="text-brand-orange hover:text-brand-yellow transition-colors underline underline-offset-4"
                     >
                         support@aiinboxassistant.com
                     </a>

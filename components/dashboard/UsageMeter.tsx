@@ -47,11 +47,11 @@ export default function UsageMeter() {
 
     return (
         <div className="px-4 pb-4">
-            <div className="bg-slate-50 border border-slate-100 rounded-xl p-3">
+            <div className="bg-brand-darker border border-brand-border rounded-xl p-3">
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-1.5">
-                        <TrendingUp className="w-3 h-3 text-slate-400" />
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                        <TrendingUp className="w-3 h-3 text-slate-500" />
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                             Monthly Usage
                         </span>
                     </div>
@@ -61,7 +61,7 @@ export default function UsageMeter() {
                 </div>
 
                 {/* Progress bar */}
-                <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
+                <div className="h-1.5 w-full bg-brand-dark rounded-full overflow-hidden">
                     <div
                         className={`h-full rounded-full transition-all duration-500 ${barColor}`}
                         style={{ width: `${percentage}%` }}
@@ -69,13 +69,13 @@ export default function UsageMeter() {
                 </div>
 
                 <div className="flex items-center justify-between mt-1.5">
-                    <span className="text-[10px] text-slate-400">
+                    <span className="text-[10px] text-slate-500">
                         Resets {resetFormatted}
                     </span>
                     {level !== "ok" && (
                         <div className="flex items-center gap-1">
-                            <Zap className="w-2.5 h-2.5 text-amber-500" />
-                            <span className="text-[10px] font-semibold text-amber-600">
+                            <Zap className="w-2.5 h-2.5 text-brand-yellow" />
+                            <span className="text-[10px] font-semibold text-brand-yellow">
                                 {level === "limit" ? "At limit" : `${percentage}% used`}
                             </span>
                         </div>

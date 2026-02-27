@@ -7,14 +7,15 @@
 /* stylelint-enable */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #2A3034;
+  --foreground: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1C2023;
+    --foreground: #ffffff;
+
   }
 }
 
@@ -26,7 +27,7 @@ body {
 
 /* ── Hero ────────────────────────────────────────────────── */
 .hero-section {
-  background: linear-gradient(135deg, #eff6ff 0%, #f0f4ff 40%, #faf5ff 70%, #ffffff 100%);
+  background: linear-gradient(135deg, #2A3034 0%, #1C2023 100%);
   position: relative;
   overflow: hidden;
 }
@@ -38,7 +39,7 @@ body {
   right: -20%;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 133, 89, 0.08) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -50,13 +51,13 @@ body {
   left: -10%;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(250, 229, 136, 0.06) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
 
 .hero-gradient-text {
-  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #FF8559 0%, #FAE588 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -64,7 +65,7 @@ body {
 
 /* ── CTA Button ──────────────────────────────────────────── */
 .cta-button {
-  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  background: linear-gradient(135deg, #FF8559 0%, #E66A3D 100%);
   position: relative;
   overflow: hidden;
 }
@@ -116,12 +117,12 @@ body {
 
 /* ── How it Works ────────────────────────────────────────── */
 .how-it-works-bg {
-  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  background: linear-gradient(180deg, #1C2023 0%, #2A3034 100%);
 }
 
 .step-number {
-  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+  background: linear-gradient(135deg, #FF8559 0%, #FAE588 100%);
+  box-shadow: 0 4px 14px rgba(255, 133, 89, 0.3);
 }
 
 .step-card {
@@ -153,7 +154,7 @@ body {
 
 /* ── CTA Section ─────────────────────────────────────────── */
 .cta-section {
-  background: linear-gradient(135deg, #1e40af 0%, #4f46e5 50%, #7c3aed 100%);
+  background: linear-gradient(135deg, #FF8559 0%, #E66A3D 50%, #CC5020 100%);
   position: relative;
   overflow: hidden;
 }
@@ -211,7 +212,7 @@ body {
 
 /* ── Success Page ─────────────────────────────────────────── */
 .success-page-bg {
-  background: linear-gradient(135deg, #eff6ff 0%, #f0f4ff 40%, #faf5ff 70%, #ffffff 100%);
+  background: #1C2023;
   position: relative;
   overflow: hidden;
 }
@@ -227,7 +228,7 @@ body {
   right: -10%;
   width: 520px;
   height: 520px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 133, 89, 0.15) 0%, transparent 70%);
 }
 
 .success-orb-2 {
@@ -235,44 +236,44 @@ body {
   left: -10%;
   width: 440px;
   height: 440px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(250, 229, 136, 0.1) 0%, transparent 70%);
 }
 
 .success-card {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 2rem;
-  padding: 3rem 2.5rem;
+  background: #2A3034;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid #353C40;
+  border-radius: 3rem;
+  padding: 4rem 3rem;
   box-shadow:
-    0 4px 6px rgba(0, 0, 0, 0.03),
-    0 24px 64px rgba(99, 102, 241, 0.1),
-    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(0, 0, 0, 0.2);
 }
 
 /* Animated SVG checkmark */
 .success-icon-ring {
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);
-  animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.1);
+  animation: pop-in 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 
 @keyframes pop-in {
   from {
     opacity: 0;
-    transform: scale(0.5);
+    transform: scale(0.5) translateY(20px);
   }
 
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) translateY(0);
   }
 }
 
@@ -283,7 +284,7 @@ body {
 
 .success-checkmark__circle {
   stroke: #10b981;
-  stroke-width: 2.5;
+  stroke-width: 3;
   stroke-dasharray: 166;
   stroke-dashoffset: 166;
   stroke-linecap: round;
@@ -292,7 +293,7 @@ body {
 
 .success-checkmark__check {
   stroke: #10b981;
-  stroke-width: 2.5;
+  stroke-width: 4;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-dasharray: 48;
@@ -314,14 +315,15 @@ body {
 
 .success-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+  background: linear-gradient(90deg, transparent, #353C40, transparent);
 }
 
 .success-btn-primary {
-  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+  background: #FF8559;
+  box-shadow: 0 10px 25px -5px rgba(255, 133, 89, 0.3);
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .success-btn-primary::after {
@@ -331,8 +333,8 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-  transition: left 0.5s ease;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
 }
 
 .success-btn-primary:hover::after {
@@ -340,13 +342,14 @@ body {
 }
 
 .success-btn-primary:hover {
-  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.45);
-  transform: translateY(-1px);
+  background: #E66A3D;
+  box-shadow: 0 15px 30px -5px rgba(255, 133, 89, 0.4);
+  transform: translateY(-2px);
 }
 
 /* ── Signup Page ──────────────────────────────────────────── */
 .signup-bg {
-  background: linear-gradient(135deg, #eff6ff 0%, #f0f4ff 40%, #faf5ff 70%, #ffffff 100%);
+  background: linear-gradient(135deg, #2A3034 0%, #1C2023 100%);
   position: relative;
   overflow: hidden;
 }
@@ -362,7 +365,7 @@ body {
   right: -10%;
   width: 480px;
   height: 480px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.09) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 133, 89, 0.09) 0%, transparent 70%);
 }
 
 .signup-orb-2 {
@@ -370,20 +373,20 @@ body {
   left: -10%;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.07) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(250, 229, 136, 0.07) 0%, transparent 70%);
 }
 
 .signup-card {
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(28, 32, 35, 0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(68, 77, 83, 0.7);
   border-radius: 2rem;
   padding: 2.5rem 2rem;
   box-shadow:
-    0 4px 6px rgba(0, 0, 0, 0.03),
-    0 24px 64px rgba(99, 102, 241, 0.1),
-    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+    0 4px 6px rgba(0, 0, 0, 0.2),
+    0 24px 64px rgba(0, 0, 0, 0.4),
+    0 1px 0 rgba(255, 255, 255, 0.1) inset;
 }
 
 /* Step indicators */
@@ -402,7 +405,7 @@ body {
 .signup-step--active {
   background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+  box-shadow: 0 4px 12px rgba(255, 133, 89, 0.35);
 }
 
 .signup-step--done {
@@ -418,10 +421,10 @@ body {
 
 /* Input fields */
 .signup-input {
-  border: 1.5px solid #e2e8f0;
+  border: 1.5px solid #444D53;
   border-radius: 0.75rem;
-  background: #fafafa;
-  color: #111827;
+  background: #2A3034;
+  color: #ffffff;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   outline: none;
 }
@@ -432,14 +435,14 @@ body {
 
 .signup-input:focus {
   border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+  box-shadow: 0 0 0 3px rgba(255, 133, 89, 0.12);
   background: #fff;
 }
 
 /* Shared CTA button (signup + payment step) */
 .signup-btn-primary {
   background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+  box-shadow: 0 4px 14px rgba(255, 133, 89, 0.35);
   position: relative;
   overflow: hidden;
 }
@@ -460,14 +463,14 @@ body {
 }
 
 .signup-btn-primary:hover {
-  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.45);
+  box-shadow: 0 8px 24px rgba(255, 133, 89, 0.45);
   transform: translateY(-1px);
 }
 
 /* Price summary box */
 .signup-price-box {
-  background: linear-gradient(135deg, #f8faff 0%, #f3f4ff 100%);
-  border: 1.5px solid #e0e4ff;
+  background: linear-gradient(135deg, rgba(28, 32, 35, 1) 0%, rgba(42, 48, 52, 1) 100%);
+  border: 1.5px solid #444D53;
   border-radius: 1rem;
   padding: 1.25rem 1.5rem;
 }

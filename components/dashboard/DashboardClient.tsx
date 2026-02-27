@@ -181,7 +181,7 @@ export default function DashboardClient({ initialLeads, initialDrafts }: Dashboa
     };
 
     return (
-        <div className="flex flex-col h-[calc(100vh-64px)] bg-white overflow-hidden">
+        <div className="flex flex-col h-[calc(100vh-64px)] bg-brand-darker overflow-hidden">
             <TopBar onNewLead={() => setIsModalOpen(true)} />
             <UsageBanner />
 
@@ -189,7 +189,7 @@ export default function DashboardClient({ initialLeads, initialDrafts }: Dashboa
                 {/* Mobile Sidebar Toggle */}
                 <button
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                    className="md:hidden fixed bottom-6 right-6 z-50 w-14 h-14 bg-slate-900 text-white rounded-full flex items-center justify-center shadow-2xl active:scale-95 transition-all"
+                    className="md:hidden fixed bottom-6 right-6 z-50 w-14 h-14 bg-brand-orange text-white rounded-full flex items-center justify-center shadow-2xl active:scale-95 transition-all"
                 >
                     {isSidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                 </button>
@@ -198,7 +198,7 @@ export default function DashboardClient({ initialLeads, initialDrafts }: Dashboa
                     ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
                     md:translate-x-0 transition-transform duration-300 ease-in-out
                     fixed md:relative z-40 h-full w-[300px] md:w-auto shrink-0
-                    bg-white
+                    bg-brand-dark border-r border-brand-border
                 `}>
                     <LeadList
                         leads={leads}

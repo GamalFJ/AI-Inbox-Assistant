@@ -63,10 +63,10 @@ export default function TaskList({ leadId }: TaskListProps) {
     }
 
     return (
-        <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm">
-            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+        <div className="bg-brand-card border border-brand-border rounded-2xl p-6 shadow-sm">
+            <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
                 Follow-up Schedule
-                <div className="h-[1px] flex-1 bg-slate-100"></div>
+                <div className="h-[1px] flex-1 bg-brand-border"></div>
             </h4>
             <div className="space-y-3">
                 {tasks.map((task) => (
@@ -74,21 +74,21 @@ export default function TaskList({ leadId }: TaskListProps) {
                         key={task.id}
                         onClick={() => toggleTask(task)}
                         className={`flex items-center justify-between p-3 rounded-xl border transition-all cursor-pointer ${task.status === "completed"
-                            ? "bg-slate-50 border-slate-100 opacity-60"
-                            : "bg-white border-slate-100 hover:border-blue-200 hover:shadow-md"
+                            ? "bg-brand-dark/50 border-brand-border opacity-60"
+                            : "bg-brand-dark border-brand-border hover:border-brand-yellow/30 hover:shadow-lg hover:shadow-brand-yellow/5"
                             }`}
                     >
                         <div className="flex items-center gap-3">
                             {task.status === "completed" ? (
                                 <CheckCircle2 className="w-5 h-5 text-emerald-500" />
                             ) : (
-                                <Circle className="w-5 h-5 text-slate-300" />
+                                <Circle className="w-5 h-5 text-slate-600" />
                             )}
-                            <span className={`text-sm font-medium ${task.status === "completed" ? "text-slate-400 line-through" : "text-slate-700"}`}>
+                            <span className={`text-sm font-medium ${task.status === "completed" ? "text-slate-500 line-through" : "text-white"}`}>
                                 {task.title}
                             </span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                        <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                             <Clock className="w-3 h-3" />
                             {new Date(task.due_at).toLocaleDateString([], { month: 'short', day: 'numeric' })}
                         </div>

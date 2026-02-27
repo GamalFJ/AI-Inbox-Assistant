@@ -32,11 +32,11 @@ interface Analytics {
 }
 
 const CLASSIFICATION_COLORS: Record<string, { bg: string; text: string; dot: string }> = {
-    new_lead: { bg: "bg-blue-50", text: "text-blue-700", dot: "bg-blue-500" },
-    existing_client: { bg: "bg-emerald-50", text: "text-emerald-700", dot: "bg-emerald-500" },
-    spam: { bg: "bg-red-50", text: "text-red-700", dot: "bg-red-500" },
-    other: { bg: "bg-slate-50", text: "text-slate-600", dot: "bg-slate-400" },
-    unclassified: { bg: "bg-amber-50", text: "text-amber-700", dot: "bg-amber-400" },
+    new_lead: { bg: "bg-blue-500/10", text: "text-blue-400", dot: "bg-blue-500" },
+    existing_client: { bg: "bg-emerald-500/10", text: "text-emerald-400", dot: "bg-emerald-500" },
+    spam: { bg: "bg-red-500/10", text: "text-red-400", dot: "bg-red-500" },
+    other: { bg: "bg-slate-500/10", text: "text-slate-400", dot: "bg-slate-400" },
+    unclassified: { bg: "bg-brand-yellow/10", text: "text-brand-yellow", dot: "bg-brand-yellow" },
 };
 
 function formatClassification(key: string): string {
@@ -78,15 +78,15 @@ export default function AnalyticsPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-slate-50">
-                <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
+            <div className="min-h-screen flex items-center justify-center bg-brand-darker">
+                <Loader2 className="w-8 h-8 text-brand-orange animate-spin" />
             </div>
         );
     }
 
     if (!data) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-slate-50">
+            <div className="min-h-screen flex items-center justify-center bg-brand-darker">
                 <p className="text-slate-500">Failed to load analytics.</p>
             </div>
         );
@@ -99,25 +99,25 @@ export default function AnalyticsPage() {
     );
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-100">
+        <div className="min-h-screen bg-brand-darker">
             <div className="max-w-6xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
                 {/* Page Header */}
                 <div className="mb-10">
                     <div className="flex items-center gap-4 mb-2">
                         <button
                             onClick={() => router.push("/dashboard")}
-                            className="p-2 rounded-xl hover:bg-white/80 text-slate-400 hover:text-slate-700 transition-all"
+                            className="p-2 rounded-xl hover:bg-brand-card text-slate-400 hover:text-white transition-all"
                         >
                             <ArrowLeft className="w-5 h-5" />
                         </button>
-                        <div className="p-2.5 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl text-white shadow-lg shadow-blue-200">
+                        <div className="p-2.5 bg-brand-orange rounded-xl text-white shadow-lg shadow-brand-orange/20">
                             <BarChart3 className="w-5 h-5" />
                         </div>
                         <div>
-                            <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+                            <h1 className="text-2xl font-black text-white tracking-tight">
                                 Analytics
                             </h1>
-                            <p className="text-sm text-slate-500">
+                            <p className="text-sm text-slate-400">
                                 Your inbox performance at a glance.
                             </p>
                         </div>
@@ -128,25 +128,25 @@ export default function AnalyticsPage() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                     <StatCard
                         icon={<Mail className="w-5 h-5" />}
-                        iconBg="bg-blue-100 text-blue-600"
+                        iconBg="bg-blue-500/10 text-blue-400"
                         label="Total Leads"
                         value={data.totalLeads}
                     />
                     <StatCard
                         icon={<Sparkles className="w-5 h-5" />}
-                        iconBg="bg-emerald-100 text-emerald-600"
+                        iconBg="bg-emerald-500/10 text-emerald-400"
                         label="Drafts Generated"
                         value={data.totalDrafts}
                     />
                     <StatCard
                         icon={<Zap className="w-5 h-5" />}
-                        iconBg="bg-amber-100 text-amber-600"
+                        iconBg="bg-brand-orange/10 text-brand-orange"
                         label="Emails Sent"
                         value={data.draftsSent}
                     />
                     <StatCard
                         icon={<Clock className="w-5 h-5" />}
-                        iconBg="bg-purple-100 text-purple-600"
+                        iconBg="bg-purple-500/10 text-purple-400"
                         label="Hours Saved"
                         value={`${data.hoursSaved}h`}
                     />
@@ -156,13 +156,13 @@ export default function AnalyticsPage() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                     <StatCard
                         icon={<ShieldBan className="w-5 h-5" />}
-                        iconBg="bg-red-100 text-red-600"
+                        iconBg="bg-red-500/10 text-red-400"
                         label="Spam Blocked"
                         value={data.spamBlocked}
                     />
                     <StatCard
                         icon={<TrendingUp className="w-5 h-5" />}
-                        iconBg="bg-sky-100 text-sky-600"
+                        iconBg="bg-sky-500/10 text-sky-400"
                         label="Avg Response"
                         value={
                             data.avgResponseMinutes !== null
@@ -173,13 +173,13 @@ export default function AnalyticsPage() {
                     />
                     <StatCard
                         icon={<CalendarCheck className="w-5 h-5" />}
-                        iconBg="bg-indigo-100 text-indigo-600"
+                        iconBg="bg-indigo-500/10 text-indigo-400"
                         label="Pending Tasks"
                         value={data.pendingTasks}
                     />
                     <StatCard
                         icon={<AlertTriangle className="w-5 h-5" />}
-                        iconBg="bg-orange-100 text-orange-600"
+                        iconBg="bg-brand-orange/10 text-brand-orange"
                         label="Overdue Tasks"
                         value={data.overdueTasks}
                         highlight={data.overdueTasks > 0}
@@ -188,9 +188,9 @@ export default function AnalyticsPage() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* ====== 7-Day Activity Chart ====== */}
-                    <div className="lg:col-span-2 bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-100 overflow-hidden">
-                        <div className="px-8 py-6 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
-                            <h2 className="text-base font-bold text-slate-800">
+                    <div className="lg:col-span-2 bg-brand-card rounded-3xl border border-brand-border shadow-2xl overflow-hidden">
+                        <div className="px-8 py-6 border-b border-brand-border bg-brand-dark/30">
+                            <h2 className="text-base font-bold text-white">
                                 7-Day Activity
                             </h2>
                             <p className="text-xs text-slate-500 mt-1">
@@ -221,7 +221,7 @@ export default function AnalyticsPage() {
                                         >
                                             <div className="flex items-end gap-1 h-36 w-full justify-center">
                                                 <div
-                                                    className="w-5 bg-gradient-to-t from-blue-500 to-blue-400 rounded-t-lg transition-all duration-500 ease-out"
+                                                    className="w-5 bg-gradient-to-t from-brand-orange to-brand-yellow rounded-t-lg transition-all duration-500 ease-out"
                                                     style={{
                                                         height: `${Math.max(leadHeight, 4)}%`,
                                                     }}
@@ -235,7 +235,7 @@ export default function AnalyticsPage() {
                                                     title={`${day.drafts} drafts`}
                                                 />
                                             </div>
-                                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-2">
+                                            <span className="text-[10px] font-black text-slate-600 uppercase tracking-widest mt-2">
                                                 {dayLabel}
                                             </span>
                                         </div>
@@ -244,16 +244,16 @@ export default function AnalyticsPage() {
                             </div>
 
                             {/* Legend */}
-                            <div className="flex justify-center gap-6 mt-6 pt-4 border-t border-slate-50">
+                            <div className="flex justify-center gap-6 mt-6 pt-4 border-t border-brand-border/30">
                                 <div className="flex items-center gap-2">
-                                    <div className="w-3 h-3 rounded-full bg-blue-500" />
-                                    <span className="text-xs text-slate-500 font-medium">
+                                    <div className="w-3 h-3 rounded-full bg-brand-orange" />
+                                    <span className="text-xs text-slate-500 font-bold uppercase tracking-widest">
                                         Leads
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <div className="w-3 h-3 rounded-full bg-emerald-500" />
-                                    <span className="text-xs text-slate-500 font-medium">
+                                    <span className="text-xs text-slate-500 font-bold uppercase tracking-widest">
                                         AI Drafts
                                     </span>
                                 </div>
@@ -262,9 +262,9 @@ export default function AnalyticsPage() {
                     </div>
 
                     {/* ====== Lead Classification Breakdown ====== */}
-                    <div className="bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-100 overflow-hidden">
-                        <div className="px-8 py-6 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
-                            <h2 className="text-base font-bold text-slate-800">
+                    <div className="bg-brand-card rounded-3xl border border-brand-border shadow-2xl overflow-hidden">
+                        <div className="px-8 py-6 border-b border-brand-border bg-brand-dark/30">
+                            <h2 className="text-base font-bold text-white">
                                 Lead Breakdown
                             </h2>
                             <p className="text-xs text-slate-500 mt-1">
@@ -300,18 +300,18 @@ export default function AnalyticsPage() {
                                                         className={`w-2.5 h-2.5 rounded-full ${colors.dot}`}
                                                     />
                                                     <span
-                                                        className={`text-sm font-semibold ${colors.text}`}
+                                                        className={`text-sm font-bold ${colors.text}`}
                                                     >
                                                         {formatClassification(type)}
                                                     </span>
                                                 </div>
                                                 <div className="flex items-center gap-3">
                                                     <span
-                                                        className={`text-sm font-bold ${colors.text}`}
+                                                        className={`text-sm font-black ${colors.text}`}
                                                     >
                                                         {count}
                                                     </span>
-                                                    <span className="text-[10px] font-medium text-slate-400 w-8 text-right">
+                                                    <span className="text-[10px] font-bold text-slate-600 w-8 text-right">
                                                         {percentage}%
                                                     </span>
                                                 </div>
@@ -345,22 +345,22 @@ function StatCard({
 }) {
     return (
         <div
-            className={`bg-white rounded-2xl border p-5 shadow-sm transition-all hover:shadow-md hover:scale-[1.01] ${highlight
-                ? "border-orange-200 shadow-orange-100"
-                : "border-slate-100 shadow-slate-100"
+            className={`bg-brand-card rounded-2xl border p-5 shadow-sm transition-all hover:shadow-xl hover:scale-[1.01] ${highlight
+                ? "border-brand-orange/50 shadow-brand-orange/5"
+                : "border-brand-border shadow-black/5"
                 }`}
         >
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${iconBg}`}>
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 border border-white/5 ${iconBg}`}>
                 {icon}
             </div>
-            <div className="text-2xl font-extrabold text-slate-900 tracking-tight">
+            <div className="text-2xl font-black text-white tracking-tight">
                 {value}
             </div>
-            <div className="text-xs font-semibold text-slate-500 mt-0.5">
+            <div className="text-[10px] font-black text-slate-500 mt-0.5 uppercase tracking-widest">
                 {label}
             </div>
             {subtitle && (
-                <div className="text-[10px] text-slate-400 mt-0.5">{subtitle}</div>
+                <div className="text-[10px] text-slate-600 font-bold mt-0.5">{subtitle}</div>
             )}
         </div>
     );

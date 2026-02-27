@@ -266,17 +266,17 @@ export default function DraftPanel({ leadId, existingDrafts, existingDraft, onSt
     // ────────────────────────────────────────────────────────────────────
     return (
         <>
-            <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+            <div className="bg-brand-card border border-brand-border rounded-2xl overflow-hidden shadow-sm">
                 {/* ── Header ── */}
-                <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                <div className="p-5 border-b border-brand-border flex items-center justify-between bg-brand-dark/50">
                     <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                            <Sparkles className="w-4 h-4 text-blue-600" />
+                        <div className="w-8 h-8 bg-brand-orange/10 rounded-lg flex items-center justify-center border border-brand-orange/20">
+                            <Sparkles className="w-4 h-4 text-brand-orange" />
                         </div>
                         <div>
-                            <h3 className="text-sm font-bold text-slate-900">AI Draft Reply</h3>
+                            <h3 className="text-sm font-bold text-white">AI Draft Reply</h3>
                             {hasDrafts && (
-                                <p className="text-[10px] text-emerald-600 font-medium uppercase tracking-wider">
+                                <p className="text-[10px] text-emerald-400 font-medium uppercase tracking-wider">
                                     {isDirty ? "Unsaved edits" : "3 Drafts Ready"}
                                 </p>
                             )}
@@ -289,7 +289,7 @@ export default function DraftPanel({ leadId, existingDrafts, existingDraft, onSt
                             <button
                                 onClick={() => setIsHistoryOpen(true)}
                                 title="View edit history"
-                                className="flex items-center gap-1.5 px-3 py-2 bg-white border border-slate-200 text-slate-500 text-xs font-bold rounded-xl hover:bg-violet-50 hover:border-violet-300 hover:text-violet-700 transition shadow-sm"
+                                className="flex items-center gap-1.5 px-3 py-2 bg-brand-dark border border-brand-border text-slate-400 text-xs font-bold rounded-xl hover:bg-brand-card hover:border-slate-500 hover:text-white transition shadow-sm"
                             >
                                 <History className="w-3.5 h-3.5" />
                                 History
@@ -300,7 +300,7 @@ export default function DraftPanel({ leadId, existingDrafts, existingDraft, onSt
                         <button
                             onClick={handleGenerate}
                             disabled={isGenerating}
-                            className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-700 text-xs font-bold rounded-xl hover:bg-slate-50 transition shadow-sm disabled:opacity-50"
+                            className="flex items-center gap-2 px-4 py-2 bg-brand-dark border border-brand-border text-slate-200 text-xs font-bold rounded-xl hover:bg-brand-card transition shadow-sm disabled:opacity-50"
                         >
                             {isGenerating ? (
                                 <>
@@ -324,7 +324,7 @@ export default function DraftPanel({ leadId, existingDrafts, existingDraft, onSt
 
                 {/* ── Tone Tab Selector ── */}
                 {hasDrafts && (
-                    <div className="flex border-b border-slate-100 bg-white">
+                    <div className="flex border-b border-brand-border bg-brand-dark/30">
                         {TONE_TABS.map((tab) => {
                             const isActive = activeTone === tab.key;
                             const hasDraft = allDrafts.some((d) => d.tone_variant === tab.key);
@@ -333,18 +333,18 @@ export default function DraftPanel({ leadId, existingDrafts, existingDraft, onSt
                                     key={tab.key}
                                     onClick={() => setActiveTone(tab.key)}
                                     className={`flex-1 flex flex-col items-center gap-1 px-3 py-3 text-xs font-semibold transition border-b-2 ${isActive
-                                            ? "border-blue-500 text-blue-600 bg-blue-50/50"
-                                            : "border-transparent text-slate-400 hover:text-slate-600 hover:bg-slate-50"
+                                        ? "border-brand-orange text-brand-orange bg-brand-orange/5"
+                                        : "border-transparent text-slate-500 hover:text-slate-300 hover:bg-brand-dark/50"
                                         }`}
                                 >
                                     <div className="flex items-center gap-1.5">
                                         {tab.icon}
                                         <span>{tab.label}</span>
                                         {dirtyTones[tab.key] && hasDraft && (
-                                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" title="Unsaved edits" />
+                                            <span className="w-1.5 h-1.5 rounded-full bg-brand-yellow" title="Unsaved edits" />
                                         )}
                                     </div>
-                                    <span className={`text-[10px] font-normal ${isActive ? "text-blue-400" : "text-slate-300"}`}>
+                                    <span className={`text-[10px] font-normal ${isActive ? "text-brand-orange/60" : "text-slate-600"}`}>
                                         {tab.description}
                                     </span>
                                 </button>
@@ -357,39 +357,39 @@ export default function DraftPanel({ leadId, existingDrafts, existingDraft, onSt
                 {hasDrafts && activeDraft ? (
                     <div className="p-6 space-y-4">
                         <div>
-                            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 ml-1">
+                            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 ml-1">
                                 Reply Subject
                             </label>
                             <input
                                 type="text"
                                 value={subject}
                                 onChange={(e) => handleSubjectChange(e.target.value)}
-                                className="w-full px-4 py-2 bg-slate-50 border border-slate-100 rounded-xl text-sm focus:ring-2 focus:ring-blue-500/20 outline-none transition"
+                                className="w-full px-4 py-2 bg-brand-dark border border-brand-border rounded-xl text-sm text-white focus:ring-2 focus:ring-brand-orange/20 outline-none transition"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 ml-1">
+                            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 ml-1">
                                 Reply Body
                             </label>
                             <textarea
                                 rows={8}
                                 value={body}
                                 onChange={(e) => handleBodyChange(e.target.value)}
-                                className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-sm focus:ring-2 focus:ring-blue-500/20 outline-none transition resize-none leading-relaxed"
+                                className="w-full px-4 py-3 bg-brand-dark border border-brand-border rounded-xl text-sm text-white focus:ring-2 focus:ring-brand-orange/20 outline-none transition resize-none leading-relaxed"
                             />
                         </div>
 
                         {/* Auto-save notice */}
                         {isDirty && (
-                            <p className="text-[10px] text-slate-400 italic ml-1 -mt-2">
+                            <p className="text-[10px] text-slate-500 italic ml-1 -mt-2">
                                 Auto-saving in 3 s…
                             </p>
                         )}
 
                         {/* ── Action Row ── */}
                         <div className="flex items-center justify-between pt-2">
-                            <p className="text-xs text-slate-400 italic">
+                            <p className="text-xs text-slate-500 italic">
                                 {sent
                                     ? "Email sent successfully!"
                                     : lastSavedBody && !isDirty
@@ -403,7 +403,7 @@ export default function DraftPanel({ leadId, existingDrafts, existingDraft, onSt
                                     <button
                                         onClick={() => saveDraft()}
                                         disabled={isSaving}
-                                        className="flex items-center gap-1.5 px-3 py-2 bg-white border border-slate-200 text-slate-600 text-xs font-bold rounded-xl hover:bg-violet-50 hover:border-violet-300 hover:text-violet-700 transition shadow-sm disabled:opacity-50"
+                                        className="flex items-center gap-1.5 px-3 py-2 bg-brand-dark border border-brand-border text-slate-300 text-xs font-bold rounded-xl hover:bg-brand-card transition shadow-sm disabled:opacity-50"
                                     >
                                         {isSaving ? (
                                             <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -417,7 +417,7 @@ export default function DraftPanel({ leadId, existingDrafts, existingDraft, onSt
                                 {/* Copy */}
                                 <button
                                     onClick={handleCopy}
-                                    className="flex items-center gap-2 px-4 py-2 text-slate-600 text-xs font-bold hover:text-slate-900 transition"
+                                    className="flex items-center gap-2 px-4 py-2 text-slate-400 text-xs font-bold hover:text-white transition"
                                 >
                                     {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                                     {copied ? "Copied" : "Copy"}
@@ -427,7 +427,7 @@ export default function DraftPanel({ leadId, existingDrafts, existingDraft, onSt
                                 <button
                                     onClick={handleSendEmail}
                                     disabled={isSending || sent}
-                                    className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-100 disabled:opacity-50 disabled:bg-slate-400"
+                                    className="flex items-center gap-2 px-6 py-2 bg-brand-orange text-white text-xs font-bold rounded-xl hover:bg-brand-orange/90 transition shadow-lg shadow-brand-orange/10 disabled:opacity-50 disabled:bg-slate-700"
                                 >
                                     {isSending ? (
                                         <>
@@ -451,17 +451,17 @@ export default function DraftPanel({ leadId, existingDrafts, existingDraft, onSt
                     </div>
                 ) : (
                     <div className="p-12 text-center">
-                        <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                            <Sparkles className="w-8 h-8 text-slate-200" />
+                        <div className="w-16 h-16 bg-brand-dark border border-brand-border rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <Sparkles className="w-8 h-8 text-brand-orange/20" />
                         </div>
-                        <p className="text-sm text-slate-500 mb-2">No drafts generated yet.</p>
-                        <p className="text-xs text-slate-400 mb-6">
+                        <p className="text-sm text-slate-400 mb-2">No drafts generated yet.</p>
+                        <p className="text-xs text-slate-500 mb-6">
                             Generate 3 tone variants — Formal, Casual, and Short — and pick the one that fits.
                         </p>
                         <button
                             onClick={handleGenerate}
                             disabled={isGenerating}
-                            className="px-6 py-2.5 bg-blue-600 text-white text-sm font-bold rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-100 disabled:opacity-50"
+                            className="px-6 py-2.5 bg-brand-orange text-white text-sm font-bold rounded-xl hover:bg-brand-orange/90 transition shadow-lg shadow-brand-orange/10 disabled:opacity-50"
                         >
                             {isGenerating ? "Generating 3 drafts…" : "Generate AI Drafts"}
                         </button>
