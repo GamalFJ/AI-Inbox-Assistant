@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation"
 import NotificationBell from "./NotificationBell"
 
 export default function Header() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [user, setUser] = useState<User | null>(null)
     const supabase = createClient()
     const router = useRouter()
@@ -52,7 +53,24 @@ export default function Header() {
                     </span>
                 </Link>
 
-                <nav className="flex items-center gap-4">
+                {/* Mobile Menu Toggle */}
+                <button
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    className="md:hidden text-white p-2 hover:bg-brand-card rounded-lg transition-colors"
+                >
+                    {isMenuOpen ? (
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    ) : (
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    )}
+                </button>
+
+                {/* Desktop Nav */}
+                <nav className="hidden md:flex items-center gap-4">
                     {user ? (
                         <>
                             <Link href="/dashboard" className="text-slate-300 hover:text-white transition-colors text-sm font-medium">
@@ -99,6 +117,59 @@ export default function Header() {
                     )}
                 </nav>
             </div>
+
+            {/* Mobile Nav Menu */}
+            {isMenuOpen && (
+                <div className="md:hidden border-t border-brand-border bg-brand-dark px-4 py-6 space-y-4 animate-slide-down">
+                    {user ? (
+                        <>
+                            <Link onClick={() => setIsMenuOpen(false)} href="/dashboard" className="block text-slate-300 hover:text-white transition-colors text-lg font-medium">
+                                Dashboard
+                            </Link>
+                            <Link onClick={() => setIsMenuOpen(false)} href="/analytics" className="block text-slate-300 hover:text-white transition-colors text-lg font-medium">
+                                Analytics
+                            </Link>
+                            <Link onClick={() => setIsMenuOpen(false)} href="/roadmap" className="block text-slate-300 hover:text-white transition-colors text-lg font-medium">
+                                Roadmap
+                            </Link>
+                            <Link onClick={() => setIsMenuOpen(false)} href="/guide" className="block text-slate-300 hover:text-white transition-colors text-lg font-medium">
+                                Guide
+                            </Link>
+                            <Link onClick={() => setIsMenuOpen(false)} href="/settings" className="block text-slate-300 hover:text-white transition-colors text-lg font-medium">
+                                Settings
+                            </Link>
+                            <div className="pt-4 flex items-center justify-between border-t border-brand-border">
+                                <NotificationBell />
+                                <button
+                                    onClick={() => { handleLogout(); setIsMenuOpen(false); }}
+                                    className="bg-brand-card border border-brand-border text-white px-6 py-3 rounded-xl transition-all text-sm font-black uppercase tracking-widest"
+                                >
+                                    Logout
+                                </button>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <Link onClick={() => setIsMenuOpen(false)} href="/login" className="block text-slate-300 hover:text-white transition-colors text-lg font-medium">
+                                Login
+                            </Link>
+                            <Link onClick={() => setIsMenuOpen(false)} href="/roadmap" className="block text-slate-300 hover:text-white transition-colors text-lg font-medium">
+                                Roadmap
+                            </Link>
+                            <Link onClick={() => setIsMenuOpen(false)} href="/guide" className="block text-slate-300 hover:text-white transition-colors text-lg font-medium">
+                                Guide
+                            </Link>
+                            <Link
+                                onClick={() => setIsMenuOpen(false)}
+                                href="/signup"
+                                className="block w-full bg-brand-orange text-white px-5 py-4 rounded-xl text-center font-black uppercase tracking-widest shadow-lg"
+                            >
+                                Sign up
+                            </Link>
+                        </>
+                    )}
+                </div>
+            )}
         </header>
     )
 }

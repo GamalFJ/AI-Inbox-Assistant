@@ -556,3 +556,186 @@ body {
 .animate-pop-in {
   animation: pop-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
+
+/* ── Mobile Responsiveness (≤1024px) ─────────────────────── */
+@media (max-width: 1024px) {
+
+  html,
+  body {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .container {
+    max-width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Images: max-width: 100%; height: auto; */
+  img,
+  svg:not(.lucide) {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Stack layouts vertically */
+  .flex-row-mobile-stack,
+  [id^="tour-lead-details"]>div:first-child>.flex {
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Buttons: min-height: 44px; min-width: 44px; */
+  button,
+  .cta-button,
+  .signup-btn-primary,
+  .success-btn-primary,
+  a.btn,
+  #tour-topbar a,
+  #tour-topbar button,
+  #notification-bell-btn {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Forms: full-width inputs */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+    /* Prevent iOS zoom */
+    width: 100% !important;
+    min-height: 44px !important;
+  }
+
+  /* Specific section adjustments */
+  .hero-section {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  .hero-section h1 {
+    font-size: 2.5rem !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  .success-card,
+  .signup-card {
+    padding: 2.5rem 1.25rem !important;
+    border-radius: 1.5rem !important;
+  }
+
+  /* Handle grids that might be too tight */
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Dashboard Adjustments */
+  #tour-lead-details {
+    padding: 1.25rem !important;
+  }
+
+  #tour-lead-details .flex.flex-col.gap-2 {
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+
+  #tour-topbar {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    height: auto !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+    flex-wrap: wrap !important;
+    gap: 1rem !important;
+  }
+
+  #tour-topbar p {
+    display: none !important;
+  }
+
+  /* Notification panel positioning */
+  #notification-panel {
+    right: -1rem !important;
+    width: calc(100vw - 2rem) !important;
+    max-width: 360px !important;
+  }
+
+  /* DraftPanel refinements */
+  #tour-draft-panel .p-5.border-b.flex.items-center.justify-between,
+  #tour-draft-panel .flex.items-center.justify-between.pt-2 {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1rem !important;
+  }
+
+  #tour-draft-panel .flex.gap-2.items-center {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    gap: 0.5rem !important;
+    flex-wrap: wrap !important;
+  }
+
+  #tour-draft-panel .flex.gap-2.items-center button {
+    flex: 1 !important;
+    font-size: 10px !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+}
+
+/* ── Tablet View (481px-1024px) ────────────────────────── */
+@media (min-width: 481px) and (max-width: 1024px) {
+
+  .grid-cols-3,
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ── Phone Specific (≤480px) ─────────────────────────────── */
+@media (max-width: 480px) {
+  .hero-section h1 {
+    font-size: 2.25rem !important;
+  }
+
+  .cta-button,
+  #hero-cta-button,
+  #footer-cta-button {
+    width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    font-size: 1rem !important;
+  }
+
+  /* Touch target safety for links */
+  header nav a,
+  footer a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 0.5rem;
+  }
+
+  /* Stack landing page pricing blocks */
+  .flex.items-start.justify-between.gap-4 {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .flex.items-start.justify-between.gap-4>div {
+    text-align: center !important;
+  }
+
+  .inline-flex.flex-col.items-center.bg-\[\#FF8559\]\/10 {
+    margin-top: 1rem;
+  }
+}
