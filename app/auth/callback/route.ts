@@ -10,12 +10,30 @@ export async function GET(request: Request) {
 
     if (code) {
         const supabase = await createClient()
-        const { error } = await supabase.auth.exchangeCodeForSession(code)
-        if (!error) {
-            const forwardedHost = request.headers.get('x-forwarded-host') // Tool: can be used for local testing
+        const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+
+        if (!error && data.user) {
+            const isTrial = searchParams.get('trial') === 'true'
+
+            if (isTrial) {
+                // Set trial end date to 3 days from now
+                const trialEndsAt = new Date()
+                trialEndsAt.setDate(trialEndsAt.getDate() + 3)
+
+                await supabase
+                    .from('profiles')
+                    .upsert({
+                        id: data.user.id,
+                        is_trial: true,
+                        trial_ends_at: trialEndsAt.toISOString(),
+                        // Ensure we don't accidentally mark as paid
+                        has_paid: false
+                    }, { onConflict: 'id' })
+            }
+
+            const forwardedHost = request.headers.get('x-forwarded-host')
             const isLocalEnv = process.env.NODE_ENV === 'development'
             if (isLocalEnv) {
-                // we can be sure that there's no proxy involved in local development
                 return NextResponse.redirect(`${origin}${next}`)
             } else if (forwardedHost) {
                 return NextResponse.redirect(`https://${forwardedHost}${next}`)
@@ -24,6 +42,7 @@ export async function GET(request: Request) {
             }
         }
     }
+
 
     // return the user to an error page with instructions
     return NextResponse.redirect(`${origin}/login?error=Could not authenticate user`)

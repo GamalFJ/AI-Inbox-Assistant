@@ -39,52 +39,21 @@ export default function Home() {
                         fluff; just results.
                     </p>
 
-                    {/* Pricing transparency block */}
-                    <div className="mt-10 max-w-lg mx-auto bg-[#1C2023]/80 backdrop-blur rounded-2xl border border-[#353C40] shadow-lg p-5 text-left animate-slide-up-delay">
-                        <div className="flex items-start justify-between gap-4 mb-3">
-                            <div>
-                                <p className="text-xs font-bold text-[#FAE588] uppercase tracking-widest mb-1">
-                                    Founding Member Price
-                                </p>
-                                <p className="text-3xl font-black text-white">
-                                    $19.99{" "}
-                                    <span className="text-base font-semibold text-gray-400 line-through">$99</span>
-                                </p>
-                                <p className="text-sm text-slate-400 mt-0.5">One-time payment — yours forever, no subscription ever.</p>
-                            </div>
-                            <div className="shrink-0 text-right">
-                                <div className="inline-flex flex-col items-center bg-[#FF8559]/10 border border-[#FAE588]/20 rounded-xl px-4 py-3">
-                                    <Lock className="w-4 h-4 text-[#FAE588] mb-1" />
-                                    <span className="text-[10px] font-bold text-[#FAE588] uppercase tracking-wider leading-tight text-center">
-                                        Price locks<br />forever
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* The honest explanation */}
-                        <div className="bg-[#1C2023] rounded-xl p-3 border border-[#353C40] mb-4">
-                            <p className="text-xs text-slate-300 leading-relaxed">
-                                <strong className="text-white">Here&apos;s the deal:</strong> We&apos;re offering lifetime access to the first 200 users at $19.99 — no strings, no future billing.
-                                When we hit 200 members, the founding price closes and new users pay a monthly subscription (~$24–29/mo).
-                                <strong className="text-white"> Your price is locked forever.</strong>
-                            </p>
-                        </div>
-
-                        {/* Live counter */}
-                        <FoundingMemberCounter />
-
+                    {/* Trial CTA button */}
+                    <div className="mt-12 animate-slide-up-delay">
                         <Link
-                            href="/signup"
-                            id="hero-cta-button"
-                            className="mt-5 cta-button block text-center px-10 py-5 rounded-2xl font-bold text-lg text-white shadow-xl hover:shadow-2xl transition-all duration-300"
+                            href="/signup?trial=true"
+                            id="hero-trial-button"
+                            className="inline-flex items-center gap-3 bg-brand-orange text-white px-12 py-6 rounded-2xl font-black text-xl hover:bg-brand-orange/90 transition-all duration-300 shadow-2xl shadow-brand-orange/20 hover:scale-105 active:scale-95 group"
                         >
-                            Claim My Founding Member Seat →
+                            Start your 3-day Free Trial now
+                            <Rocket className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                         </Link>
-                        <p className="text-center text-xs text-slate-400 mt-3 font-medium">
-                            One payment. No recurring fees. Price locked for life.
+                        <p className="mt-4 text-slate-400 text-sm font-medium">
+                            No credit card required. Instant access.
                         </p>
                     </div>
+
 
                     {/* Urgency sub-text */}
                     <p className="mt-6 text-sm text-slate-400 flex items-center justify-center gap-2 animate-slide-up-delay-2">
@@ -202,10 +171,10 @@ export default function Home() {
 
                     <div className="mt-20 text-center animate-slide-up-delay-2">
                         <Link
-                            href="/signup"
-                            className="inline-flex items-center gap-3 bg-[#FF8559] text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-[#E66A3D] transition-all duration-300 shadow-xl shadow-[#FF8559]/10 hover:shadow-2xl hover:shadow-[#FF8559]/20 active:scale-[0.98] group"
+                            href="/signup?trial=true"
+                            className="inline-flex items-center gap-3 bg-brand-orange text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-brand-orange/90 transition-all duration-300 shadow-xl shadow-brand-orange/10 hover:shadow-2xl hover:shadow-brand-orange/20 active:scale-[0.98] group"
                         >
-                            Start Recovering Revenue
+                            Start your 3-day Free Trial
                             <Rocket className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                         </Link>
                         <p className="mt-6 text-slate-500 text-sm font-medium">
@@ -467,11 +436,11 @@ export default function Home() {
                         </ul>
 
                         <Link
-                            href="/signup"
+                            href="/signup?trial=true"
                             id="footer-cta-button"
-                            className="block w-full text-center bg-[#FF8559] text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-[#E66A3D] transition-all duration-300 shadow-xl hover:shadow-2xl active:scale-[0.98]"
+                            className="block w-full text-center bg-brand-orange text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-brand-orange/90 transition-all duration-300 shadow-xl hover:shadow-2xl active:scale-[0.98]"
                         >
-                            Claim My Founding Member Seat →
+                            Start my 3-day Free Trial →
                         </Link>
                         <p className="text-center text-xs text-slate-400 mt-4 font-medium italic">
                             No monthly fees. No recurring billing. One payment, forever.

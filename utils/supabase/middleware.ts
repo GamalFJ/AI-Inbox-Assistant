@@ -60,21 +60,35 @@ export async function updateSession(request: NextRequest) {
         return NextResponse.redirect(url)
     }
 
-    // ── 3. Logged in but not paid → redirect to signup (payment step) ──
+    // ── 3. Logged in check trial/payment status ────────────────
     const { data: profile } = await supabase
         .from('profiles')
-        .select('has_paid')
+        .select('has_paid, trial_ends_at, is_trial')
         .eq('id', user.id)
         .single()
 
-    if (!profile?.has_paid) {
-        const url = request.nextUrl.clone()
-        url.pathname = '/signup'
-        // Add a hint so the signup page can jump straight to Step 2
-        url.searchParams.set('step', 'pay')
-        return NextResponse.redirect(url)
+    // If they've paid, they're good
+    if (profile?.has_paid) {
+        return supabaseResponse
     }
 
-    // ── 4. Logged in + paid → allow ─────────────────────────
-    return supabaseResponse
+    // If they are on trial and it hasn't expired yet, they're good
+    if (profile?.is_trial && profile.trial_ends_at) {
+        const trialEndsAt = new Date(profile.trial_ends_at)
+        if (trialEndsAt > new Date()) {
+            return supabaseResponse
+        }
+    }
+
+    // Not paid AND (not on trial OR trial expired) → redirect to signup (payment step)
+    const url = request.nextUrl.clone()
+    url.pathname = '/signup'
+    // Add a hint so the signup page can jump straight to Step 2
+    url.searchParams.set('step', 'pay')
+    // If trial expired, we could add another hint
+    if (profile?.is_trial) {
+        url.searchParams.set('trial', 'expired')
+    }
+    return NextResponse.redirect(url)
 }
+

@@ -31,16 +31,23 @@ function SignupContent() {
     }, [searchParams])
 
 
+    const isTrial = searchParams.get("trial") === "true"
+
     const handleSignup = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
         setError(null)
 
+        const callbackUrl = new URL(`${window.location.origin}/auth/callback`)
+        if (isTrial) {
+            callbackUrl.searchParams.set("trial", "true")
+        }
+
         const { error } = await supabase.auth.signUp({
             email,
             password,
             options: {
-                emailRedirectTo: `${window.location.origin}/auth/callback`,
+                emailRedirectTo: callbackUrl.toString(),
             },
         })
 
@@ -53,7 +60,8 @@ function SignupContent() {
         }
     }
 
-    /* ── Step 2: Account created — now pay ─────────────────── */
+
+    /* ── Step 2: Account created — now activate/pay ─────────────────── */
     if (accountCreated) {
         return (
             <div className="signup-bg min-h-[90vh] flex items-center justify-center px-4 py-16">
@@ -87,49 +95,68 @@ function SignupContent() {
                             <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none">
                                 <path d="M3 8l3.5 3.5L13 4" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
-                            Account secured
+                            {isTrial ? "Trial Reserved" : "Account secured"}
                         </div>
                         <h1 className="text-4xl font-black text-white mb-3 uppercase tracking-tight">
-                            Unlock Access
+                            {isTrial ? "Check Email" : "Unlock Access"}
                         </h1>
                         <p className="text-slate-400 text-sm font-medium leading-relaxed">
-                            Join our founding members and secure lifetime access before the price increases.
+                            {isTrial
+                                ? "We've sent an activation link to your email. Click it to start your 3-day free trial instantly."
+                                : "Join our founding members and secure lifetime access before the price increases."}
                         </p>
                     </div>
 
-                    {/* Price summary */}
-                    <div className="bg-brand-dark/50 border border-brand-border rounded-2xl p-6 mb-8 shadow-inner text-left">
-                        <div className="flex items-center justify-between mb-2">
-                            <span className="text-slate-400 text-xs font-bold uppercase tracking-widest">Product</span>
-                            <span className="text-slate-500 text-xs font-bold line-through mr-2 leading-none">$99 VALUE</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <span className="text-white font-bold text-sm">Lifetime Pro Access</span>
-                            <div className="text-right">
-                                <span className="text-3xl font-black text-white">$19.99</span>
-                                <p className="text-[10px] text-brand-orange font-bold uppercase tracking-tighter">Limited Time Offer</p>
+                    {!isTrial ? (
+                        <>
+                            {/* Price summary */}
+                            <div className="bg-brand-dark/50 border border-brand-border rounded-2xl p-6 mb-8 shadow-inner text-left">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-slate-400 text-xs font-bold uppercase tracking-widest">Product</span>
+                                    <span className="text-slate-500 text-xs font-bold line-through mr-2 leading-none">$99 VALUE</span>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                    <span className="text-white font-bold text-sm">Lifetime Pro Access</span>
+                                    <div className="text-right">
+                                        <span className="text-3xl font-black text-white">$19.99</span>
+                                        <p className="text-[10px] text-brand-orange font-bold uppercase tracking-tighter">Limited Time Offer</p>
+                                    </div>
+                                </div>
                             </div>
+
+                            {/* PayPal checkout button */}
+                            <a
+                                href="https://www.paypal.com/ncp/payment/5PUTY67JAYFMU"
+                                id="signup-paypal-button"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="bg-brand-orange hover:bg-brand-orange/90 text-white block w-full text-center py-5 rounded-2xl font-black uppercase tracking-widest shadow-2xl shadow-brand-orange/20 transition-all active:scale-[0.98] mb-6"
+                            >
+                                Pay $19.99 &nbsp;→&nbsp; Secure Seat
+                            </a>
+
+                            <p className="text-center text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-relaxed">
+                                Secure checkout via PayPal. Instant activation.
+                            </p>
+                        </>
+                    ) : (
+                        <div className="bg-brand-dark/50 border border-brand-border rounded-2xl p-8 text-center">
+                            <div className="w-16 h-16 bg-brand-orange/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <svg className="w-8 h-8 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <p className="text-white font-bold mb-2">Awaiting Verification</p>
+                            <p className="text-xs text-slate-400 leading-relaxed uppercase tracking-widest font-black">
+                                Check your inbox (and spam folder) for the confirmation link.
+                            </p>
                         </div>
-                    </div>
-
-                    {/* PayPal checkout button */}
-                    <a
-                        href="https://www.paypal.com/ncp/payment/5PUTY67JAYFMU"
-                        id="signup-paypal-button"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-brand-orange hover:bg-brand-orange/90 text-white block w-full text-center py-5 rounded-2xl font-black uppercase tracking-widest shadow-2xl shadow-brand-orange/20 transition-all active:scale-[0.98] mb-6"
-                    >
-                        Pay $19.99 &nbsp;→&nbsp; Secure Seat
-                    </a>
-
-                    <p className="text-center text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-relaxed">
-                        Secure checkout via PayPal. Instant activation.
-                    </p>
+                    )}
                 </div>
             </div>
         )
     }
+
 
     /* ── Step 1: Create account ─────────────────────────────── */
     return (
@@ -157,13 +184,18 @@ function SignupContent() {
                         />
                     </Link>
                     <h1 className="text-4xl font-black text-white mb-3 uppercase tracking-tight">
-                        Get Started
+                        {isTrial ? "Start Your Trial" : "Get Started"}
                     </h1>
                     <p className="text-slate-400 text-sm font-medium">
-                        Already have an account?{" "}
-                        <Link href="/login" className="text-brand-orange font-bold underline hover:text-brand-yellow transition-colors">
-                            Sign in
-                        </Link>
+                        {isTrial ? "Create your free account to begin." : "Already have an account?"}
+                        {isTrial ? "" : (
+                            <>
+                                {" "}
+                                <Link href="/login" className="text-brand-orange font-bold underline hover:text-brand-yellow transition-colors">
+                                    Sign in
+                                </Link>
+                            </>
+                        )}
                     </p>
                 </div>
 
@@ -224,7 +256,7 @@ function SignupContent() {
                                 Creating...
                             </span>
                         ) : (
-                            "Continue to Payment →"
+                            isTrial ? "Start 3-Day Free Trial →" : "Continue to Payment →"
                         )}
                     </button>
                     <p className="text-center text-[10px] text-slate-600 font-bold uppercase tracking-widest">
