@@ -326,7 +326,7 @@ export default function Home() {
                                 "Daily usage monitoring",
                                 "Price locked forever — even when we go to $24–29/mo",
                             ].map((item, i) => (
-                                <li key={i} className="flex items-center gap-3 text-sm font-medium text-slate-700">
+                                <li key={i} className="flex items-center gap-3 text-sm font-medium text-[#FAE588]">
                                     <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0" />
                                     {item}
                                 </li>
