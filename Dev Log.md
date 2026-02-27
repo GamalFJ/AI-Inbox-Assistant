@@ -235,6 +235,13 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 - **Component Pipeline**: `selectedDraft` (single) changed to `selectedDrafts` (array) through DashboardClient ? LeadDetails ? DraftPanel.
 - **Cost note**: 60 leads/month x 3 drafts = approx. USD 1.26/mo per active user (GPT-4o). Fits within the USD 19.99 lifetime pricing window.
 
+## Phase 11: Branding Assets & Favicon Update
+- **App Favicon & Logo**:
+    - Replaced existing `/public/icon.png`, `/public/images/icon.png`, and `/app/icon.png` with the official branding asset `@[Branding Assets/0.1 - Icon (no bg).png]`.
+    - Next.js automatically detects `app/icon.png` for the browser favicon.
+    - Verified `app/layout.tsx` metadata correctly references `/icon.png`.
+    - Landing page hero and header logo updated automatically via shared image path.
+
 ### Next Steps Updated
 - [x] ~~Multiple Draft Options: Formal / Casual / Short variants, parallel generation, 3-tab UI.~~
 - [ ] **Run DB Migration**: Execute `supabase/migrations/add_tone_variant.sql` in the Supabase SQL Editor.

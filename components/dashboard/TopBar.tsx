@@ -27,9 +27,16 @@ export default function TopBar({ onNewLead }: TopBarProps) {
 
     return (
         <div id="tour-topbar" className="h-20 border-b border-brand-border bg-brand-dark/50 backdrop-blur-md px-8 flex items-center justify-between">
-            <div>
-                <h1 className="text-xl font-bold text-white leading-tight">Inbox Assistant</h1>
-                <p className="text-sm text-slate-400">Review leads, generate drafts, never miss a follow-up.</p>
+            <div className="flex items-center gap-4">
+                <img
+                    src="/images/icon.png"
+                    alt="AI Inbox Assistant Icon"
+                    className="h-12 w-12 object-contain hover:scale-110 transition-transform duration-300"
+                />
+                <div>
+                    <h1 className="text-xl font-bold text-white leading-tight">Inbox Assistant</h1>
+                    <p className="text-sm text-slate-400">Review leads, generate drafts, never miss a follow-up.</p>
+                </div>
             </div>
 
             <div className="flex items-center gap-3">

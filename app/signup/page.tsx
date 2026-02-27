@@ -72,7 +72,14 @@ function SignupContent() {
                     </div>
 
                     {/* Heading */}
-                    <div className="text-center mb-8">
+                    <div className="text-center mb-8 flex flex-col items-center">
+                        <Link href="/">
+                            <img
+                                src="/images/icon.png"
+                                alt="AI Inbox Assistant Icon"
+                                className="h-16 w-16 object-contain mb-6 hover:scale-110 transition-transform duration-300"
+                            />
+                        </Link>
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-black uppercase tracking-widest mb-6 border border-emerald-500/20">
                             <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none">
                                 <path d="M3 8l3.5 3.5L13 4" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
@@ -136,7 +143,14 @@ function SignupContent() {
                 </div>
 
                 {/* Heading */}
-                <div className="text-center mb-10 animate-slide-up">
+                <div className="text-center mb-10 animate-slide-up flex flex-col items-center">
+                    <Link href="/">
+                        <img
+                            src="/images/icon.png"
+                            alt="AI Inbox Assistant Icon"
+                            className="h-20 w-20 object-contain mb-8 hover:scale-110 transition-transform duration-300"
+                        />
+                    </Link>
                     <h1 className="text-4xl font-black text-white mb-3 uppercase tracking-tight">
                         Get Started
                     </h1>

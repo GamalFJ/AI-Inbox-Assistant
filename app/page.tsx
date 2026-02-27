@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { CheckCircle, HelpCircle, Map, Rocket, Shield, Layers, Star, Lock, Clock, AlertTriangle } from "lucide-react"
+import { CheckCircle, HelpCircle, Map, Rocket, Shield, Layers, Star, Lock, Clock, AlertTriangle, MessageSquare, Target } from "lucide-react"
 import FoundingMemberCounter from "@/components/FoundingMemberCounter"
 
 export default function Home() {
@@ -9,6 +9,15 @@ export default function Home() {
             {/* ── Hero Section ── */}
             <section className="hero-section py-24 md:py-36">
                 <div className="container mx-auto px-4 text-center relative z-10">
+
+                    {/* Brand Logo */}
+                    <div className="flex justify-center mb-10 animate-fade-in">
+                        <img
+                            src="/images/icon.png"
+                            alt="AI Inbox Assistant Logo"
+                            className="h-28 w-28 md:h-36 md:w-36 object-contain transition-transform hover:scale-110 duration-500"
+                        />
+                    </div>
 
                     {/* Founding member badge */}
                     <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-[#FAE588]/10 text-[#FAE588] text-sm font-bold tracking-wide animate-fade-in border border-[#FAE588]/20">
@@ -53,7 +62,7 @@ export default function Home() {
                         {/* The honest explanation */}
                         <div className="bg-[#1C2023] rounded-xl p-3 border border-[#353C40] mb-4">
                             <p className="text-xs text-slate-300 leading-relaxed">
-                                <strong className="text-white">Here&apos;s the deal:</strong> We&apos;re offering lifetime access to the first 200 users at $19.99 — no strings, no future billing.
+                                <strong className="text-white">Here's the deal:</strong> We're offering lifetime access to the first 200 users at $19.99 — no strings, no future billing.
                                 When we hit 200 members, the founding price closes and new users pay a monthly subscription (~$24–29/mo).
                                 <strong className="text-white"> Your price is locked forever.</strong>
                             </p>
@@ -82,6 +91,127 @@ export default function Home() {
                 </div>
             </section>
 
+            {/* ── Features Section ── */}
+            <section id="features" className="py-24 bg-[#1C2023] relative overflow-hidden">
+                {/* Background decorative elements */}
+                <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#FF8559]/20 to-transparent"></div>
+                <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#FF8559]/5 rounded-full blur-3xl"></div>
+                <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#FAE588]/5 rounded-full blur-3xl"></div>
+
+                <div className="container mx-auto px-4 relative z-10">
+                    <div className="text-center mb-20 animate-fade-in">
+                        <span className="text-[#FAE588] text-xs font-black uppercase tracking-[0.2em] mb-4 block">
+                            Stop leaving money on the table
+                        </span>
+                        <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6">
+                            Your Inbox is a <span className="text-[#FF8559]">Gold Mine</span>.<br className="hidden md:block" />
+                            Don't Let It Become a Graveyard.
+                        </h2>
+                        <p className="text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
+                            We didn't build another &ldquo;productivity app.&rdquo; We built a revenue recovery engine
+                            that fixes the biggest leak in your business: **your response time.**
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {[
+                            {
+                                icon: <Layers className="w-6 h-6" />,
+                                title: "AI Lead Extraction",
+                                pain: "Sifting through 100s of emails just to find one potential client?",
+                                result: "Our AI identifies high-intent leads instantly and pulls them into a clean dashboard.",
+                                benefit: "Saves 2+ hours of 'digging' every day.",
+                                color: "#FF8559"
+                            },
+                            {
+                                icon: <MessageSquare className="w-6 h-6" />,
+                                title: "Smart Tone-Matched Drafts",
+                                pain: "Hate generic AI replies that sound like a robot?",
+                                result: "Upload 3 'Gold Standard' replies, and the AI will mirror your vocabulary and style perfectly.",
+                                benefit: "Leads can't tell it's AI. High response rates.",
+                                color: "#FAE588"
+                            },
+                            {
+                                icon: <Clock className="w-6 h-6" />,
+                                title: "Zero-Latency Follow-ups",
+                                pain: "Forgetting to follow up because 'I'll do it later'?",
+                                result: "The assistant drafts follow-ups automatically if they haven't replied within your set window.",
+                                benefit: "Never let a deal go cold again.",
+                                color: "#FF8559"
+                            },
+                            {
+                                icon: <Target className="w-6 h-6" />,
+                                title: "Active Deal Radar",
+                                pain: "Leads getting buried under newsletters and Amazon receipts?",
+                                result: "We filter the noise. You only see what matters: people who want to pay you.",
+                                benefit: "Zero missed opportunities. Ever.",
+                                color: "#FAE588"
+                            },
+                            {
+                                icon: <Shield className="w-6 h-6" />,
+                                title: "Privacy-First Architecture",
+                                pain: "Worried about AI training on your private client data?",
+                                result: "Your data is yours. We don't use your emails to train global models. Period.",
+                                benefit: "Enterprise-grade security for solo founders.",
+                                color: "#FF8559"
+                            },
+                            {
+                                icon: <Rocket className="w-6 h-6" />,
+                                title: "One-Click Execution",
+                                pain: "Tired of complex CRM setups and API integrations?",
+                                result: "Forward your emails or connect your inbox. It works in 3 minutes, not 3 weeks.",
+                                benefit: "ROI from day one. No learning curve.",
+                                color: "#FAE588"
+                            }
+                        ].map((feature, i) => (
+                            <div key={i} className="group p-8 rounded-[32px] bg-[#2A3034] border border-[#353C40] hover:border-[#FF8559]/30 transition-all duration-500 hover:shadow-2xl hover:shadow-[#FF8559]/5 hover:-translate-y-1">
+                                <div
+                                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3"
+                                    style={{ backgroundColor: `${feature.color}15`, color: feature.color }}
+                                >
+                                    {feature.icon}
+                                </div>
+                                <h3 className="text-xl font-bold text-white mb-4">{feature.title}</h3>
+
+                                <div className="space-y-4">
+                                    <div className="bg-[#1C2023] rounded-xl p-3 border-l-2 border-[#FF8559]/50">
+                                        <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">The Pain</p>
+                                        <p className="text-sm text-slate-300 italic">“{feature.pain}”</p>
+                                    </div>
+
+                                    <div>
+                                        <p className="text-[11px] font-bold text-[#FAE588] uppercase tracking-wider mb-1 text-left">The Result</p>
+                                        <p className="text-sm text-slate-300 leading-relaxed text-left">
+                                            {feature.result}
+                                        </p>
+                                    </div>
+
+                                    <div className="pt-2 flex items-center gap-2">
+                                        <div className="w-1 h-1 rounded-full bg-emerald-400"></div>
+                                        <p className="text-xs font-bold text-emerald-400 uppercase tracking-wide">
+                                            {feature.benefit}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="mt-20 text-center animate-slide-up-delay-2">
+                        <Link
+                            href="/signup"
+                            className="inline-flex items-center gap-3 bg-[#FF8559] text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-[#E66A3D] transition-all duration-300 shadow-xl shadow-[#FF8559]/10 hover:shadow-2xl hover:shadow-[#FF8559]/20 active:scale-[0.98] group"
+                        >
+                            Start Recovering Revenue
+                            <Rocket className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                        </Link>
+                        <p className="mt-6 text-slate-500 text-sm font-medium">
+                            First 200 users get lifetime access for <span className="text-[#FAE588] font-bold">$19.99</span>.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
             {/* ── What happens after 200 users? (Transparency section) ── */}
             <section className="py-16 bg-[#1C2023] text-white">
                 <div className="container mx-auto px-4 max-w-4xl">
@@ -91,10 +221,10 @@ export default function Home() {
                             Full Transparency — No Surprises
                         </span>
                         <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
-                            Here&apos;s exactly what you&apos;re getting into
+                            Here's exactly what you're getting into
                         </h2>
                         <p className="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
-                            We believe in radical transparency. Here&apos;s the plain-English breakdown of the offer, the limits, and your rights as a Founding Member.
+                            We believe in radical transparency. Here's the plain-English breakdown of the offer, the limits, and your rights as a Founding Member.
                         </p>
                     </div>
 
@@ -177,7 +307,7 @@ export default function Home() {
                         </h2>
                         <p className="text-slate-400 max-w-xl mx-auto text-base leading-relaxed">
                             We ship in public. Every phase is tracked, every milestone is visible.
-                            You always know what you&apos;re getting — and what&apos;s coming next.
+                            You always know what you're getting — and what's coming next.
                         </p>
                     </div>
 
@@ -293,7 +423,7 @@ export default function Home() {
             <section className="cta-section py-24 md:py-32 text-white">
                 <div className="container mx-auto px-4 text-center relative z-10">
                     <h2 className="text-3xl md:text-5xl font-bold mb-6">
-                        Don&apos;t wait until the seats are gone.
+                        Don't wait until the seats are gone.
                     </h2>
                     <p className="text-blue-100 mb-12 text-lg max-w-xl mx-auto leading-relaxed">
                         Once all 200 founding member seats are taken, this price closes permanently and new users pay monthly. Lock in your access now.

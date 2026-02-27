@@ -35,8 +35,15 @@ export default function LoginPage() {
 
     return (
         <div className="min-h-[80vh] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-brand-darker">
-            <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <h2 className="mt-6 text-center text-4xl font-black text-white uppercase tracking-tight">
+            <div className="sm:mx-auto sm:w-full sm:max-w-md flex flex-col items-center">
+                <Link href="/">
+                    <img
+                        src="/images/icon.png"
+                        alt="AI Inbox Assistant Icon"
+                        className="h-20 w-20 object-contain mb-8 hover:scale-110 transition-transform duration-300"
+                    />
+                </Link>
+                <h2 className="text-center text-4xl font-black text-white uppercase tracking-tight">
                     Welcome Back
                 </h2>
                 <p className="mt-4 text-center text-sm text-slate-400 font-medium">

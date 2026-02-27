@@ -349,9 +349,13 @@ export default function RoadmapClient() {
         <div className="min-h-screen bg-brand-darker">
 
             <nav className="bg-brand-dark/80 backdrop-blur-sm border-b border-brand-border px-6 py-4 flex items-center justify-between sticky top-0 z-20">
-                <Link href="/" className="flex items-center gap-2 text-white hover:text-brand-orange transition">
-                    <div className="w-8 h-8 bg-brand-orange rounded-xl flex items-center justify-center shadow-lg shadow-brand-orange/20">
-                        <Sparkles className="w-4 h-4 text-white" />
+                <Link href="/" className="flex items-center gap-2 text-white hover:text-brand-orange transition group">
+                    <div className="w-10 h-10 flex items-center justify-center relative transition-transform group-hover:scale-110">
+                        <img
+                            src="/images/icon.png"
+                            alt="Logo"
+                            className="w-full h-full object-contain"
+                        />
                     </div>
                     <span className="font-bold text-sm">AI Inbox Assistant</span>
                 </Link>

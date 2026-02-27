@@ -19,6 +19,7 @@ const config: Config = {
                     darker: "#1C2023",
                     card: "#353C40",
                     border: "#444D53",
+                    purple: "#A64DFF",
                 },
             },
         },

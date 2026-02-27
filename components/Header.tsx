@@ -37,8 +37,17 @@ export default function Header() {
     return (
         <header className="border-b border-[#353C40] bg-[#1C2023]/80 backdrop-blur-md sticky top-0 z-50">
             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-                <Link href="/" className="text-xl font-black text-brand-orange tracking-tight hover:text-brand-yellow transition-colors">
-                    AI INBOX ASSISTANT
+                <Link href="/" className="flex items-center gap-3 group">
+                    <div className="relative h-10 w-10 transition-transform group-hover:scale-110 duration-300">
+                        <img
+                            src="/images/icon.png"
+                            alt="AI Inbox Assistant Icon"
+                            className="object-contain w-full h-full"
+                        />
+                    </div>
+                    <span className="text-xl font-black text-white tracking-tighter group-hover:text-brand-orange transition-colors">
+                        AI INBOX <span className="text-brand-orange">ASSISTANT</span>
+                    </span>
                 </Link>
 
                 <nav className="flex items-center gap-4">
@@ -52,6 +61,9 @@ export default function Header() {
                             </Link>
                             <Link href="/roadmap" className="text-slate-300 hover:text-white transition-colors text-sm font-medium">
                                 Roadmap
+                            </Link>
+                            <Link href="/guide" className="text-slate-300 hover:text-white transition-colors text-sm font-medium">
+                                Guide
                             </Link>
                             <Link href="/settings" className="text-slate-300 hover:text-white transition-colors text-sm font-medium">
                                 Settings
@@ -71,6 +83,9 @@ export default function Header() {
                             </Link>
                             <Link href="/roadmap" className="text-slate-300 hover:text-white transition-colors text-sm font-medium">
                                 Roadmap
+                            </Link>
+                            <Link href="/guide" className="text-slate-300 hover:text-white transition-colors text-sm font-medium">
+                                Guide
                             </Link>
                             <Link
                                 href="/signup"
