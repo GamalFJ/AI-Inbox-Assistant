@@ -25,24 +25,32 @@ import {
 } from 'lucide-react';
 
 const StepCard = ({ number, title, subtitle, icon: Icon, children, isLast = false }: any) => (
-    <div className="relative pl-12 md:pl-20 pb-20 group">
+    <div className="relative mb-12 md:mb-0 md:pl-20 pb-12 md:pb-20 group">
         {!isLast && (
-            <div className="absolute left-[1.85rem] md:left-[2.85rem] top-10 bottom-0 w-1 bg-brand-card/30 rounded-full overflow-hidden">
+            <div className="hidden md:block absolute left-[2.85rem] top-10 bottom-0 w-1 bg-brand-card/30 rounded-full overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-b from-brand-orange via-brand-yellow to-transparent h-0 group-hover:h-full transition-all duration-1000 ease-out" />
             </div>
         )}
-        <div className={`absolute left-0 top-0 w-16 h-16 rounded-[1.5rem] bg-brand-darker border-4 border-brand-card flex items-center justify-center z-10 group-hover:scale-110 group-hover:border-brand-orange/50 transition-all duration-500 shadow-2xl`}>
+
+        {/* Step Icon - Desktop: Absolute, Mobile: Relative/Flex top */}
+        <div className={`
+            md:absolute md:left-0 md:top-0 
+            w-16 h-16 rounded-[1.5rem] bg-brand-darker border-4 border-brand-card 
+            flex items-center justify-center z-10 
+            group-hover:scale-110 group-hover:border-brand-orange/50 transition-all duration-500 shadow-2xl
+            mb-6 md:mb-0
+        `}>
             <Icon className="w-7 h-7 text-brand-orange" />
             <div className="absolute -top-2 -right-2 w-7 h-7 bg-brand-orange rounded-full flex items-center justify-center text-brand-darker text-xs font-black shadow-lg">
                 {number}
             </div>
         </div>
 
-        <div className="bg-brand-dark/40 backdrop-blur-md border border-brand-card rounded-[2.5rem] p-8 md:p-12 hover:border-brand-orange/20 transition-all duration-500 relative overflow-hidden group/card shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+        <div className="bg-brand-dark/40 backdrop-blur-md border border-brand-card rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-12 hover:border-brand-orange/20 transition-all duration-500 relative overflow-hidden group/card shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
             <div className="absolute top-0 right-0 w-64 h-64 bg-brand-orange/5 blur-[80px] -mr-32 -mt-32 rounded-full group-hover/card:bg-brand-orange/10 transition-colors" />
 
             <div className="relative z-10">
-                <div className="flex flex-col md:flex-row md:items-center gap-4 mb-8">
+                <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6 md:mb-8 text-left">
                     <div>
                         <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-2">
                             {title}
@@ -89,11 +97,11 @@ const StepCard = ({ number, title, subtitle, icon: Icon, children, isLast = fals
 );
 
 const Instruction = ({ text, step }: { text: string; step: number }) => (
-    <div className="flex gap-4 group/item">
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-brand-orange/10 border border-brand-orange/20 flex items-center justify-center text-brand-orange font-black text-xs group-hover/item:scale-110 transition-transform">
+    <div className="flex gap-4 group/item items-start">
+        <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-brand-orange/10 border border-brand-orange/20 flex items-center justify-center text-brand-orange font-black text-[10px] md:text-xs group-hover/item:scale-110 transition-transform mt-1 md:mt-0">
             {step}
         </div>
-        <p className="text-[#94A3B8] text-lg font-medium leading-relaxed pt-0.5">
+        <p className="text-[#94A3B8] text-base md:text-lg font-medium leading-relaxed pt-0.5">
             {text}
         </p>
     </div>
@@ -116,8 +124,8 @@ export default function GuidePage() {
                     Setup Masterclass
                 </div>
 
-                <h1 className="text-7xl md:text-9xl font-black mb-8 text-white tracking-tighter leading-[0.8] flex flex-col items-center">
-                    <span className="opacity-50 text-4xl md:text-6xl mb-2 font-medium tracking-normal text-brand-yellow">HOW TO</span>
+                <h1 className="text-5xl md:text-9xl font-black mb-8 text-white tracking-tighter leading-[0.9] md:leading-[0.8] flex flex-col items-center">
+                    <span className="opacity-50 text-2xl md:text-6xl mb-2 font-medium tracking-normal text-brand-yellow">HOW TO</span>
                     RECLAIM YOUR TIME
                 </h1>
 
@@ -159,7 +167,7 @@ export default function GuidePage() {
                         <Instruction step={3} text="Paste 3–5 examples of emails you've actually sent. We call these 'Gold Standards'." />
                         <Instruction step={4} text="Add your Calendly link so the AI can book meetings." />
                         <div className="pt-4">
-                            <Link href="/settings" className="inline-flex items-center gap-3 px-8 py-4 bg-brand-orange rounded-2xl text-white font-black hover:scale-105 transition-all shadow-[0_10px_30px_rgba(255,133,89,0.3)]">
+                            <Link href="/settings" className="inline-flex w-full md:w-auto items-center justify-center gap-3 px-8 py-4 bg-brand-orange rounded-2xl text-white font-black hover:scale-105 transition-all shadow-[0_10px_30px_rgba(255,133,89,0.3)]">
                                 Configure My Brain <ArrowRight className="w-5 h-5" />
                             </Link>
                         </div>
@@ -180,12 +188,12 @@ export default function GuidePage() {
                         <Instruction step={1} text="Go to Settings > Lead Ingestion." />
                         <Instruction step={2} text="Copy your unique Secret Webhook URL." />
                         <Instruction step={3} text="Paste this link into your email tool (Zapier or Postmark)." />
-                        <div className="p-6 bg-brand-dark/80 rounded-3xl border border-brand-border flex items-center justify-between group cursor-pointer hover:border-brand-yellow/30 transition-all">
-                            <div className="flex flex-col">
+                        <div className="p-4 md:p-6 bg-brand-dark/80 rounded-2xl md:rounded-3xl border border-brand-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group cursor-pointer hover:border-brand-yellow/30 transition-all">
+                            <div className="flex flex-col w-full overflow-hidden">
                                 <span className="text-[10px] font-black tracking-widest text-[#64748B] uppercase mb-1">Your Secret Link</span>
-                                <code className="text-brand-yellow text-sm font-mono truncate max-w-[200px] md:max-w-xs">https://api.assistant.com/v1/inbox-ingest...</code>
+                                <code className="text-brand-yellow text-xs md:text-sm font-mono truncate w-full">https://api.assistant.com/v1/inbox-ingest...</code>
                             </div>
-                            <div className="flex items-center gap-2 bg-brand-yellow/10 border border-brand-yellow/20 px-4 py-2 rounded-xl text-brand-yellow text-xs font-black uppercase tracking-widest group-hover:bg-brand-yellow group-hover:text-brand-darker transition-all">
+                            <div className="w-full md:w-auto flex items-center justify-center gap-2 bg-brand-yellow/10 border border-brand-yellow/20 px-4 py-3 md:py-2 rounded-xl text-brand-yellow text-[10px] md:text-xs font-black uppercase tracking-widest group-hover:bg-brand-yellow group-hover:text-brand-darker transition-all">
                                 <Copy className="w-3 h-3" />
                                 Copy
                             </div>
@@ -208,11 +216,11 @@ export default function GuidePage() {
                         <Instruction step={2} text="Type in your website address." />
                         <Instruction step={3} text="Copy the 3 lines of text (DNS records) we give you." />
                         <Instruction step={4} text="Paste them into your domain account (GoDaddy, etc)." />
-                        <div className="pt-4 flex flex-wrap gap-4">
-                            <Link href="/settings" className="inline-flex items-center gap-3 px-8 py-4 bg-white rounded-2xl text-brand-darker font-black hover:scale-105 transition-all">
+                        <div className="pt-4 flex flex-col md:flex-row gap-4">
+                            <Link href="/settings" className="inline-flex w-full md:w-auto items-center justify-center gap-3 px-8 py-4 bg-white rounded-2xl text-brand-darker font-black hover:scale-105 transition-all text-center">
                                 Verify My Domain <Globe className="w-5 h-5 opacity-40" />
                             </Link>
-                            <a href="#" className="inline-flex items-center gap-2 text-brand-yellow font-bold hover:underline decoration-2 underline-offset-4">
+                            <a href="#" className="inline-flex items-center justify-center gap-2 text-brand-yellow font-bold hover:underline decoration-2 underline-offset-4 text-center">
                                 Need help with DNS? <ExternalLink className="w-4 h-4" />
                             </a>
                         </div>
@@ -263,7 +271,7 @@ export default function GuidePage() {
                         <div className="relative bg-brand-dark/60 backdrop-blur-3xl border border-brand-card rounded-[4rem] p-16 md:p-24 shadow-2xl max-w-4xl mx-auto overflow-hidden">
                             <div className="absolute inset-0 bg-[radial-gradient(#353C40_1px,transparent_1px)] [background-size:30px_30px] opacity-[0.1]" />
                             <div className="relative z-10">
-                                <h2 className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter leading-none">
+                                <h2 className="text-4xl md:text-7xl font-black text-white mb-8 tracking-tighter leading-tight md:leading-none">
                                     RECLAIM <br />
                                     <span className="text-brand-orange">YOUR LIFE.</span>
                                 </h2>
