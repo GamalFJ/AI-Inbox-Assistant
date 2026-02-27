@@ -19,6 +19,7 @@ import {
     Package,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -351,10 +352,11 @@ export default function RoadmapClient() {
             <nav className="bg-brand-dark/80 backdrop-blur-sm border-b border-brand-border px-6 py-4 flex items-center justify-between sticky top-0 z-20">
                 <Link href="/" className="flex items-center gap-2 text-white hover:text-brand-orange transition group">
                     <div className="w-10 h-10 flex items-center justify-center relative transition-transform group-hover:scale-110">
-                        <img
+                        <Image
                             src="/images/icon.png"
                             alt="Logo"
-                            className="w-full h-full object-contain"
+                            fill
+                            className="object-contain"
                         />
                     </div>
                     <span className="font-bold text-sm">AI Inbox Assistant</span>

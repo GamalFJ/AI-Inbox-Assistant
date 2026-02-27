@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 
 export default function Footer() {
     return (
@@ -7,9 +8,11 @@ export default function Footer() {
                 <div className="flex flex-col md:flex-row justify-between items-center gap-8">
                     <div>
                         <Link href="/" className="flex items-center gap-2 group mb-2">
-                            <img
+                            <Image
                                 src="/images/icon.png"
                                 alt="AI Inbox Assistant Icon"
+                                width={32}
+                                height={32}
                                 className="h-8 w-8 object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all"
                             />
                             <span className="text-lg font-black text-white group-hover:text-brand-orange transition-colors tracking-tighter">

@@ -2,6 +2,7 @@
 
 import { Plus, Settings, BarChart3, Map, HelpCircle } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 
@@ -28,9 +29,11 @@ export default function TopBar({ onNewLead }: TopBarProps) {
     return (
         <div id="tour-topbar" className="h-20 border-b border-brand-border bg-brand-dark/50 backdrop-blur-md px-8 flex items-center justify-between">
             <div className="flex items-center gap-4">
-                <img
+                <Image
                     src="/images/icon.png"
                     alt="AI Inbox Assistant Icon"
+                    width={48}
+                    height={48}
                     className="h-12 w-12 object-contain hover:scale-110 transition-transform duration-300"
                 />
                 <div>

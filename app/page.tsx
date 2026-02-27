@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { CheckCircle, HelpCircle, Map, Rocket, Shield, Layers, Star, Lock, Clock, AlertTriangle, MessageSquare, Target } from "lucide-react"
 import FoundingMemberCounter from "@/components/FoundingMemberCounter"
 
@@ -11,10 +12,12 @@ export default function Home() {
                 <div className="container mx-auto px-4 text-center relative z-10">
 
                     {/* Brand Logo */}
-                    <div className="flex justify-center mb-10 animate-fade-in">
-                        <img
+                    <div className="flex justify-center mb-10 animate-fade-in text-left">
+                        <Image
                             src="/images/icon.png"
                             alt="AI Inbox Assistant Logo"
+                            width={144}
+                            height={144}
                             className="h-28 w-28 md:h-36 md:w-36 object-contain transition-transform hover:scale-110 duration-500"
                         />
                     </div>
@@ -62,7 +65,7 @@ export default function Home() {
                         {/* The honest explanation */}
                         <div className="bg-[#1C2023] rounded-xl p-3 border border-[#353C40] mb-4">
                             <p className="text-xs text-slate-300 leading-relaxed">
-                                <strong className="text-white">Here's the deal:</strong> We're offering lifetime access to the first 200 users at $19.99 — no strings, no future billing.
+                                <strong className="text-white">Here&apos;s the deal:</strong> We&apos;re offering lifetime access to the first 200 users at $19.99 — no strings, no future billing.
                                 When we hit 200 members, the founding price closes and new users pay a monthly subscription (~$24–29/mo).
                                 <strong className="text-white"> Your price is locked forever.</strong>
                             </p>
@@ -103,12 +106,12 @@ export default function Home() {
                         <span className="text-[#FAE588] text-xs font-black uppercase tracking-[0.2em] mb-4 block">
                             Stop leaving money on the table
                         </span>
-                        <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6">
+                        <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6 text-left">
                             Your Inbox is a <span className="text-[#FF8559]">Gold Mine</span>.<br className="hidden md:block" />
-                            Don't Let It Become a Graveyard.
+                            Don&apos;t Let It Become a Graveyard.
                         </h2>
-                        <p className="text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
-                            We didn't build another &ldquo;productivity app.&rdquo; We built a revenue recovery engine
+                        <p className="text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed text-left">
+                            We didn&apos;t build another &ldquo;productivity app.&rdquo; We built a revenue recovery engine
                             that fixes the biggest leak in your business: **your response time.**
                         </p>
                     </div>
@@ -221,10 +224,10 @@ export default function Home() {
                             Full Transparency — No Surprises
                         </span>
                         <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
-                            Here's exactly what you're getting into
+                            Here&apos;s exactly what you&apos;re getting into
                         </h2>
                         <p className="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
-                            We believe in radical transparency. Here's the plain-English breakdown of the offer, the limits, and your rights as a Founding Member.
+                            We believe in radical transparency. Here&apos;s the plain-English breakdown of the offer, the limits, and your rights as a Founding Member.
                         </p>
                     </div>
 
@@ -307,7 +310,7 @@ export default function Home() {
                         </h2>
                         <p className="text-slate-400 max-w-xl mx-auto text-base leading-relaxed">
                             We ship in public. Every phase is tracked, every milestone is visible.
-                            You always know what you're getting — and what's coming next.
+                            You always know what you&apos;re getting — and what&apos;s coming next.
                         </p>
                     </div>
 
@@ -423,7 +426,7 @@ export default function Home() {
             <section className="cta-section py-24 md:py-32 text-white">
                 <div className="container mx-auto px-4 text-center relative z-10">
                     <h2 className="text-3xl md:text-5xl font-bold mb-6">
-                        Don't wait until the seats are gone.
+                        Don&apos;t wait until the seats are gone.
                     </h2>
                     <p className="text-blue-100 mb-12 text-lg max-w-xl mx-auto leading-relaxed">
                         Once all 200 founding member seats are taken, this price closes permanently and new users pay monthly. Lock in your access now.

@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useEffect, useState } from "react"
 import { createClient } from "@/utils/supabase/client"
 import { User } from "@supabase/supabase-js"
@@ -39,10 +40,11 @@ export default function Header() {
             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-3 group">
                     <div className="relative h-10 w-10 transition-transform group-hover:scale-110 duration-300">
-                        <img
+                        <Image
                             src="/images/icon.png"
                             alt="AI Inbox Assistant Icon"
-                            className="object-contain w-full h-full"
+                            fill
+                            className="object-contain"
                         />
                     </div>
                     <span className="text-xl font-black text-white tracking-tighter group-hover:text-brand-orange transition-colors">

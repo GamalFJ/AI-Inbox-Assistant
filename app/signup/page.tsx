@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useState, useEffect, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { createClient } from "@/utils/supabase/client"
@@ -74,9 +75,11 @@ function SignupContent() {
                     {/* Heading */}
                     <div className="text-center mb-8 flex flex-col items-center">
                         <Link href="/">
-                            <img
+                            <Image
                                 src="/images/icon.png"
                                 alt="AI Inbox Assistant Icon"
+                                width={64}
+                                height={64}
                                 className="h-16 w-16 object-contain mb-6 hover:scale-110 transition-transform duration-300"
                             />
                         </Link>
@@ -145,9 +148,11 @@ function SignupContent() {
                 {/* Heading */}
                 <div className="text-center mb-10 animate-slide-up flex flex-col items-center">
                     <Link href="/">
-                        <img
+                        <Image
                             src="/images/icon.png"
                             alt="AI Inbox Assistant Icon"
+                            width={80}
+                            height={80}
                             className="h-20 w-20 object-contain mb-8 hover:scale-110 transition-transform duration-300"
                         />
                     </Link>

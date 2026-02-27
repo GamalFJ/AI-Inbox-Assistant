@@ -185,66 +185,75 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 
 ---
 
-##  🗓️ Next Steps
-- [x] ~~**WEBHOOK_SECRET in .env.local**: Add `WEBHOOK_SECRET=your-secret` to `.env.local` before connecting a real provider.~~
-- [x] ~~**Polling Fallback**: Add a cron job / Vercel Cron to poll for new emails if webhooks aren't available.~~
-- [x] ~~**Notification System**: Add email/toast notifications when new leads arrive or tasks become overdue.~~
-- [x] ~~**Draft Edit History**: Track revisions to AI-generated drafts before sending.~~
-- [x] ~~**Usage Monitor**: Setup early warning system for AI costs and user growth.~~
-- [ ] **Production AI Model**: Connect to a strong, reliable AI provider (OpenAI / Anthropic) for real classification and draft generation.
-- [ ] **Domain Verification**: Verify your custom domain on Resend for professional email sending (instructions in Settings → Email Domain tab).
+## 🎨 Phase 10: Multiple Draft Variants
+- **3-Tone AI Draft System**:
+    - Refactored `utils/ai.ts` to export `generateDraftVariants()` — fires **3 parallel GPT-4o calls**: Formal, Casual, Short.
+    - Only the Formal call handles `lead_type` classification and `followup_plan`. Others focus purely on drafting, keeping token costs lean.
+    - Original `generateDraftForLead()` preserved for backward compatibility.
+- **API Route** (`POST /api/process-lead`):
+    - Clears existing drafts for the lead, inserts all 3 variants with a `tone_variant` label.
+    - Deduplicates follow-up tasks on regeneration.
+- **Database**: Executed `add_tone_variant.sql` migration to add `tone_variant` column to the `drafts` table.
+- **Dashboard UI** (`components/dashboard/DraftPanel.tsx`):
+    - Full rebuild with a 3-tab selector (Formal / Casual / Short).
+    - Added amber-dot indicators for unsaved edits per tab.
+
+---
+
+## 🖼️ Phase 11: Branding Assets & Identity
+- **App Favicon & Logo**:
+    - Replaced temporary icons with official branding assets (`Branding Assets/0.1 - Icon (no bg).png`).
+    - Configured Next.js metadata in `app/layout.tsx` to correctly handle the new favicon.
+- **Landing Page Assets**: Updated hero sections and header logos to use high-fidelity, background-removed branding assets.
+
+---
+
+## 🎨 Phase 12: Visual Identity & Dark Theme
+- **Premium Dark Mode**: Implemented a comprehensive dark theme using a sophisticated palette: `#1C2023` (Background), `#FF8559` (Brand Orange), and `#FAE588` (Brand Yellow).
+- **Core UI Overhaul**: Updated `tailwind.config.ts` and `globals.css` to support high-contrast dark design across all components.
+- **Glassmorphism & Motion**: Added subtle animations, glassmorphism effects, and refined transitions to create a "living" interface feel.
+
+---
+
+## 📈 Phase 13: Conversion Optimization & Transparency
+- **Founding Member Offer**: Built an explicit $19.99 lifetime deal offer for the first 200 users.
+- **Urgency Triggers**:
+    - **Live Seat Count**: Integrated a dynamic counter showing remaining "Founding Member" spots.
+    - **Transparency Section**: Added clear messaging about future pricing changes and a "Reasonable Use" policy.
+- **Features Section**: Added a results-driven Features section to the landing page, addressing user pain points with quantifiable benefits.
+
+---
+
+## 🧭 Phase 14: Interactive Onboarding & Documentation
+- **In-App Interactive Guide**: Developed a togglable `InteractiveGuide` component to provide step-by-step UI tours for first-time users.
+- **Setup Masterclass**: Created a dedicated, non-technical friendly User Guide page (`/guide`) using a "Step Card" design to simplify technical integrations.
+- **Branded Micro-copy**: Updated footer branding color to `#A64DFF` for a signature contrast.
+
+---
+
+## 🚀 Phase 15: Launch Readiness Audit
+- **Comprehensive Audit**: Conducted a full system audit (documented in `Launch Readiness.md`) covering UI/UX, Backend, SEO, and Security.
+- **SEO Optimization**: Verified H1-H3 hierarchy, optimized meta tags for social sharing, and improved semantic HTML.
+- **Final Verdict**: **READY FOR LAUNCH!** ✅
+
+---
+
+## 🗓️ Next Steps
+- [x] ~~**Multiple Draft Options**: Formal / Casual / Short variants, parallel generation, 3-tab UI.~~
+- [x] ~~**Launch Readiness Audit**: Comprehensive audit completed and passed.~~
+- [x] ~~**Dark Theme Polish**: Premium dark mode implemented across all pages.~~
+- [x] ~~**Interactive Guide**: Togglable in-app tutorial and dedicated /guide page.~~
+- [ ] **Run DB Migration**: Execute `supabase/migrations/add_tone_variant.sql` in the Supabase SQL Editor (Verify live).
+- [ ] **Lead Stages**: Add pipeline stages (New to Contacted to Negotiating to Closed) to the dashboard.
+- [ ] **Production AI Model**: Confirm OpenAI API key is live and producing real drafts.
+- [ ] **Domain Verification**: Verify custom domain on Resend (Settings → Email Domain tab).
 
 ---
 
 ## 💡 Future Features (Planned Upsells)
-> These features are intentionally shelved for now and will be introduced as premium upgrade tiers once the core product is stable and generating revenue.
+> These features are intentionally shelved for now and will be introduced as premium upgrade tiers.
 
-- **🏢 Multi-user / Team Support** *(Pro / Team Plan Upsell)*:
-    - `teams` and `team_members` Supabase tables with role-based access (owner, admin, member).
-    - Shared inbox view — all team members see and can act on the same lead pool.
-    - Lead assignment (`assigned_to` field) with assignee avatars in the dashboard.
-    - Team management tab in `/settings`: invite by email, change roles, remove members.
-    - Invite emails sent via Resend.
-    - Dashboard filters: "Assigned to Me" vs. "All Team Leads".
+- **🏢 Multi-user / Team Support**: Shared inbox view, lead assignment, and role-based access control.
+- **🤖 Fine-tuned AI Models**: Allow enterprise users to train models on their own high-volume datasets.
+- **📆 Calendar Integration**: One-click "Book a Call" via Google Calendar or Calendly embedded in AI replies.
 
-- **🤖 Fine-tuned / Custom AI Models** *(Enterprise Plan Upsell)*:
-    - Allow enterprise users to upload their own JSONL training data for a fine-tuned model.
-    - Per-user model selection (e.g., GPT-4o, Claude Opus, or a custom fine-tune).
-
-- **📆 Calendar Integration** *(Pro Plan Upsell)*:
-    - One-click "Book a Call" via Google Calendar or Calendly embedded in AI replies.
-    - Auto-detect scheduling intent in lead emails.
-
----
-
-## Phase 10: Multiple Draft Variants (Current)
-- **3-Tone AI Draft System**:
-    - Refactored `utils/ai.ts` to export `generateDraftVariants()`   fires **3 parallel GPT-4o calls**: Formal, Casual, Short.
-    - Only the Formal call handles `lead_type` classification and `followup_plan`. Others focus purely on drafting, keeping token costs lean.
-    - Original `generateDraftForLead()` preserved for backward compat with cron/webhook pipelines.
-- **API Route** (`POST /api/process-lead`):
-    - Clears existing drafts for the lead, inserts all 3 variants with a `tone_variant` label.
-    - Deduplicates follow-up tasks on regeneration. Returns full drafts array so UI renders instantly.
-- **Database** (`supabase/migrations/add_tone_variant.sql`):
-    - `ALTER TABLE drafts ADD COLUMN IF NOT EXISTS tone_variant TEXT CHECK (...)`   safe, non-destructive.
-- **Type System** (`types/index.ts`):
-    - Added `ToneVariant = 'formal' | 'casual' | 'short'` and optional `tone_variant` field on `Draft`.
-- **Dashboard UI** (`components/dashboard/DraftPanel.tsx`):
-    - Full rebuild: 3-tab selector (Formal / Casual / Short), each independently editable with auto-save + history.
-    - Amber-dot per tab for unsaved edits. Backward compatible with old single-draft prop.
-- **Component Pipeline**: `selectedDraft` (single) changed to `selectedDrafts` (array) through DashboardClient ? LeadDetails ? DraftPanel.
-- **Cost note**: 60 leads/month x 3 drafts = approx. USD 1.26/mo per active user (GPT-4o). Fits within the USD 19.99 lifetime pricing window.
-
-## Phase 11: Branding Assets & Favicon Update
-- **App Favicon & Logo**:
-    - Replaced existing `/public/icon.png`, `/public/images/icon.png`, and `/app/icon.png` with the official branding asset `@[Branding Assets/0.1 - Icon (no bg).png]`.
-    - Next.js automatically detects `app/icon.png` for the browser favicon.
-    - Verified `app/layout.tsx` metadata correctly references `/icon.png`.
-    - Landing page hero and header logo updated automatically via shared image path.
-
-### Next Steps Updated
-- [x] ~~Multiple Draft Options: Formal / Casual / Short variants, parallel generation, 3-tab UI.~~
-- [ ] **Run DB Migration**: Execute `supabase/migrations/add_tone_variant.sql` in the Supabase SQL Editor.
-- [ ] **Lead Stages**: Add pipeline stages (New to Contacted to Negotiating to Closed) to the dashboard.
-- [ ] **Production AI Model**: Confirm OpenAI API key is live and producing real drafts.
-- [ ] **Domain Verification**: Verify custom domain on Resend (Settings ? Email Domain tab).

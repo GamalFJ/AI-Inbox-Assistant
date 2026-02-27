@@ -76,7 +76,7 @@ const StepCard = ({ number, title, subtitle, icon: Icon, children, isLast = fals
                                 </Link>
                                 <div className="space-y-2">
                                     <p className="text-xs text-[#64748B] font-medium leading-relaxed italic">
-                                        "Follow the orange highlights in the app window."
+                                        &quot;Follow the orange highlights in the app window.&quot;
                                     </p>
                                 </div>
                             </div>
@@ -174,7 +174,7 @@ export default function GuidePage() {
                     icon={Webhook}
                 >
                     <p className="text-white/70 text-lg leading-relaxed mb-8">
-                        Now, let's route your emails into the app. This is the only technical part, but we've made it simple.
+                        Now, let&apos;s route your emails into the app. This is the only technical part, but we&apos;ve made it simple.
                     </p>
                     <div className="space-y-6">
                         <Instruction step={1} text="Go to Settings > Lead Ingestion." />
