@@ -25,7 +25,7 @@ import {
 } from 'lucide-react';
 
 const StepCard = ({ number, title, subtitle, icon: Icon, children, isLast = false }: any) => (
-    <div className="relative mb-12 md:mb-0 md:pl-20 pb-12 md:pb-20 group">
+    <div className="relative mb-8 md:mb-0 md:pl-20 pb-8 md:pb-20 group">
         {!isLast && (
             <div className="hidden md:block absolute left-[2.85rem] top-10 bottom-0 w-1 bg-brand-card/30 rounded-full overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-b from-brand-orange via-brand-yellow to-transparent h-0 group-hover:h-full transition-all duration-1000 ease-out" />
@@ -46,22 +46,22 @@ const StepCard = ({ number, title, subtitle, icon: Icon, children, isLast = fals
             </div>
         </div>
 
-        <div className="bg-brand-dark/40 backdrop-blur-md border border-brand-card rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-12 hover:border-brand-orange/20 transition-all duration-500 relative overflow-hidden group/card shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+        <div className="bg-brand-dark/40 backdrop-blur-md border border-brand-card rounded-[1.5rem] md:rounded-[2.5rem] p-5 md:p-12 hover:border-brand-orange/20 transition-all duration-500 relative overflow-hidden group/card shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
             <div className="absolute top-0 right-0 w-64 h-64 bg-brand-orange/5 blur-[80px] -mr-32 -mt-32 rounded-full group-hover/card:bg-brand-orange/10 transition-colors" />
 
             <div className="relative z-10">
                 <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6 md:mb-8 text-left">
                     <div>
-                        <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-2">
+                        <h3 className="text-2xl md:text-4xl font-black text-white tracking-tight mb-2">
                             {title}
                         </h3>
-                        <p className="text-brand-yellow/80 font-bold uppercase tracking-widest text-xs">
+                        <p className="text-brand-yellow/80 font-bold uppercase tracking-widest text-[10px] md:text-xs">
                             {subtitle}
                         </p>
                     </div>
                 </div>
 
-                <div className="grid lg:grid-cols-12 gap-12 items-start">
+                <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
                     <div className="lg:col-span-7 space-y-6">
                         {children}
                     </div>
@@ -97,11 +97,11 @@ const StepCard = ({ number, title, subtitle, icon: Icon, children, isLast = fals
 );
 
 const Instruction = ({ text, step }: { text: string; step: number }) => (
-    <div className="flex gap-4 group/item items-start">
-        <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-brand-orange/10 border border-brand-orange/20 flex items-center justify-center text-brand-orange font-black text-[10px] md:text-xs group-hover/item:scale-110 transition-transform mt-1 md:mt-0">
+    <div className="flex gap-3 md:gap-4 group/item items-start">
+        <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-brand-orange/10 border border-brand-orange/20 flex items-center justify-center text-brand-orange font-black text-[10px] md:text-xs group-hover/item:scale-110 transition-transform mt-0.5 md:mt-0">
             {step}
         </div>
-        <p className="text-[#94A3B8] text-base md:text-lg font-medium leading-relaxed pt-0.5">
+        <p className="text-[#94A3B8] text-sm md:text-lg font-medium leading-relaxed pt-0.5">
             {text}
         </p>
     </div>
@@ -191,9 +191,9 @@ export default function GuidePage() {
                         <div className="p-4 md:p-6 bg-brand-dark/80 rounded-2xl md:rounded-3xl border border-brand-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group cursor-pointer hover:border-brand-yellow/30 transition-all">
                             <div className="flex flex-col w-full overflow-hidden">
                                 <span className="text-[10px] font-black tracking-widest text-[#64748B] uppercase mb-1">Your Secret Link</span>
-                                <code className="text-brand-yellow text-xs md:text-sm font-mono truncate w-full">https://api.assistant.com/v1/inbox-ingest...</code>
+                                <code className="text-brand-yellow text-[10px] md:text-sm font-mono truncate w-full">https://api.assistant.com/v1/inbox-ingest...</code>
                             </div>
-                            <div className="w-full md:w-auto flex items-center justify-center gap-2 bg-brand-yellow/10 border border-brand-yellow/20 px-4 py-3 md:py-2 rounded-xl text-brand-yellow text-[10px] md:text-xs font-black uppercase tracking-widest group-hover:bg-brand-yellow group-hover:text-brand-darker transition-all">
+                            <div className="w-full md:w-auto flex items-center justify-center gap-2 bg-brand-yellow/10 border border-brand-yellow/20 px-4 py-2.5 md:py-2 rounded-xl text-brand-yellow text-[10px] md:text-xs font-black uppercase tracking-widest group-hover:bg-brand-yellow group-hover:text-brand-darker transition-all">
                                 <Copy className="w-3 h-3" />
                                 Copy
                             </div>
