@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { generateDraftForLead } from "@/utils/ai";
+import { getMonthlyLeadCount, MONTHLY_CAP, getResetDate } from "@/utils/usage";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
@@ -68,10 +69,23 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ success: true, lead_id: lead.id, draft: null });
         }
 
-        // 5. Generate AI draft
+        // 5b. Check monthly cap — lead is already saved above (never dropped), but skip AI if at cap
+        const monthlyCount = await getMonthlyLeadCount(supabase, user_id);
+        if (monthlyCount > MONTHLY_CAP) {
+            console.info(`User ${user_id} at monthly cap (${monthlyCount}/${MONTHLY_CAP}). Lead saved, AI skipped.`);
+            return NextResponse.json({
+                success: true,
+                lead_id: lead.id,
+                draft_id: null,
+                cap_reached: true,
+                resetDate: getResetDate(),
+            });
+        }
+
+        // 6. Generate AI draft
         const draftResult = await generateDraftForLead(lead, profile);
 
-        // 6. Update lead classification
+        // 7. Update lead classification
         await supabase
             .from("leads")
             .update({

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Search, Mail, Clock } from "lucide-react";
 import { Lead, LeadStatus } from "@/types";
+import UsageMeter from "./UsageMeter";
+
 
 interface LeadListProps {
     leads: Lead[];
@@ -102,6 +104,9 @@ export default function LeadList({ leads, selectedLeadId, onSelectLead }: LeadLi
                     ))
                 )}
             </div>
+
+            {/* Usage Meter */}
+            <UsageMeter />
         </div>
     );
 }

@@ -1,87 +1,135 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Sparkles, Copy, Check, RotateCcw, Send, History, Save, Loader2 } from "lucide-react";
-import { Draft } from "@/types";
+import { Sparkles, Copy, Check, RotateCcw, Send, History, Save, Loader2, Briefcase, Coffee, Zap } from "lucide-react";
+import { Draft, ToneVariant } from "@/types";
 import { useNotification } from "@/components/NotificationContext";
 import DraftHistory from "./DraftHistory";
 import { DraftRevision } from "@/types";
 
 interface DraftPanelProps {
     leadId: string;
+    existingDrafts?: Draft[];
+    /** @deprecated Pass existingDrafts instead. Kept for backward compatibility. */
     existingDraft?: Draft;
     onStatusChange: (status: string) => void;
 }
 
-export default function DraftPanel({ leadId, existingDraft, onStatusChange }: DraftPanelProps) {
+const TONE_TABS: { key: ToneVariant; label: string; icon: React.ReactNode; description: string }[] = [
+    {
+        key: "formal",
+        label: "Formal",
+        icon: <Briefcase className="w-3.5 h-3.5" />,
+        description: "Polished & professional",
+    },
+    {
+        key: "casual",
+        label: "Casual",
+        icon: <Coffee className="w-3.5 h-3.5" />,
+        description: "Warm & conversational",
+    },
+    {
+        key: "short",
+        label: "Short",
+        icon: <Zap className="w-3.5 h-3.5" />,
+        description: "Concise & direct",
+    },
+];
+
+export default function DraftPanel({ leadId, existingDrafts, existingDraft, onStatusChange }: DraftPanelProps) {
     const { notify } = useNotification();
 
-    // ── Core draft state ─────────────────────────────────────────────────
-    const [isGenerating, setIsGenerating] = useState(false);
-    const [draft, setDraft] = useState<Partial<Draft> | null>(existingDraft || null);
-    const [subject, setSubject] = useState("");
-    const [body, setBody] = useState("");
+    // ── Tone selection ────────────────────────────────────────────────────
+    const [activeTone, setActiveTone] = useState<ToneVariant>("formal");
+
+    // ── All 3 draft variants ──────────────────────────────────────────────
+    // Normalise: if only a single legacy draft is passed, wrap it
+    const normaliseDrafts = useCallback((drafts?: Draft[], single?: Draft): Draft[] => {
+        if (drafts && drafts.length > 0) return drafts;
+        if (single) return [{ ...single, tone_variant: "formal" }];
+        return [];
+    }, []);
+
+    const [allDrafts, setAllDrafts] = useState<Draft[]>(() => normaliseDrafts(existingDrafts, existingDraft));
+
+    // ── Derived: currently active draft ──────────────────────────────────
+    const activeDraft = allDrafts.find((d) => d.tone_variant === activeTone) ?? allDrafts[0] ?? null;
+
+    // ── Per-variant edit state ────────────────────────────────────────────
+    const [subjects, setSubjects] = useState<Record<ToneVariant, string>>({ formal: "", casual: "", short: "" });
+    const [bodies, setBodies] = useState<Record<ToneVariant, string>>({ formal: "", casual: "", short: "" });
+    const [dirtyTones, setDirtyTones] = useState<Record<ToneVariant, boolean>>({ formal: false, casual: false, short: false });
+    const [lastSavedBodies, setLastSavedBodies] = useState<Record<ToneVariant, string>>({ formal: "", casual: "", short: "" });
 
     // ── Send state ───────────────────────────────────────────────────────
     const [copied, setCopied] = useState(false);
     const [isSending, setIsSending] = useState(false);
     const [sent, setSent] = useState(false);
 
-    // ── Save / edit history state ────────────────────────────────────────
+    // ── Save / generate state ─────────────────────────────────────────────
     const [isSaving, setIsSaving] = useState(false);
-    const [isDirty, setIsDirty] = useState(false);           // has user unsaved edits?
-    const [lastSavedBody, setLastSavedBody] = useState("");  // snapshot of last-saved body
+    const [isGenerating, setIsGenerating] = useState(false);
     const [isHistoryOpen, setIsHistoryOpen] = useState(false);
     const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    // ── Sync when a new draft prop arrives ───────────────────────────────
+    // ── Sync when props change ────────────────────────────────────────────
     useEffect(() => {
-        if (existingDraft) {
-            setDraft(existingDraft);
-            setSubject(existingDraft.suggested_subject || "");
-            setBody(existingDraft.body || "");
-            setLastSavedBody(existingDraft.body || "");
-            setIsDirty(false);
-        } else {
-            setDraft(null);
-            setSubject("");
-            setBody("");
-            setLastSavedBody("");
-            setIsDirty(false);
-        }
+        const normalised = normaliseDrafts(existingDrafts, existingDraft);
+        setAllDrafts(normalised);
         setSent(false);
-    }, [existingDraft]);
 
-    // ── Mark dirty when fields change ────────────────────────────────────
+        const newSubjects: Record<ToneVariant, string> = { formal: "", casual: "", short: "" };
+        const newBodies: Record<ToneVariant, string> = { formal: "", casual: "", short: "" };
+        const newSaved: Record<ToneVariant, string> = { formal: "", casual: "", short: "" };
+
+        normalised.forEach((d) => {
+            const t = (d.tone_variant ?? "formal") as ToneVariant;
+            newSubjects[t] = d.suggested_subject || "";
+            newBodies[t] = d.body || "";
+            newSaved[t] = d.body || "";
+        });
+
+        setSubjects(newSubjects);
+        setBodies(newBodies);
+        setLastSavedBodies(newSaved);
+        setDirtyTones({ formal: false, casual: false, short: false });
+    }, [existingDrafts, existingDraft, normaliseDrafts]);
+
+    // Shorthands for the active tone
+    const subject = subjects[activeTone];
+    const body = bodies[activeTone];
+    const isDirty = dirtyTones[activeTone];
+    const lastSavedBody = lastSavedBodies[activeTone];
+
     const handleSubjectChange = (val: string) => {
-        setSubject(val);
-        setIsDirty(true);
+        setSubjects((prev) => ({ ...prev, [activeTone]: val }));
+        setDirtyTones((prev) => ({ ...prev, [activeTone]: true }));
     };
 
     const handleBodyChange = (val: string) => {
-        setBody(val);
-        setIsDirty(true);
+        setBodies((prev) => ({ ...prev, [activeTone]: val }));
+        setDirtyTones((prev) => ({ ...prev, [activeTone]: true }));
     };
 
-    // ── Save draft edits + create revision ───────────────────────────────
+    // ── Save draft ────────────────────────────────────────────────────────
     const saveDraft = useCallback(async (opts?: { edit_source?: DraftRevision["edit_source"] }) => {
-        if (!draft?.id) return;
+        if (!activeDraft?.id) return;
         setIsSaving(true);
         try {
-            const res = await fetch(`/api/drafts/${draft.id}`, {
+            const res = await fetch(`/api/drafts/${activeDraft.id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    body,
-                    suggested_subject: subject,
+                    body: bodies[activeTone],
+                    suggested_subject: subjects[activeTone],
                     edit_source: opts?.edit_source ?? "user_edit",
                 }),
             });
             const data = await res.json();
             if (data.error) throw new Error(data.error);
 
-            setLastSavedBody(body);
-            setIsDirty(false);
+            setLastSavedBodies((prev) => ({ ...prev, [activeTone]: bodies[activeTone] }));
+            setDirtyTones((prev) => ({ ...prev, [activeTone]: false }));
 
             notify({
                 type: "success",
@@ -98,11 +146,11 @@ export default function DraftPanel({ leadId, existingDraft, onStatusChange }: Dr
         } finally {
             setIsSaving(false);
         }
-    }, [draft?.id, body, subject, notify]);
+    }, [activeDraft?.id, bodies, subjects, activeTone, notify]);
 
     // ── Auto-save 3 s after stopped typing ───────────────────────────────
     useEffect(() => {
-        if (!isDirty || !draft?.id) return;
+        if (!isDirty || !activeDraft?.id) return;
         if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
         saveTimerRef.current = setTimeout(() => {
             saveDraft({ edit_source: "user_edit" });
@@ -110,7 +158,7 @@ export default function DraftPanel({ leadId, existingDraft, onStatusChange }: Dr
         return () => {
             if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
         };
-    }, [isDirty, body, subject, draft?.id, saveDraft]);
+    }, [isDirty, bodies, subjects, activeDraft?.id, saveDraft]);
 
     // ── Generate / Regenerate ─────────────────────────────────────────────
     const handleGenerate = async () => {
@@ -124,31 +172,37 @@ export default function DraftPanel({ leadId, existingDraft, onStatusChange }: Dr
             const data = await res.json();
             if (data.error) throw new Error(data.error);
 
-            setDraft(data);
-            const newSubject = data.suggested_subject || `Re: Inquiry`;
-            const newBody = data.body || "";
-            setSubject(newSubject);
-            setBody(newBody);
-            setLastSavedBody(newBody);
-            setIsDirty(false);
+            const newDrafts: Draft[] = data.drafts ?? [];
+            setAllDrafts(newDrafts);
 
-            // Snapshot a revision for the AI output
-            if (data.id) {
-                await fetch(`/api/drafts/${data.id}`, {
-                    method: "PATCH",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        body: newBody,
-                        suggested_subject: newSubject,
-                        edit_source: draft ? "regenerated" : "ai_generated",
-                    }),
-                });
-            }
+            const newSubjects: Record<ToneVariant, string> = { formal: "", casual: "", short: "" };
+            const newBodies: Record<ToneVariant, string> = { formal: "", casual: "", short: "" };
+            const newSaved: Record<ToneVariant, string> = { formal: "", casual: "", short: "" };
+
+            newDrafts.forEach((d: Draft) => {
+                const t = (d.tone_variant ?? "formal") as ToneVariant;
+                newSubjects[t] = d.suggested_subject || "";
+                newBodies[t] = d.body || "";
+                newSaved[t] = d.body || "";
+            });
+
+            setSubjects(newSubjects);
+            setBodies(newBodies);
+            setLastSavedBodies(newSaved);
+            setDirtyTones({ formal: false, casual: false, short: false });
+            setSent(false);
+
+            notify({
+                type: "success",
+                title: "3 drafts generated",
+                message: "Formal, Casual, and Short versions are ready. Pick your tone!",
+                duration: 3500,
+            });
         } catch (error) {
             notify({
                 type: "error",
                 title: "Draft generation failed",
-                message: error instanceof Error ? error.message : "Could not generate an AI draft. Check your API key configuration.",
+                message: error instanceof Error ? error.message : "Could not generate AI drafts. Check your API key configuration.",
             });
         } finally {
             setIsGenerating(false);
@@ -157,9 +211,9 @@ export default function DraftPanel({ leadId, existingDraft, onStatusChange }: Dr
 
     // ── Restore a revision ────────────────────────────────────────────────
     const handleRestore = (revision: DraftRevision) => {
-        setSubject(revision.suggested_subject);
-        setBody(revision.body);
-        setIsDirty(true);
+        setSubjects((prev) => ({ ...prev, [activeTone]: revision.suggested_subject }));
+        setBodies((prev) => ({ ...prev, [activeTone]: revision.body }));
+        setDirtyTones((prev) => ({ ...prev, [activeTone]: true }));
         setIsHistoryOpen(false);
         notify({
             type: "success",
@@ -183,7 +237,7 @@ export default function DraftPanel({ leadId, existingDraft, onStatusChange }: Dr
             const res = await fetch("/api/send-email", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ lead_id: leadId, draft_id: draft?.id, subject, body }),
+                body: JSON.stringify({ lead_id: leadId, draft_id: activeDraft?.id, subject, body }),
             });
             const data = await res.json();
             if (data.error) throw new Error(data.error);
@@ -193,7 +247,7 @@ export default function DraftPanel({ leadId, existingDraft, onStatusChange }: Dr
             notify({
                 type: "success",
                 title: "Email sent!",
-                message: `Your reply has been delivered successfully.`,
+                message: `Your ${activeTone} reply has been delivered successfully.`,
             });
         } catch (error) {
             notify({
@@ -207,29 +261,31 @@ export default function DraftPanel({ leadId, existingDraft, onStatusChange }: Dr
         }
     };
 
+    const hasDrafts = allDrafts.length > 0;
+
     // ────────────────────────────────────────────────────────────────────
     return (
         <>
             <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
                 {/* ── Header ── */}
-                <div className="p-5 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
+                <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
                     <div className="flex items-center gap-2">
                         <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
                             <Sparkles className="w-4 h-4 text-blue-600" />
                         </div>
                         <div>
                             <h3 className="text-sm font-bold text-slate-900">AI Draft Reply</h3>
-                            {draft && (
+                            {hasDrafts && (
                                 <p className="text-[10px] text-emerald-600 font-medium uppercase tracking-wider">
-                                    {isDirty ? "Unsaved edits" : "Draft Ready"}
+                                    {isDirty ? "Unsaved edits" : "3 Drafts Ready"}
                                 </p>
                             )}
                         </div>
                     </div>
 
                     <div className="flex items-center gap-2">
-                        {/* History button — only when there's a real saved draft */}
-                        {draft?.id && (
+                        {/* History button */}
+                        {activeDraft?.id && (
                             <button
                                 onClick={() => setIsHistoryOpen(true)}
                                 title="View edit history"
@@ -251,23 +307,54 @@ export default function DraftPanel({ leadId, existingDraft, onStatusChange }: Dr
                                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                                     Generating…
                                 </>
-                            ) : draft ? (
+                            ) : hasDrafts ? (
                                 <>
                                     <RotateCcw className="w-3.5 h-3.5" />
-                                    Regenerate
+                                    Regenerate All
                                 </>
                             ) : (
                                 <>
                                     <Sparkles className="w-3.5 h-3.5" />
-                                    Generate Draft
+                                    Generate Drafts
                                 </>
                             )}
                         </button>
                     </div>
                 </div>
 
+                {/* ── Tone Tab Selector ── */}
+                {hasDrafts && (
+                    <div className="flex border-b border-slate-100 bg-white">
+                        {TONE_TABS.map((tab) => {
+                            const isActive = activeTone === tab.key;
+                            const hasDraft = allDrafts.some((d) => d.tone_variant === tab.key);
+                            return (
+                                <button
+                                    key={tab.key}
+                                    onClick={() => setActiveTone(tab.key)}
+                                    className={`flex-1 flex flex-col items-center gap-1 px-3 py-3 text-xs font-semibold transition border-b-2 ${isActive
+                                            ? "border-blue-500 text-blue-600 bg-blue-50/50"
+                                            : "border-transparent text-slate-400 hover:text-slate-600 hover:bg-slate-50"
+                                        }`}
+                                >
+                                    <div className="flex items-center gap-1.5">
+                                        {tab.icon}
+                                        <span>{tab.label}</span>
+                                        {dirtyTones[tab.key] && hasDraft && (
+                                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" title="Unsaved edits" />
+                                        )}
+                                    </div>
+                                    <span className={`text-[10px] font-normal ${isActive ? "text-blue-400" : "text-slate-300"}`}>
+                                        {tab.description}
+                                    </span>
+                                </button>
+                            );
+                        })}
+                    </div>
+                )}
+
                 {/* ── Draft Editing Area ── */}
-                {draft ? (
+                {hasDrafts && activeDraft ? (
                     <div className="p-6 space-y-4">
                         <div>
                             <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 ml-1">
@@ -312,7 +399,7 @@ export default function DraftPanel({ leadId, existingDraft, onStatusChange }: Dr
 
                             <div className="flex gap-2 items-center">
                                 {/* Manual Save */}
-                                {isDirty && draft?.id && (
+                                {isDirty && activeDraft?.id && (
                                     <button
                                         onClick={() => saveDraft()}
                                         disabled={isSaving}
@@ -367,22 +454,25 @@ export default function DraftPanel({ leadId, existingDraft, onStatusChange }: Dr
                         <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
                             <Sparkles className="w-8 h-8 text-slate-200" />
                         </div>
-                        <p className="text-sm text-slate-500 mb-6">No draft generated for this lead yet.</p>
+                        <p className="text-sm text-slate-500 mb-2">No drafts generated yet.</p>
+                        <p className="text-xs text-slate-400 mb-6">
+                            Generate 3 tone variants — Formal, Casual, and Short — and pick the one that fits.
+                        </p>
                         <button
                             onClick={handleGenerate}
                             disabled={isGenerating}
                             className="px-6 py-2.5 bg-blue-600 text-white text-sm font-bold rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-100 disabled:opacity-50"
                         >
-                            {isGenerating ? "Generating draft…" : "Generate AI Draft"}
+                            {isGenerating ? "Generating 3 drafts…" : "Generate AI Drafts"}
                         </button>
                     </div>
                 )}
             </div>
 
             {/* ── History Drawer ── */}
-            {draft?.id && (
+            {activeDraft?.id && (
                 <DraftHistory
-                    draftId={draft.id}
+                    draftId={activeDraft.id}
                     isOpen={isHistoryOpen}
                     onClose={() => setIsHistoryOpen(false)}
                     onRestore={handleRestore}

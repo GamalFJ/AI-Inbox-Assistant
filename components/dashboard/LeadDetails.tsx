@@ -7,12 +7,12 @@ import TaskList from "./TaskList";
 
 interface LeadDetailsProps {
     lead: Lead | null;
-    draft: Draft | undefined;
+    drafts: Draft[];
     onUpdateLeadStatus: (status: LeadStatus) => void;
     onNewLead: () => void;
 }
 
-export default function LeadDetails({ lead, draft, onUpdateLeadStatus, onNewLead }: LeadDetailsProps) {
+export default function LeadDetails({ lead, drafts, onUpdateLeadStatus, onNewLead }: LeadDetailsProps) {
     if (!lead) {
         return (
             <div className="flex-1 flex flex-col items-center justify-center p-12 bg-slate-50/30">
@@ -101,10 +101,9 @@ export default function LeadDetails({ lead, draft, onUpdateLeadStatus, onNewLead
             {/* Follow-up Tasks */}
             <TaskList leadId={lead.id} />
 
-            {/* AI Draft Panel */}
             <DraftPanel
                 leadId={lead.id}
-                existingDraft={draft}
+                existingDrafts={drafts}
                 onStatusChange={(status) => onUpdateLeadStatus(status as LeadStatus)}
             />
         </div>

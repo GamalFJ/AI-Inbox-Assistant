@@ -1,7 +1,8 @@
 "use client";
 
-import { Plus, Settings, BarChart3 } from "lucide-react";
+import { Plus, Settings, BarChart3, Map } from "lucide-react";
 import Link from "next/link";
+
 
 interface TopBarProps {
     onNewLead: () => void;
@@ -16,6 +17,13 @@ export default function TopBar({ onNewLead }: TopBarProps) {
             </div>
 
             <div className="flex items-center gap-3">
+                <Link
+                    href="/roadmap"
+                    title="Roadmap"
+                    className="flex items-center justify-center w-10 h-10 rounded-xl border border-slate-200 bg-white text-slate-500 hover:text-violet-600 hover:border-violet-300 hover:bg-violet-50 transition-all"
+                >
+                    <Map className="w-5 h-5" />
+                </Link>
                 <Link
                     href="/analytics"
                     title="Analytics"

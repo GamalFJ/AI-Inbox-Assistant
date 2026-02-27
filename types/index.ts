@@ -12,6 +12,8 @@ export interface Lead {
     classification?: LeadClassification;
 }
 
+export type ToneVariant = "formal" | "casual" | "short";
+
 export interface Draft {
     id: string;
     created_at: string;
@@ -20,6 +22,7 @@ export interface Draft {
     body: string;
     status: string;
     suggested_subject: string;
+    tone_variant?: ToneVariant;
 }
 
 export interface DraftRevision {

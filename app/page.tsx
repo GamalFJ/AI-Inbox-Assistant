@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Inbox, Mic, Clock, CreditCard, Puzzle, CheckCircle, XCircle, HelpCircle } from "lucide-react"
+import { Inbox, CreditCard, Puzzle, CheckCircle, HelpCircle } from "lucide-react"
 
 export default function Home() {
     return (
@@ -31,86 +31,9 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Demo Section */}
-            <section id="demo" className="py-24 md:py-32 bg-slate-50">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-16">
-                        <p className="text-blue-600 font-semibold tracking-widest uppercase text-sm mb-3">See it in action</p>
-                        <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
-                            From inbox chaos to <span className="text-blue-600">done</span> in seconds
-                        </h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">
-                            Watch how the assistant identifies a lead, drafts a professional reply in your tone, and schedules a follow-up—all without you lifting a finger.
-                        </p>
-                    </div>
 
-                    <div className="max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-2xl border-8 border-white bg-slate-900 aspect-video relative group cursor-pointer animate-float">
-                        {/* Video Placeholder Container */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-950 flex items-center justify-center">
-                            <div className="text-center">
-                                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300 mx-auto mb-4">
-                                    <Clock className="w-10 h-10 ml-1 fill-white" />
-                                </div>
-                                <p className="text-slate-400 font-medium">Watch the 1-minute walkthrough</p>
-                            </div>
-                        </div>
-                        {/* Mock UI Overlay Elements */}
-                        <div className="absolute top-4 left-4 right-4 h-12 bg-white/10 rounded-xl backdrop-blur-md flex items-center px-4 gap-3 border border-white/10">
-                            <div className="w-3 h-3 rounded-full bg-red-400" />
-                            <div className="w-3 h-3 rounded-full bg-amber-400" />
-                            <div className="w-3 h-3 rounded-full bg-emerald-400" />
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            {/* Social Proof / Testimonials */}
-            <section id="testimonials" className="py-24 md:py-32 bg-white overflow-hidden">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-16">
-                        <p className="text-blue-600 font-semibold tracking-widest uppercase text-sm mb-3">Trusted by Pros</p>
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                            Saving 10+ hours every week
-                        </h2>
-                    </div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                        {[
-                            {
-                                quote: "I used to ignore leads because I didn't have the mental energy to reply. This AI captures my tone so well it's scary.",
-                                author: "Sarah Jenkins",
-                                role: "Freelance Designer",
-                                avatar: "SJ"
-                            },
-                            {
-                                quote: "The follow-up scheduling is the real game-changer. I'm actually closing deals that used to just go cold.",
-                                author: "Mark Thompson",
-                                role: "Agency Owner",
-                                avatar: "MT"
-                            },
-                            {
-                                quote: "Setup took 5 minutes. I just pasted three emails I wrote last week and it was ready to go. No AI strategy needed.",
-                                author: "Elena Rodriguez",
-                                role: "Consultant",
-                                avatar: "ER"
-                            },
-                        ].map((t, i) => (
-                            <div key={i} className="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-xl transition-all duration-300">
-                                <p className="text-gray-700 italic mb-8 leading-relaxed">&quot;{t.quote}&quot;</p>
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
-                                        {t.avatar}
-                                    </div>
-                                    <div>
-                                        <p className="font-bold text-gray-900">{t.author}</p>
-                                        <p className="text-sm text-gray-500 font-medium">{t.role}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
 
             {/* FAQ Section */}
             <section id="faq" className="py-24 md:py-32 bg-slate-50">
@@ -125,7 +48,6 @@ export default function Home() {
                     <div className="space-y-5">
                         {[
                             { q: "Is it secure?", a: "Yes, we use enterprise-grade encryption and never store your raw password." },
-                            { q: "Can I cancel anytime?", a: "Absolutely. No hidden fees or long-term contracts." },
                             { q: "Do you support all email providers?", a: "We work with any modern inbox that supports standard web access." },
                             { q: "Does the AI sound robotic?", a: "Not at all. Because you provide your own 'gold standard' examples, the AI learns your specific vocabulary and tone." },
                         ].map((faq, i) => (
@@ -162,7 +84,7 @@ export default function Home() {
 
                         <ul className="space-y-4 mb-8">
                             {[
-                                "Unlimited leads (Fair use)",
+                                "200–300 leads per month",
                                 "AI Tone-matching engine",
                                 "Custom Inbox Dashboard",
                                 "Automated Follow-up Tasks",

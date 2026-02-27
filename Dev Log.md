@@ -214,3 +214,30 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 - **ðŸ“† Calendar Integration** *(Pro Plan Upsell)*:
     - One-click "Book a Call" via Google Calendar or Calendly embedded in AI replies.
     - Auto-detect scheduling intent in lead emails.
+
+---
+
+## Phase 10: Multiple Draft Variants (Current)
+- **3-Tone AI Draft System**:
+    - Refactored `utils/ai.ts` to export `generateDraftVariants()` — fires **3 parallel GPT-4o calls**: Formal, Casual, Short.
+    - Only the Formal call handles `lead_type` classification and `followup_plan`. Others focus purely on drafting, keeping token costs lean.
+    - Original `generateDraftForLead()` preserved for backward compat with cron/webhook pipelines.
+- **API Route** (`POST /api/process-lead`):
+    - Clears existing drafts for the lead, inserts all 3 variants with a `tone_variant` label.
+    - Deduplicates follow-up tasks on regeneration. Returns full drafts array so UI renders instantly.
+- **Database** (`supabase/migrations/add_tone_variant.sql`):
+    - `ALTER TABLE drafts ADD COLUMN IF NOT EXISTS tone_variant TEXT CHECK (...)` — safe, non-destructive.
+- **Type System** (`types/index.ts`):
+    - Added `ToneVariant = 'formal' | 'casual' | 'short'` and optional `tone_variant` field on `Draft`.
+- **Dashboard UI** (`components/dashboard/DraftPanel.tsx`):
+    - Full rebuild: 3-tab selector (Formal / Casual / Short), each independently editable with auto-save + history.
+    - Amber-dot per tab for unsaved edits. Backward compatible with old single-draft prop.
+- **Component Pipeline**: `selectedDraft` (single) changed to `selectedDrafts` (array) through DashboardClient ? LeadDetails ? DraftPanel.
+- **Cost note**: 60 leads/month x 3 drafts = approx. USD 1.26/mo per active user (GPT-4o). Fits within the USD 19.99 lifetime pricing window.
+
+### Next Steps Updated
+- [x] ~~Multiple Draft Options: Formal / Casual / Short variants, parallel generation, 3-tab UI.~~
+- [ ] **Run DB Migration**: Execute `supabase/migrations/add_tone_variant.sql` in the Supabase SQL Editor.
+- [ ] **Lead Stages**: Add pipeline stages (New to Contacted to Negotiating to Closed) to the dashboard.
+- [ ] **Production AI Model**: Confirm OpenAI API key is live and producing real drafts.
+- [ ] **Domain Verification**: Verify custom domain on Resend (Settings ? Email Domain tab).

@@ -6,6 +6,7 @@ import TopBar from "./TopBar";
 import LeadList from "./LeadList";
 import LeadDetails from "./LeadDetails";
 import NewLeadModal from "./NewLeadModal";
+import UsageBanner from "./UsageBanner";
 import { Menu, X } from "lucide-react";
 import { useNotification } from "@/components/NotificationContext";
 import { createClient } from "@/utils/supabase/client";
@@ -26,7 +27,7 @@ export default function DashboardClient({ initialLeads, initialDrafts }: Dashboa
     const supabase = useMemo(() => createClient(), []);
 
     const selectedLead = (leads || []).find(l => l.id === selectedLeadId) || null;
-    const selectedDraft = (drafts || []).find(d => d.lead_id === selectedLeadId);
+    const selectedDrafts = (drafts || []).filter(d => d.lead_id === selectedLeadId);
 
     // ── Realtime Subscriptions ───────────────────────────────────────────
     useEffect(() => {
@@ -182,6 +183,7 @@ export default function DashboardClient({ initialLeads, initialDrafts }: Dashboa
     return (
         <div className="flex flex-col h-[calc(100vh-64px)] bg-white overflow-hidden">
             <TopBar onNewLead={() => setIsModalOpen(true)} />
+            <UsageBanner />
 
             <div className="flex-1 flex overflow-hidden relative">
                 {/* Mobile Sidebar Toggle */}
@@ -215,7 +217,7 @@ export default function DashboardClient({ initialLeads, initialDrafts }: Dashboa
 
                 <LeadDetails
                     lead={selectedLead}
-                    draft={selectedDraft}
+                    drafts={selectedDrafts}
                     onUpdateLeadStatus={handleUpdateStatus}
                     onNewLead={() => setIsModalOpen(true)}
                 />
