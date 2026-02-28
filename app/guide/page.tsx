@@ -46,16 +46,16 @@ const StepCard = ({ number, title, subtitle, icon: Icon, children, isLast = fals
             </div>
         </div>
 
-        <div className="bg-brand-dark/40 backdrop-blur-md border border-brand-card rounded-[1.5rem] md:rounded-[2.5rem] p-5 md:p-12 hover:border-brand-orange/20 transition-all duration-500 relative overflow-hidden group/card shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+        <div className="bg-brand-dark/60 backdrop-blur-xl border border-brand-card rounded-[1.5rem] md:rounded-[2.5rem] p-5 md:p-12 hover:border-brand-orange/20 transition-all duration-500 relative overflow-hidden group/card shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
             <div className="absolute top-0 right-0 w-64 h-64 bg-brand-orange/5 blur-[80px] -mr-32 -mt-32 rounded-full group-hover/card:bg-brand-orange/10 transition-colors" />
 
             <div className="relative z-10">
                 <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6 md:mb-8 text-left">
                     <div>
-                        <h3 className="text-2xl md:text-4xl font-black text-white tracking-tight mb-2">
+                        <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-2">
                             {title}
                         </h3>
-                        <p className="text-brand-yellow/80 font-bold uppercase tracking-widest text-[10px] md:text-xs">
+                        <p className="text-brand-yellow font-bold uppercase tracking-widest text-[10px] md:text-xs">
                             {subtitle}
                         </p>
                     </div>
@@ -174,7 +174,11 @@ export default function GuidePage() {
                     </div>
                 </StepCard>
 
-                {/* Step 2: Connection */}
+                {/* 
+                  * Step 2: Connection 
+                  * MOBILE COMPLIANCE GUARD: This section is specifically optimized for mobile devices (up to 1024px).
+                  * Do not alter the flex-col/row layouts or padding without verification.
+                  */}
                 <StepCard
                     number="02"
                     title="Connect Your Inbox"
@@ -188,13 +192,13 @@ export default function GuidePage() {
                         <Instruction step={1} text="Go to Settings > Lead Ingestion." />
                         <Instruction step={2} text="Copy your unique Secret Webhook URL." />
                         <Instruction step={3} text="Paste this link into your email tool (Zapier or Postmark)." />
-                        <div className="p-4 md:p-6 bg-brand-dark/80 rounded-2xl md:rounded-3xl border border-brand-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group cursor-pointer hover:border-brand-yellow/30 transition-all">
-                            <div className="flex flex-col w-full overflow-hidden">
-                                <span className="text-[10px] font-black tracking-widest text-[#64748B] uppercase mb-1">Your Secret Link</span>
-                                <code className="text-brand-yellow text-[10px] md:text-sm font-mono truncate w-full">https://api.assistant.com/v1/inbox-ingest...</code>
+                        <div className="p-4 md:p-6 bg-brand-dark/80 rounded-2xl md:rounded-3xl border border-brand-border flex flex-col md:flex-row items-center md:items-center justify-between gap-6 group cursor-pointer hover:border-brand-yellow/30 transition-all shadow-xl">
+                            <div className="flex flex-col w-full overflow-hidden text-center md:text-left">
+                                <span className="text-[10px] font-black tracking-widest text-brand-yellow/60 uppercase mb-2">Your Secret Link</span>
+                                <code className="text-brand-yellow text-[10px] md:text-sm font-mono truncate w-full mb-2 md:mb-0">https://api.assistant.com/v1/inbox-ingest...</code>
                             </div>
-                            <div className="w-full md:w-auto flex items-center justify-center gap-2 bg-brand-yellow/10 border border-brand-yellow/20 px-4 py-2.5 md:py-2 rounded-xl text-brand-yellow text-[10px] md:text-xs font-black uppercase tracking-widest group-hover:bg-brand-yellow group-hover:text-brand-darker transition-all">
-                                <Copy className="w-3 h-3" />
+                            <div className="w-full md:w-auto flex items-center justify-center gap-2 bg-brand-yellow/10 border border-brand-yellow/20 px-6 py-3 md:py-2.5 rounded-xl text-brand-yellow text-[10px] md:text-xs font-black uppercase tracking-widest group-hover:bg-brand-yellow group-hover:text-brand-darker transition-all hover:scale-[1.02] active:scale-[0.98]">
+                                <Copy className="w-3.5 h-3.5" />
                                 Copy
                             </div>
                         </div>

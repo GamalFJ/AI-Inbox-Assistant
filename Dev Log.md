@@ -238,12 +238,24 @@ The primary goal is to **reclaim time**. By automating the cognitive load of dra
 
 ---
 
+## 📱 Phase 16: Growth & Mobile Optimization
+- **Full Mobile Responsiveness**:
+    - Applied comprehensive UI fixes across all pages for mobile compatibility (1024px and below).
+    - Optimized "Setup Guide" for mobile users with enhanced card layouts and touch targets.
+- **3-Day Free Trial Engine**:
+    - Implemented a "growth-first" onboarding flow allowing new users to try the product for 3 days without early payment.
+    - **Database Migration**: Added `trial_ends_at` and `is_trial` to the `profiles` table.
+    - **Trial Lockout**: Implemented paywall logic that restricts dashboard access once the trial expires, while still allowing background lead processing.
+    - **Hero CTA**: Updated landing page to prioritize the "Start your 3-day Free Trial" entry point.
+- **Production Hardening**:
+    - Resolved `favicon.ico` path conflicts between `/app` and `/public` directories.
+    - Fixed build-time linting errors (unescaped JSX entities) to ensure smooth Vercel deployments.
+
+---
+
 ## 🗓️ Next Steps
-- [x] ~~**Multiple Draft Options**: Formal / Casual / Short variants, parallel generation, 3-tab UI.~~
-- [x] ~~**Launch Readiness Audit**: Comprehensive audit completed and passed.~~
-- [x] ~~**Dark Theme Polish**: Premium dark mode implemented across all pages.~~
-- [x] ~~**Interactive Guide**: Togglable in-app tutorial and dedicated /guide page.~~
-- [ ] **Run DB Migration**: Execute `supabase/migrations/add_tone_variant.sql` in the Supabase SQL Editor (Verify live).
+- [x] ~~**Run DB Migration**: Execute `supabase/migrations/add_tone_variant.sql` in the Supabase SQL Editor.~~
+- [ ] **Run Free Trial Migration**: Execute `supabase/migrations/20260227_add_free_trial.sql` in the Supabase SQL Editor.
 - [ ] **Lead Stages**: Add pipeline stages (New to Contacted to Negotiating to Closed) to the dashboard.
 - [ ] **Production AI Model**: Confirm OpenAI API key is live and producing real drafts.
 - [ ] **Domain Verification**: Verify custom domain on Resend (Settings → Email Domain tab).
