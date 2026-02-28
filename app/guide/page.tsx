@@ -195,7 +195,7 @@ export default function GuidePage() {
                         <div className="p-4 md:p-6 bg-brand-dark/80 rounded-2xl md:rounded-3xl border border-brand-border flex flex-col md:flex-row items-center md:items-center justify-between gap-6 group cursor-pointer hover:border-brand-yellow/30 transition-all shadow-xl">
                             <div className="flex flex-col w-full overflow-hidden text-center md:text-left">
                                 <span className="text-[10px] font-black tracking-widest text-brand-yellow/60 uppercase mb-2">Your Secret Link</span>
-                                <code className="text-brand-yellow text-[10px] md:text-sm font-mono truncate w-full mb-2 md:mb-0">https://api.assistant.com/v1/inbox-ingest...</code>
+                                <code className="text-brand-yellow text-[10px] md:text-sm font-mono break-all w-full mb-2 md:mb-0">https://api.assistant.com/v1/inbox-ingest...</code>
                             </div>
                             <div className="w-full md:w-auto flex items-center justify-center gap-2 bg-brand-yellow/10 border border-brand-yellow/20 px-6 py-3 md:py-2.5 rounded-xl text-brand-yellow text-[10px] md:text-xs font-black uppercase tracking-widest group-hover:bg-brand-yellow group-hover:text-brand-darker transition-all hover:scale-[1.02] active:scale-[0.98]">
                                 <Copy className="w-3.5 h-3.5" />

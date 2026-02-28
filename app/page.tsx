@@ -186,7 +186,7 @@ export default function Home() {
 
             {/* ── What happens after 200 users? (Transparency section) ── */}
             <section className="py-16 bg-[#1C2023] text-white">
-                <div className="container mx-auto px-4 max-w-4xl">
+                <div className="container mx-auto px-4 max-w-4xl w-full">
                     <div className="text-center mb-10">
                         <span className="inline-flex items-center gap-2 bg-[#FAE588]/10 text-[#FAE588] text-xs font-bold px-4 py-1.5 rounded-full mb-4 tracking-wide uppercase border border-[#FAE588]/20">
                             <AlertTriangle className="w-3.5 h-3.5" />
@@ -268,7 +268,7 @@ export default function Home() {
 
             {/* ── Roadmap Teaser Section ── */}
             <section className="py-20 md:py-28 bg-[#2A3034]">
-                <div className="container mx-auto px-4 max-w-4xl">
+                <div className="container mx-auto px-4 max-w-4xl w-full">
                     <div className="text-center mb-12">
                         <span className="inline-flex items-center gap-2 bg-[#FF8559]/10 text-[#FF8559] text-xs font-bold px-4 py-1.5 rounded-full mb-4 tracking-wide uppercase">
                             <Map className="w-3.5 h-3.5" />
@@ -368,7 +368,7 @@ export default function Home() {
 
             {/* ── FAQ Section ── */}
             <section id="faq" className="py-24 md:py-32 bg-[#1C2023]">
-                <div className="container mx-auto px-4 max-w-3xl">
+                <div className="container mx-auto px-4 max-w-3xl w-full">
                     <div className="text-center mb-16">
                         <p className="text-[#FF8559] font-semibold tracking-widest uppercase text-sm mb-3">Support</p>
                         <h2 className="text-3xl md:text-4xl font-bold text-white flex items-center justify-center gap-3">
@@ -401,7 +401,7 @@ export default function Home() {
                         Once all 200 founding member seats are taken, this price closes permanently and new users pay monthly. Lock in your access now.
                     </p>
 
-                    <div className="max-w-md mx-auto bg-[#2A3034] rounded-[32px] p-8 md:p-12 mb-12 text-white shadow-3xl text-left border-8 border-[#FF8559]/20">
+                    <div className="max-w-md w-full mx-auto bg-[#2A3034] rounded-[32px] p-8 md:p-12 mb-12 text-white shadow-3xl text-left border-8 border-[#FF8559]/20">
                         <div className="flex justify-between items-start mb-2">
                             <div>
                                 <h3 className="text-2xl font-bold mb-1">Founder&rsquo;s Lifetime Plan</h3>
